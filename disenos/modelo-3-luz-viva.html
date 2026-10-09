@@ -280,7 +280,8 @@ html.has-cursor .cursor { display: grid; place-items: center; position: fixed; t
 .cursor.is-label span { opacity: 1; }
 
 /* ---------- Sol con destellos ---------- */
-.sunwrap { position: fixed; inset: 0; z-index: 6; pointer-events: none; mix-blend-mode: screen; transition: opacity 0.6s; }
+/* El sol vive en el cielo, detrás del contenido: nunca tapa un video ni una foto */
+.sunwrap { position: fixed; inset: 0; z-index: 0; pointer-events: none; mix-blend-mode: screen; transition: opacity 0.6s; }
 html.on-light .sunwrap { opacity: 0; }
 .sun-disc { position: absolute; left: 0; top: 0; width: 16vmin; height: 16vmin; margin: -8vmin 0 0 -8vmin; border-radius: 50%;
   background: radial-gradient(circle, #fffaf0 0%, #ffe6bb 40%, #ffb56e 62%, rgba(255, 140, 70, 0) 72%);
@@ -772,7 +773,7 @@ if (window.gsap && window.ScrollTrigger && animated) {
     const cx = innerWidth - sunState.mx, cy = innerHeight - sunState.my;
     flares.forEach((f, i) => { const t = flareT[i]; f.style.transform = `translate(${x + (cx - x) * t}px, ${y + (cy - y) * t}px)`; });
     const vis = y < innerHeight * 1.02 ? 1 : 0;
-    $("#sunwrap").style.opacity = document.documentElement.classList.contains("on-light") ? 0 : vis * (0.55 + arc * 0.45);
+    $("#sunwrap").style.opacity = document.documentElement.classList.contains("on-light") ? 0 : vis * (0.38 + arc * 0.3);
     flares.forEach((f) => (f.style.opacity = Math.max(0, 1 - Math.hypot(sunState.mx - x, sunState.my - y) / (innerWidth * 0.9))));
   });
 

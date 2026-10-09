@@ -1,0 +1,653 @@
+<title>Redsight · De sol a sol</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&display=swap">
+<script>
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("anim");
+</script>
+<style>
+/* Concepto: la página es un día completo. El cielo de fondo va del amanecer (arriba) a la hora azul (contacto) mientras haces scroll. */
+:root {
+  color-scheme: dark;
+  --ink: #0d0b14;          /* noche */
+  --cream: #f6eee2;        /* texto principal */
+  --mist: #b9aea3;         /* texto secundario */
+  --line: rgba(246, 238, 226, 0.16);
+  --sun: #ff7a3d;          /* acento: sol bajo */
+  --gold: #ffc27a;         /* luz dorada */
+  --sky-top: #141a33;
+  --sky-mid: #3b2f52;
+  --sky-glow: #e07a4f;
+  --serif: "Instrument Serif", "Iowan Old Style", "Times New Roman", serif;
+  --sans: "Geist", "Helvetica Neue", Arial, sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --gutter: clamp(16px, 4vw, 56px);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--ink); -webkit-font-smoothing: antialiased; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+body { background: var(--ink); color: var(--cream); font-family: var(--sans); font-weight: 300; overflow-x: hidden; }
+em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+::selection { background: var(--sun); color: var(--ink); }
+
+/* ---------- Cielo fijo + sol ---------- */
+.sky { position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 55%, var(--sky-glow) 130%); }
+.sky::after { content: ""; position: absolute; inset: 0;
+  background: radial-gradient(120% 60% at 50% 115%, color-mix(in srgb, var(--sky-glow) 70%, transparent), transparent 70%); }
+.sun { position: fixed; z-index: 0; left: 0; top: 0; width: 34vmin; height: 34vmin; margin: -17vmin 0 0 -17vmin; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, #fff3dc 0%, var(--gold) 28%, color-mix(in srgb, var(--sun) 60%, transparent) 55%, transparent 72%);
+  filter: blur(6px); opacity: 0.55; transform: translate(12vw, 92vh); }
+.grain { position: fixed; inset: -50%; z-index: 90; pointer-events: none; opacity: 0.08;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 0.8s steps(4) infinite; }
+@keyframes grain { 25% { transform: translate(-3%, 2%); } 50% { transform: translate(2%, -3%); } 75% { transform: translate(-2%, -1%); } }
+
+main, footer, .material { position: relative; z-index: 1; }
+.section { padding: clamp(96px, 14vw, 180px) var(--gutter); }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); display: flex; gap: 14px; align-items: center; }
+.eyebrow time { color: var(--gold); }
+.mask { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 0.04em 0.18em; margin: 0 -0.04em -0.18em; }
+.mask > span { display: inline-block; }
+h1, h2, h3 { font-weight: 400; text-wrap: balance; }
+
+/* ---------- Marcadores de video/foto ---------- */
+.slot { position: relative; overflow: hidden; isolation: isolate; background: var(--ph, linear-gradient(180deg, #2a2440, #e07a4f)); max-width: 100%; }
+.slot::before { content: ""; position: absolute; inset: -20%; z-index: -1;
+  background: radial-gradient(circle at var(--sx, 50%) var(--sy, 78%), rgba(255, 230, 190, 0.75) 0%, rgba(255, 170, 100, 0.35) 12%, transparent 34%);
+  animation: drift 14s ease-in-out infinite alternate; }
+@keyframes drift { to { transform: translate(4%, -6%) scale(1.08); } }
+.slot::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, transparent 55%, rgba(0, 0, 0, 0.45)); }
+.ph-dawn   { --ph: linear-gradient(180deg, #1c2244 0%, #6b4a73 45%, #f09a6b 85%, #ffd3a1 100%); }
+.ph-day    { --ph: linear-gradient(180deg, #3e6a8f 0%, #8fb3c4 55%, #f3d7a6 100%); --sy: 20%; }
+.ph-dusk   { --ph: linear-gradient(180deg, #2b1a3d 0%, #a2405a 50%, #ff8a4c 82%, #ffc27a 100%); }
+.ph-night  { --ph: linear-gradient(180deg, #07080f 0%, #1b1f3b 60%, #3b2f52 100%); --sy: 15%; }
+.ph-sea    { --ph: linear-gradient(180deg, #ffb37a 0%, #f0d2a8 30%, #3fb0b5 62%, #0d5a6b 100%); --sy: 26%; }
+.ph-desert { --ph: linear-gradient(180deg, #4a2a3a 0%, #c9603d 45%, #e8a865 75%, #b97a45 100%); --sy: 40%; }
+.ph-clinic { --ph: linear-gradient(180deg, #1d2d44 0%, #4f7290 55%, #cfdbe0 100%); --sy: 25%; }
+.ph-jungle { --ph: linear-gradient(180deg, #ffb27a 0%, #6f7f4f 40%, #24361f 80%, #0f1a0c 100%); --sy: 18%; }
+.ph-city   { --ph: linear-gradient(180deg, #24304f 0%, #6a6f8f 45%, #f0a36b 90%); --sy: 70%; }
+
+.tag { position: absolute; left: 12px; top: 12px; z-index: 2; display: flex; flex-direction: column; gap: 2px; max-width: calc(100% - 24px);
+  font-family: var(--mono); font-size: 10.5px; line-height: 1.4; letter-spacing: 0.04em; color: #fff;
+  background: rgba(10, 8, 16, 0.62); backdrop-filter: blur(6px); border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 6px; padding: 7px 9px; }
+.tag b { font-weight: 500; color: var(--gold); letter-spacing: 0.08em; }
+.tag .m { display: none; }
+@media (max-width: 760px) { .tag .d { display: none; } .tag .m { display: inline; } }
+html.no-specs .tag { display: none; }
+
+/* ---------- Preloader ---------- */
+.preloader { display: none; }
+html.anim .preloader { display: grid; position: fixed; inset: 0; z-index: 100; background: var(--ink); place-items: center; align-content: center; gap: 22px; overflow: hidden; }
+.pl-scene { position: relative; width: min(420px, 80vw); height: 120px; overflow: hidden; }
+.pl-sun { position: absolute; left: 50%; bottom: -70px; width: 140px; height: 140px; margin-left: -70px; border-radius: 50%;
+  background: radial-gradient(circle, #fff3dc 0%, var(--gold) 35%, var(--sun) 62%, transparent 72%); }
+.pl-horizon { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--cream); transform: scaleX(0); }
+.pl-word { font-family: var(--serif); font-style: italic; font-size: clamp(44px, 9vw, 96px); line-height: 1; }
+.pl-time { font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; color: var(--mist); }
+
+/* ---------- Nav + reloj ---------- */
+.nav { position: fixed; z-index: 50; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  padding: calc(18px + env(safe-area-inset-top, 0px)) var(--gutter) 18px; }
+.nav-logo { font-size: 26px; }
+.nav-right { display: flex; align-items: center; gap: clamp(12px, 2.6vw, 32px); }
+.nav-link { font-size: 13px; letter-spacing: 0.04em; position: relative; }
+.nav-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.5s cubic-bezier(0.7, 0, 0.2, 1); }
+.nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+.spec-toggle { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; border: 1px solid var(--line); border-radius: 999px; padding: 8px 12px; background: rgba(10, 8, 16, 0.4); backdrop-filter: blur(8px); }
+.spec-toggle[aria-pressed="true"] { border-color: var(--gold); color: var(--gold); }
+.nav, .clock { transition: color 0.4s, opacity 0.4s; }
+html.on-light .nav { color: #1c1712; }
+html.on-light .spec-toggle { background: rgba(255,255,255,0.5); }
+html.on-light .spec-toggle[aria-pressed="true"] { color: #c4501f; border-color: #c4501f; }
+html.on-light .clock { opacity: 0; }
+@media (max-width: 720px) { .nav-link { display: none; } }
+
+.clock { position: fixed; z-index: 50; left: var(--gutter); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); display: flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; color: var(--cream); background: rgba(10, 8, 16, 0.45); backdrop-filter: blur(8px); border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px 8px 10px; }
+.clock i { width: 10px; height: 10px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 12px var(--sun); }
+.clock span:last-child { color: var(--mist); text-transform: uppercase; }
+
+/* ---------- 1. Hero ---------- */
+.hero { position: relative; height: 100svh; min-height: 600px; overflow: hidden; }
+.hero .slot { position: absolute; inset: 0; }
+.hero-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,11,20,0.45) 0%, transparent 30%, transparent 55%, rgba(13,11,20,0.9) 100%); }
+.hero .tag { top: auto; bottom: auto; top: calc(84px + env(safe-area-inset-top, 0px)); left: var(--gutter); }
+.hero-content { position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(72px, 9vw, 96px); display: grid; gap: 22px; }
+.hero-title { font-family: var(--serif); font-size: clamp(56px, 11vw, 190px); line-height: 0.9; letter-spacing: -0.02em; max-width: 14ch; }
+.hero-title em { color: var(--gold); }
+.hero-row { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; flex-wrap: wrap; }
+.hero-row p { max-width: 44ch; font-size: 15px; line-height: 1.6; color: rgba(246, 238, 226, 0.85); }
+.btn-play { display: inline-flex; align-items: center; gap: 12px; padding: 12px 22px 12px 12px; border-radius: 999px; border: 1px solid var(--line);
+  background: rgba(10, 8, 16, 0.35); backdrop-filter: blur(10px); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; transition: background 0.4s, color 0.4s; }
+.btn-play:hover { background: var(--cream); color: var(--ink); }
+.btn-play i { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--sun); color: var(--ink); font-style: normal; font-size: 11px; }
+html.anim .hero-char { transform: translateY(115%); }
+html.anim .hero-fade { opacity: 0; transform: translateY(18px); }
+
+/* ---------- 2. Manifiesto ---------- */
+.manifesto { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(40px, 7vw, 110px); align-items: center; }
+.manifesto h2 { font-family: var(--serif); font-size: clamp(40px, 6vw, 96px); line-height: 1; letter-spacing: -0.01em; margin-top: 24px; }
+.manifesto h2 em { color: var(--gold); }
+.manifesto p.lead { margin-top: 28px; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.65; color: rgba(246, 238, 226, 0.86); max-width: 52ch; }
+.manifesto .sign { margin-top: 24px; color: var(--mist); font-size: 14px; }
+.manifesto .sign em { color: var(--cream); font-size: 21px; }
+.stills { position: relative; height: clamp(460px, 52vw, 680px); }
+.stills .slot { position: absolute; border-radius: 3px; box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.6); }
+.stills .s1 { width: 58%; aspect-ratio: 4 / 5; left: 0; top: 6%; }
+.stills .s2 { width: 50%; aspect-ratio: 3 / 2; right: 0; top: 0; }
+.stills .s3 { width: 46%; aspect-ratio: 4 / 5; right: 6%; bottom: 0; }
+@media (max-width: 860px) { .manifesto { grid-template-columns: 1fr; } }
+
+/* ---------- 3. Film destacado (Punta Cana) ---------- */
+.feature { position: relative; height: 100svh; min-height: 560px; overflow: hidden; }
+.feature .slot { position: absolute; inset: 0; }
+.bar { position: absolute; left: 0; right: 0; height: 14vh; background: var(--ink); z-index: 3; }
+.bar.top { top: 0; } .bar.bottom { bottom: 0; }
+.feature-copy { position: absolute; z-index: 4; left: var(--gutter); right: var(--gutter); bottom: calc(14vh + 28px); display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; }
+.feature-copy h2 { font-family: var(--serif); font-size: clamp(48px, 8vw, 140px); line-height: 0.92; }
+.feature-copy h2 em { color: var(--gold); }
+.feature .eyebrow { color: var(--cream); margin-bottom: 14px; }
+.feature .tag { top: calc(14vh + 24px); left: var(--gutter); }
+
+/* ---------- 4. Categorías / carrusel de viralidad ---------- */
+.cats-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; flex-wrap: wrap; }
+.cats-head h2 { font-family: var(--serif); font-size: clamp(48px, 8vw, 130px); line-height: 0.92; letter-spacing: -0.02em; margin-top: 22px; }
+.cats-head h2 em { color: var(--sun); }
+.tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-top: clamp(36px, 5vw, 64px); }
+.tab { display: inline-flex; gap: 10px; align-items: baseline; padding: 11px 18px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; transition: background 0.35s, color 0.35s, border-color 0.35s; }
+.tab small { font-family: var(--mono); font-size: 11px; color: var(--mist); }
+.tab:hover { border-color: var(--cream); }
+.tab[aria-selected="true"] { background: var(--cream); color: var(--ink); border-color: var(--cream); }
+.tab[aria-selected="true"] small { color: #6c6258; }
+.cat-intro { margin-top: 28px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+.cat-intro p { max-width: 58ch; color: rgba(246, 238, 226, 0.82); line-height: 1.6; }
+.arrows { display: flex; gap: 8px; }
+.arrows button { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line); font-size: 18px; transition: background 0.3s, color 0.3s; }
+.arrows button:hover { background: var(--cream); color: var(--ink); }
+.track { display: flex; gap: clamp(14px, 1.6vw, 22px); overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; margin: 28px calc(var(--gutter) * -1) 0; padding: 0 var(--gutter) 8px; cursor: grab; }
+.track::-webkit-scrollbar { display: none; }
+.track.dragging { cursor: grabbing; scroll-snap-type: none; }
+.card { flex: 0 0 auto; scroll-snap-align: start; display: flex; flex-direction: column; gap: 14px; }
+.card .slot { border-radius: 4px; }
+.card.v { width: clamp(210px, 21vw, 300px); }
+.card.v .slot { aspect-ratio: 9 / 16; }
+.card.h { width: clamp(290px, 46vw, 700px); }
+.card.h .slot { aspect-ratio: 16 / 9; }
+.card-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.card-meta h3 { font-family: var(--serif); font-size: clamp(22px, 2vw, 30px); line-height: 1.05; }
+.card-meta p { font-size: 12.5px; color: var(--mist); margin-top: 4px; }
+.views { text-align: right; flex-shrink: 0; }
+.views strong { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(24px, 2.2vw, 34px); color: var(--gold); font-variant-numeric: tabular-nums; }
+.views span { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); }
+.views.pending strong { color: var(--mist); font-size: 18px; }
+
+/* ---------- 5. De sol a sol (secuencia fija) ---------- */
+.day { position: relative; height: 100svh; min-height: 560px; overflow: hidden; }
+.day .layer { position: absolute; inset: 0; }
+.day .layer.dusk { opacity: 0; }
+.day .shade { position: absolute; inset: 0; background: radial-gradient(80% 60% at 50% 55%, rgba(13, 11, 20, 0.15), rgba(13, 11, 20, 0.7)); z-index: 1; }
+.day-center { position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; align-content: center; gap: 10px; text-align: center; padding: 0 var(--gutter); }
+.day-clock { font-family: var(--serif); font-size: clamp(88px, 19vw, 300px); line-height: 0.85; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.day-caption { font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+.day-line { font-family: var(--serif); font-style: italic; font-size: clamp(22px, 2.6vw, 38px); max-width: 26ch; }
+.floater { position: absolute; z-index: 2; border-radius: 3px; box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7); }
+.floater.f1 { width: clamp(120px, 16vw, 240px); aspect-ratio: 4 / 5; left: 6%; top: 16%; }
+.floater.f2 { width: clamp(140px, 19vw, 300px); aspect-ratio: 3 / 2; right: 5%; top: 22%; }
+.floater.f3 { width: clamp(110px, 14vw, 210px); aspect-ratio: 4 / 5; right: 14%; bottom: 10%; }
+.day > .tag { z-index: 4; top: calc(84px + env(safe-area-inset-top, 0px)); left: var(--gutter); }
+@media (max-width: 760px) { .floater.f2 { display: none; } .floater.f1 { top: 24%; left: 4%; } .floater.f3 { bottom: 12%; } }
+
+/* ---------- 6. Cifras + clientes ---------- */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line); margin-top: 36px; }
+.stat { padding: 26px 18px 0 0; }
+.stat p:first-child { font-family: var(--serif); font-size: clamp(54px, 6.5vw, 110px); line-height: 1; font-variant-numeric: tabular-nums; }
+.stat p:last-child { margin-top: 10px; font-size: 13px; color: var(--mist); max-width: 22ch; }
+@media (max-width: 800px) { .stats { grid-template-columns: repeat(2, 1fr); row-gap: 34px; } }
+.logos { margin-top: clamp(72px, 9vw, 120px); display: grid; gap: 22px; }
+.logo-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.logo { position: relative; flex: 1 1 180px; min-height: 92px; display: grid; place-items: center; border: 1px dashed var(--line); border-radius: 4px; font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--mist); text-align: center; padding: 18px; }
+
+/* ---------- 7. Contacto ---------- */
+.contact { position: relative; min-height: 100svh; display: grid; align-items: center; overflow: hidden; }
+.contact > .slot { position: absolute; inset: 0; z-index: -1; }
+.contact > .slot::after { background: linear-gradient(180deg, rgba(13,11,20,0.35), rgba(13,11,20,0.75)); }
+.contact-tag { top: auto !important; left: auto !important; right: var(--gutter); bottom: calc(18px + env(safe-area-inset-bottom, 0px)); }
+.contact-wrap { display: grid; grid-template-columns: 1fr minmax(0, 520px); gap: clamp(40px, 7vw, 110px); align-items: end; }
+.contact h2 { font-family: var(--serif); font-size: clamp(52px, 8.5vw, 150px); line-height: 0.92; letter-spacing: -0.02em; margin-top: 22px; }
+.contact h2 em { color: var(--gold); }
+.contact-alt { margin-top: 28px; display: grid; gap: 0; border-top: 1px solid var(--line); max-width: 460px; }
+.contact-alt div { display: flex; justify-content: space-between; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--line); }
+.contact-alt span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); }
+.contact-alt em { font-size: 21px; }
+.panel { background: rgba(13, 11, 20, 0.55); backdrop-filter: blur(18px); border: 1px solid var(--line); border-radius: 8px; padding: clamp(22px, 3vw, 36px); display: grid; gap: 22px; }
+.field { display: grid; gap: 6px; }
+.field span, .chips legend { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mist); }
+.field input, .field textarea { background: transparent; border: 0; border-bottom: 1px solid var(--line); color: var(--cream); font: inherit; font-size: 17px; padding: 9px 0; outline: none; resize: vertical; }
+.field input:focus, .field textarea:focus { border-color: var(--gold); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+.chips { border: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.chips legend { margin-bottom: 12px; }
+.chip { padding: 9px 15px; border: 1px solid var(--line); border-radius: 999px; font-size: 13.5px; }
+.chip[aria-pressed="true"] { background: var(--cream); color: var(--ink); border-color: var(--cream); }
+.send { justify-self: start; display: inline-flex; gap: 12px; align-items: center; padding: 17px 28px; border-radius: 999px; background: var(--sun); color: var(--ink); font-weight: 500; letter-spacing: 0.02em; transition: background 0.35s; }
+.send:hover { background: var(--gold); }
+.form-ok { font-size: 14px; color: var(--gold); }
+@media (max-width: 900px) { .contact-wrap { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .two { grid-template-columns: 1fr; } }
+
+footer { padding: 40px var(--gutter) 90px; border-top: 1px solid var(--line); background: var(--ink); }
+.footer-brand { font-size: clamp(84px, 24vw, 400px); line-height: 0.8; text-align: center; letter-spacing: -0.03em;
+  background: linear-gradient(180deg, var(--cream) 30%, var(--sun) 140%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.footer-row { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-top: 22px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); }
+
+/* ---------- Ficha técnica (solo para Juan) ---------- */
+.material { background: #f4ede3; color: #1c1712; padding: clamp(64px, 9vw, 120px) var(--gutter) calc(110px + env(safe-area-inset-bottom, 0px)); }
+.material .eyebrow { color: #7a6a5a; }
+.material h2 { font-family: var(--serif); font-size: clamp(40px, 6vw, 84px); line-height: 1; margin-top: 18px; }
+.material h2 em { color: #c4501f; }
+.material > p { margin-top: 18px; max-width: 64ch; line-height: 1.65; color: #4a3f35; }
+.table-wrap { overflow-x: auto; margin-top: 36px; border-top: 2px solid #1c1712; }
+table { color: #1c1712; border-collapse: collapse; width: 100%; min-width: 860px; font-size: 14px; }
+th { text-align: left; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #7a6a5a; font-weight: 400; padding: 14px 12px 10px 0; border-bottom: 1px solid #d8ccbd; }
+td { padding: 14px 12px 14px 0; border-bottom: 1px solid #e3d8ca; vertical-align: top; line-height: 1.5; }
+td:first-child { font-family: var(--mono); font-weight: 500; color: #c4501f; white-space: nowrap; }
+td:nth-child(3), td:nth-child(4), td:nth-child(5) { font-family: var(--mono); font-size: 12.5px; white-space: nowrap; font-variant-numeric: tabular-nums; }
+tr.group td { font-family: var(--serif); font-style: italic; font-size: 22px; color: #1c1712; padding-top: 28px; border-bottom: 1px solid #1c1712; white-space: normal; }
+.howto { margin-top: 40px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.howto h3 { font-family: var(--serif); font-size: 26px; }
+.howto p, .howto li { font-size: 14px; line-height: 1.6; color: #4a3f35; margin-top: 8px; }
+.howto ul { list-style: none; font-family: var(--mono); font-size: 12.5px; }
+@media (max-width: 860px) { .howto { grid-template-columns: 1fr; } }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+
+<div class="sky" id="sky" aria-hidden="true"></div>
+<div class="sun" id="sun" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="pl-scene"><div class="pl-sun"></div><div class="pl-horizon"></div></div>
+  <p class="pl-word">Redsight</p>
+  <p class="pl-time" id="plTime">05:00</p>
+</div>
+
+<header class="nav">
+  <button class="nav-logo" data-go="inicio"><em>Redsight</em></button>
+  <div class="nav-right">
+    <button class="nav-link" data-go="films">Films</button>
+    <button class="nav-link" data-go="categorias">Categorías</button>
+    <button class="nav-link" data-go="contacto">Contacto</button>
+    <button class="spec-toggle" id="specToggle" aria-pressed="true">Specs ✓</button>
+  </div>
+</header>
+
+<div class="clock" aria-hidden="true"><i></i><span id="clockTime">05:42</span><span id="clockPhase">Amanecer</span></div>
+
+<main>
+  <!-- 1. HERO -->
+  <section class="hero" id="inicio">
+    <div class="slot ph-dawn" id="heroSlot">
+      <span class="tag"><b>V01 · SHOWREEL</b><span class="d">Horizontal 16:9 · 1920×1080 · 30–60 s · loop sin audio</span><span class="m">V02 · Vertical 9:16 · 1080×1920 · 15–30 s</span></span>
+    </div>
+    <div class="hero-shade"></div>
+    <div class="hero-content">
+      <p class="eyebrow hero-fade"><time>05:42</time> Pereira, Colombia · Contenido audiovisual</p>
+      <h1 class="hero-title" aria-label="Contamos historias a la luz del sol">
+        <span class="mask"><span class="hero-char">Contamos</span></span>
+        <span class="mask"><span class="hero-char">historias</span></span>
+        <span class="mask"><span class="hero-char">a&nbsp;la&nbsp;<em>luz</em></span></span>
+        <span class="mask"><span class="hero-char"><em>del&nbsp;sol.</em></span></span>
+      </h1>
+      <div class="hero-row">
+        <p class="hero-fade">Films y reels para hoteles, proyectos inmobiliarios, salud y documental. Más de 10 años persiguiendo la mejor luz del día.</p>
+        <button class="btn-play hero-fade" data-go="films"><i>▶</i> Ver showreel</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. MANIFIESTO -->
+  <section class="section manifesto" id="nosotros">
+    <div>
+      <p class="eyebrow"><time>07:10</time> Quiénes somos</p>
+      <h2>Grabamos cuando <em>la luz</em> decide.</h2>
+      <p class="lead">Nacimos en Pereira con una visión clara: crear contenido audiovisual de alto nivel para marcas que quieren contar mejor su historia. Con más de 10 años en storytelling, turismo y hospitalidad, hemos trabajado para marcas de Alemania, Italia, República Dominicana y Colombia, y en producciones documentales para canales regionales.</p>
+      <p class="sign">Dirección — <em>Juan José Rojas Cano</em></p>
+    </div>
+    <div class="stills">
+      <div class="slot ph-dawn s1 par" data-speed="-8"><span class="tag"><b>F01 · RETRATO / DETRÁS DE CÁMARA</b>Vertical 4:5 · 1600×2000</span></div>
+      <div class="slot ph-jungle s2 par" data-speed="10"><span class="tag"><b>F02 · FOTO AMANECER</b>Horizontal 3:2 · 2400×1600</span></div>
+      <div class="slot ph-dusk s3 par" data-speed="-14"><span class="tag"><b>F03 · FOTO ATARDECER</b>Vertical 4:5 · 1600×2000</span></div>
+    </div>
+  </section>
+
+  <!-- 3. FILM DESTACADO -->
+  <section class="feature" id="films">
+    <div class="slot ph-sea" id="featureSlot">
+      <span class="tag"><b>V03 · FILM PUNTA CANA</b>Horizontal 16:9 · 1920×1080 (ideal 4K) · clip 20–40 s sin audio + link al film completo</span>
+    </div>
+    <div class="bar top"></div><div class="bar bottom"></div>
+    <div class="feature-copy">
+      <div><p class="eyebrow"><time>09:30</time> Film destacado · República Dominicana</p><h2>Punta <em>Cana</em></h2></div>
+      <button class="btn-play"><i>▶</i> Ver film completo</button>
+    </div>
+  </section>
+
+  <!-- 4. CATEGORÍAS -->
+  <section class="section cats" id="categorias">
+    <div class="cats-head">
+      <div>
+        <p class="eyebrow"><time>12:00</time> Contenido que se comparte</p>
+        <h2>Historias que se <em>vuelven virales.</em></h2>
+      </div>
+    </div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="cat-intro">
+      <p id="catIntro"></p>
+      <div class="arrows"><button id="prev" aria-label="Anterior">←</button><button id="next" aria-label="Siguiente">→</button></div>
+    </div>
+    <div class="track" id="track"></div>
+  </section>
+
+  <!-- 5. DE SOL A SOL -->
+  <section class="day" id="sol">
+    <div class="layer dawn slot ph-dawn" id="dayDawn"></div>
+    <div class="layer dusk slot ph-dusk" id="dayDusk" style="--sy: 70%"></div>
+    <div class="shade"></div>
+    <span class="tag"><b>V04 AMANECER → V05 ATARDECER</b>Dos clips 16:9 · 1920×1080 · 10–15 s c/u · ideal timelapse</span>
+    <div class="slot ph-day floater f1 par" data-speed="-20"><span class="tag"><b>F04</b>4:5 · 1600×2000</span></div>
+    <div class="slot ph-sea floater f2 par" data-speed="16"><span class="tag"><b>F05</b>3:2 · 2400×1600</span></div>
+    <div class="slot ph-desert floater f3 par" data-speed="-28"><span class="tag"><b>F06</b>4:5 · 1600×2000</span></div>
+    <div class="day-center">
+      <p class="day-caption" id="dayCaption">Primera luz</p>
+      <p class="day-clock" id="dayClock">05:42</p>
+      <p class="day-line">Del amanecer al atardecer, buscamos el momento exacto en que tu lugar se ve mejor.</p>
+    </div>
+  </section>
+
+  <!-- 6. CIFRAS -->
+  <section class="section" id="cifras">
+    <p class="eyebrow"><time>18:40</time> Resultados</p>
+    <div class="stats">
+      <div class="stat"><p><span class="count" data-v="6">6</span>M+</p><p>visualizaciones en reels de hoteles</p></div>
+      <div class="stat"><p><span class="count" data-v="10">10</span>+</p><p>años contando historias</p></div>
+      <div class="stat"><p><span class="count" data-v="4">4</span></p><p>países: Colombia, Alemania, Italia y República Dominicana</p></div>
+      <div class="stat"><p><span class="count" data-v="4">4</span></p><p>sectores: hotelería, inmobiliario, salud y documental</p></div>
+    </div>
+    <div class="logos">
+      <p class="eyebrow">Han confiado en nosotros · <span style="color:var(--gold)">L01 · logos PNG/SVG transparentes</span></p>
+      <div class="logo-row">
+        <div class="logo">Casa Tuirák</div><div class="logo">La Colina Spa</div><div class="logo">Balcón del Cielo</div>
+        <div class="logo">Attraversiamo</div><div class="logo">Termales Santa Rosa</div><div class="logo">Fundación Santa Fe</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. CONTACTO -->
+  <section class="section contact" id="contacto">
+    <div class="slot ph-dusk" style="--sy: 88%"><span class="tag contact-tag"><b>V06 · FONDO CONTACTO</b>Horizontal 16:9 · 1920×1080 · 10–20 s · atardecer tranquilo, loop</span></div>
+    <div class="contact-wrap">
+      <div>
+        <p class="eyebrow"><time>19:05</time> Hora azul · Contacto</p>
+        <h2>Tu lugar merece <em>su mejor luz.</em></h2>
+        <div class="contact-alt">
+          <div><span>WhatsApp</span><em>Por definir</em></div>
+          <div><span>Instagram</span><em>Por definir</em></div>
+          <div><span>Email</span><em>Por definir</em></div>
+        </div>
+      </div>
+      <form class="panel" id="form">
+        <div class="two">
+          <label class="field" for="c-nombre"><span>Nombre</span><input id="c-nombre" required autocomplete="name"></label>
+          <label class="field" for="c-email"><span>Email</span><input id="c-email" type="email" required autocomplete="email"></label>
+        </div>
+        <label class="field" for="c-marca"><span>Hotel, empresa o marca</span><input id="c-marca"></label>
+        <fieldset class="chips" id="chips"><legend>¿Qué quieres contar?</legend></fieldset>
+        <label class="field" for="c-msg"><span>Cuéntanos del proyecto</span><textarea id="c-msg" rows="3" required></textarea></label>
+        <button class="send" type="submit">Enviar mensaje →</button>
+        <p class="form-ok" id="formOk" hidden>Vista previa: en el sitio real este mensaje te llegará al correo.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <p class="footer-brand"><em>Redsight</em></p>
+  <div class="footer-row"><span>by juanjoreds</span><span>Pereira, Colombia</span><span>De sol a sol · © 2026</span></div>
+</footer>
+
+<!-- FICHA TÉCNICA: no aparece en el sitio final -->
+<section class="material" id="material">
+  <p class="eyebrow">Solo para ti · no aparece en el sitio final</p>
+  <h2>Ficha técnica del <em>material</em></h2>
+  <p>Cada código corresponde a una etiqueta del diseño (botón «Specs» arriba para mostrarlas u ocultarlas). Entrega siempre el archivo de mejor calidad que tengas: yo hago la compresión para web. Para los clips en bucle no importa el audio, se reproducen en silencio.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Código</th><th>Dónde va</th><th>Formato</th><th>Tamaño</th><th>Duración</th><th>Qué mostrar</th></tr></thead>
+      <tbody id="specRows"></tbody>
+    </table>
+  </div>
+  <div class="howto">
+    <div><h3>Cómo entregarlo</h3><p>Una carpeta en Google Drive llamada «Redsight web» con una subcarpeta por sección. Nombra cada archivo con su código, por ejemplo <code>V03_puntacana.mp4</code>.</p></div>
+    <div><h3>Estructura de carpetas</h3><ul><li>01_portada/</li><li>02_nosotros/</li><li>03_punta-cana/</li><li>04_hoteles/ · 04_inmobiliario/</li><li>04_guajira/ · 04_santa-fe/</li><li>05_sol-a-sol/ · 06_contacto/ · logos/</li></ul></div>
+    <div><h3>Datos de cada pieza</h3><p>En un documento dentro de la carpeta: nombre del proyecto, cliente, año, vistas o resultado, y el link a la publicación de Instagram o al video completo (YouTube o Vimeo).</p></div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
+<script>
+// ---------- Contenido de las categorías ----------
+const cats = [
+  { id: "hoteles", name: "Hoteles", intro: "Reels verticales que llenan habitaciones. Cada pieza muestra sus vistas reales en Instagram.", items: [
+    { o: "v", ph: "ph-jungle", code: "H01", title: "Casa Tuirák", sub: "Hotel boutique · 3 años", views: "1.8 M" },
+    { o: "v", ph: "ph-dawn", code: "H02", title: "La Colina Spa", sub: "Spa & bienestar · 4 años", views: "950 mil" },
+    { o: "v", ph: "ph-dusk", code: "H03", title: "Balcón del Cielo", sub: "Glamping · 1 año", views: "901 mil" },
+    { o: "v", ph: "ph-day", code: "H04", title: "Attraversiamo", sub: "Hotel & experiencias · 5 años", views: "627 mil" },
+    { o: "v", ph: "ph-clinic", code: "H05", title: "Termales Santa Rosa", sub: "Termales · 4 años", views: "98.5 k" },
+  ]},
+  { id: "inmobiliario", name: "Inmobiliario", intro: "Proyectos que se venden antes de construirse: recorridos, drone y estilo de vida.", items: [
+    { o: "h", ph: "ph-city", code: "I01", title: "Proyecto inmobiliario 1", sub: "Nombre y cliente por definir" },
+    { o: "v", ph: "ph-dusk", code: "I02", title: "Proyecto inmobiliario 2", sub: "Nombre y cliente por definir" },
+    { o: "v", ph: "ph-day", code: "I03", title: "Proyecto inmobiliario 3", sub: "Nombre y cliente por definir" },
+  ]},
+  { id: "documental", name: "Documental", intro: "Historias reales con ritmo de cine. La Guajira: territorio, cultura y su gente.", items: [
+    { o: "h", ph: "ph-desert", code: "D01", title: "La Guajira", sub: "Documental · tráiler" },
+    { o: "h", ph: "ph-dusk", code: "D02", title: "La Guajira — escena", sub: "Fragmento o fotograma" },
+  ]},
+  { id: "salud", name: "Salud", intro: "Comunicación institucional con calidez humana para centros de salud.", items: [
+    { o: "h", ph: "ph-clinic", code: "S01", title: "Fundación Santa Fe", sub: "Film institucional" },
+    { o: "h", ph: "ph-day", code: "S02", title: "Fundación Santa Fe — pieza 2", sub: "Testimonio o campaña" },
+  ]},
+];
+
+const spec = { v: "Vertical 9:16 · 1080×1920 · clip 6–10 s", h: "Horizontal 16:9 · 1920×1080 · clip 10–20 s" };
+const $ = (s) => document.querySelector(s);
+let current = 0;
+
+function renderCat(i) {
+  current = i;
+  const c = cats[i];
+  document.querySelectorAll(".tab").forEach((t, j) => t.setAttribute("aria-selected", j === i));
+  $("#catIntro").textContent = c.intro;
+  $("#track").innerHTML = c.items.map((it) => `
+    <article class="card ${it.o}">
+      <div class="slot ${it.ph}"><span class="tag"><b>${it.code} · ${c.name.toUpperCase()}</b>${spec[it.o]}</span></div>
+      <div class="card-meta">
+        <div><h3>${it.title}</h3><p>${it.sub}</p></div>
+        <div class="views ${it.views ? "" : "pending"}"><strong>${it.views || "—"}</strong><span>${it.views ? "vistas" : "métrica por definir"}</span></div>
+      </div>
+    </article>`).join("");
+  $("#track").scrollLeft = 0;
+  if (window.gsap && document.documentElement.classList.contains("anim")) {
+    gsap.from("#track .card", { x: 60, opacity: 0, stagger: 0.07, duration: 0.8, ease: "power3.out" });
+  }
+}
+$("#tabs").innerHTML = cats.map((c, i) => `<button class="tab" role="tab" data-i="${i}">${c.name} <small>${String(c.items.length).padStart(2, "0")}</small></button>`).join("");
+document.querySelectorAll(".tab").forEach((t) => t.addEventListener("click", () => renderCat(+t.dataset.i)));
+renderCat(0);
+
+// Carrusel: flechas + arrastrar con el mouse
+const track = $("#track");
+const step = () => (track.querySelector(".card")?.offsetWidth || 300) + 20;
+$("#prev").addEventListener("click", () => track.scrollBy({ left: -step(), behavior: "smooth" }));
+$("#next").addEventListener("click", () => track.scrollBy({ left: step(), behavior: "smooth" }));
+let drag = null;
+track.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") return; drag = { x: e.clientX, s: track.scrollLeft }; track.classList.add("dragging"); });
+addEventListener("pointermove", (e) => { if (drag) track.scrollLeft = drag.s - (e.clientX - drag.x); });
+addEventListener("pointerup", () => { drag = null; track.classList.remove("dragging"); });
+
+// Formulario (vista previa)
+const types = ["Hotel", "Inmobiliario", "Documental", "Salud", "Otro"];
+$("#chips").insertAdjacentHTML("beforeend", types.map((t, i) => `<button type="button" class="chip" aria-pressed="${i === 0}">${t}</button>`).join(""));
+document.querySelectorAll(".chip").forEach((c) => c.addEventListener("click", () => document.querySelectorAll(".chip").forEach((x) => x.setAttribute("aria-pressed", x === c))));
+$("#form").addEventListener("submit", (e) => { e.preventDefault(); $("#formOk").hidden = false; });
+
+// Etiquetas de especificaciones
+$("#specToggle").addEventListener("click", (e) => {
+  const on = document.documentElement.classList.toggle("no-specs") === false;
+  e.currentTarget.setAttribute("aria-pressed", on);
+  e.currentTarget.textContent = on ? "Specs ✓" : "Specs";
+});
+
+// Ficha técnica
+const rows = [
+  ["Portada"],
+  ["V01", "Showreel de portada (computador)", "MP4 16:9", "1920×1080", "30–60 s", "Tus mejores tomas, empezando por un amanecer. Sin texto encima."],
+  ["V02", "Showreel de portada (celular)", "MP4 9:16", "1080×1920", "15–30 s", "Versión vertical del mismo showreel."],
+  ["V01a", "Botón «Ver showreel»", "Link", "YouTube / Vimeo", "Libre", "Showreel completo con música."],
+  ["Nosotros"],
+  ["F01", "Retrato o detrás de cámara", "JPG 4:5", "1600×2000", "—", "Tú grabando, idealmente con luz dorada."],
+  ["F02", "Foto amanecer", "JPG 3:2", "2400×1600", "—", "Paisaje o hotel con primera luz."],
+  ["F03", "Foto atardecer", "JPG 4:5", "1600×2000", "—", "Silueta, piscina o terraza al atardecer."],
+  ["Film destacado"],
+  ["V03", "Punta Cana", "MP4 16:9", "1920×1080 (4K ideal)", "20–40 s", "Clip en bucle + link al film completo."],
+  ["Categorías"],
+  ["H01–H05", "Hoteles (un clip por hotel)", "MP4 9:16", "1080×1920", "6–10 s", "El momento más fuerte de cada reel + vistas + link de Instagram."],
+  ["I01–I03", "Inmobiliario", "MP4 16:9 o 9:16", "1920×1080 / 1080×1920", "10–20 s", "Dime qué formato tiene cada proyecto."],
+  ["D01–D02", "Documental La Guajira", "MP4 16:9", "1920×1080", "10–20 s", "Tráiler o escena + 1 fotograma."],
+  ["S01–S02", "Fundación Santa Fe", "MP4 16:9", "1920×1080", "10–20 s", "Fragmento del film institucional."],
+  ["De sol a sol"],
+  ["V04", "Transición: amanecer", "MP4 16:9", "1920×1080", "10–15 s", "Timelapse o plano fijo del sol saliendo."],
+  ["V05", "Transición: atardecer", "MP4 16:9", "1920×1080", "10–15 s", "Mismo encuadre que V04 si es posible (se funden)."],
+  ["F04–F06", "Fotos flotantes", "JPG 4:5 y 3:2", "1600×2000 / 2400×1600", "—", "Detalles: café, agua, personas, texturas."],
+  ["Cierre"],
+  ["V06", "Fondo de contacto", "MP4 16:9", "1920×1080", "10–20 s", "Atardecer calmado, poco movimiento."],
+  ["L01", "Logos de clientes", "PNG / SVG", "Fondo transparente", "—", "Hoteles, Fundación Santa Fe y demás."],
+];
+$("#specRows").innerHTML = rows.map((r) => r.length === 1 ? `<tr class="group"><td colspan="6">${r[0]}</td></tr>` : `<tr>${r.map((c) => `<td>${c}</td>`).join("")}</tr>`).join("");
+
+// ---------- Navegación ----------
+let lenis = null;
+function go(id) { const el = document.getElementById(id); if (lenis) lenis.scrollTo(el); else el.scrollIntoView({ behavior: "smooth" }); }
+document.querySelectorAll("[data-go]").forEach((b) => b.addEventListener("click", () => go(b.dataset.go)));
+
+// ---------- Reloj del día ----------
+const fmt = (m) => `${String(Math.floor(m / 60)).padStart(2, "0")}:${String(Math.floor(m % 60)).padStart(2, "0")}`;
+const phase = (m) => m < 420 ? "Amanecer" : m < 660 ? "Mañana" : m < 900 ? "Mediodía" : m < 1050 ? "Tarde" : m < 1120 ? "Atardecer" : "Hora azul";
+function setClock(p) {
+  const m = 342 + (1170 - 342) * p; // 05:42 → 19:30
+  $("#clockTime").textContent = fmt(m);
+  $("#clockPhase").textContent = phase(m);
+}
+
+// ---------- Animaciones ----------
+const animated = document.documentElement.classList.contains("anim");
+if (window.gsap && window.ScrollTrigger && animated) {
+  gsap.registerPlugin(ScrollTrigger);
+  if (window.Lenis) {
+    lenis = new Lenis({ duration: 1.25 });
+    lenis.on("scroll", ScrollTrigger.update);
+    gsap.ticker.add((t) => lenis.raf(t * 1000));
+    gsap.ticker.lagSmoothing(0);
+  }
+
+  // Preloader: el sol sale sobre el horizonte
+  const intro = () => gsap.timeline()
+    .fromTo("#heroSlot", { scale: 1.2 }, { scale: 1, duration: 2.4, ease: "expo.out" })
+    .to(".hero-char", { y: 0, stagger: 0.09, duration: 1.2, ease: "power4.out" }, 0.1)
+    .to(".hero-fade", { opacity: 1, y: 0, stagger: 0.12, duration: 0.9, ease: "power3.out" }, 0.6);
+  const t = { m: 300 };
+  gsap.timeline({ onComplete: () => { $("#preloader").style.display = "none"; intro(); } })
+    .to(".pl-horizon", { scaleX: 1, duration: 0.7, ease: "power3.inOut" })
+    .to(".pl-sun", { y: -110, duration: 1.4, ease: "power2.out" }, 0.3)
+    .to(t, { m: 342, duration: 1.4, ease: "power2.out", onUpdate: () => ($("#plTime").textContent = fmt(t.m)) }, 0.3)
+    .from(".pl-word", { opacity: 0, y: 16, duration: 0.8, ease: "power3.out" }, 0.6)
+    .to("#preloader", { yPercent: -100, duration: 0.9, ease: "expo.inOut" }, "+=0.25");
+
+  // Cielo y sol a lo largo de toda la página
+  const skyStops = [
+    ["#141a33", "#3b2f52", "#e07a4f"], // amanecer
+    ["#1f2d4d", "#5a5a7a", "#f0a36b"], // mañana
+    ["#22385a", "#4f6a86", "#e8c08a"], // mediodía
+    ["#2a2747", "#6a3f5c", "#f08a4b"], // tarde dorada
+    ["#251536", "#7a2f48", "#ff6a3a"], // atardecer
+    ["#0b0a18", "#1e1a36", "#3b2f52"], // hora azul
+  ];
+  const sky = $("#sky"), sun = $("#sun");
+  const lerp = gsap.utils.interpolate;
+  ScrollTrigger.create({
+    trigger: "main", start: "top top", end: "bottom bottom",
+    onUpdate: (self) => {
+      const p = self.progress, seg = p * (skyStops.length - 1), i = Math.min(Math.floor(seg), skyStops.length - 2), f = seg - i;
+      ["--sky-top", "--sky-mid", "--sky-glow"].forEach((v, k) => sky.style.setProperty(v, lerp(skyStops[i][k], skyStops[i + 1][k], f)));
+      const x = 8 + 84 * p, y = 92 - Math.sin(Math.PI * p) * 72;
+      sun.style.transform = `translate(${x}vw, ${y}vh)`;
+      sun.style.opacity = 0.25 + Math.sin(Math.PI * p) * 0.35;
+      setClock(p);
+    },
+  });
+
+  // Hero: parallax de salida
+  gsap.to("#heroSlot", { yPercent: 22, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+  gsap.to(".hero-content", { yPercent: -30, opacity: 0.1, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+
+  // Parallax de fotos
+  document.querySelectorAll(".manifesto .par").forEach((el) => gsap.to(el, { yPercent: +el.dataset.speed, ease: "none", scrollTrigger: { trigger: ".manifesto", start: "top bottom", end: "bottom top", scrub: true } }));
+  gsap.from(".manifesto h2, .manifesto .lead, .manifesto .sign", { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".manifesto", start: "top 75%" } });
+
+  // Film destacado: las barras de cine se abren
+  gsap.timeline({ scrollTrigger: { trigger: ".feature", start: "top 70%", end: "center center", scrub: true } })
+    .fromTo(".feature .bar", { scaleY: 2.2 }, { scaleY: 0, transformOrigin: (i) => (i ? "bottom" : "top"), ease: "none" })
+    .fromTo("#featureSlot", { scale: 1.25 }, { scale: 1, ease: "none" }, 0);
+  gsap.from(".feature-copy h2", { y: 80, opacity: 0, duration: 1.2, ease: "power4.out", scrollTrigger: { trigger: ".feature", start: "top 40%" } });
+
+  gsap.from(".cats-head h2", { y: 60, opacity: 0, duration: 1.1, ease: "power4.out", scrollTrigger: { trigger: ".cats", start: "top 75%" } });
+
+  // De sol a sol: escena fija, el amanecer se funde en atardecer y el reloj corre
+  const clockObj = { m: 342 };
+  gsap.timeline({
+    scrollTrigger: { trigger: ".day", start: "top top", end: "+=180%", pin: true, scrub: 0.6 },
+  })
+    .to(clockObj, { m: 1101, ease: "none", duration: 1, onUpdate: () => {
+      $("#dayClock").textContent = fmt(clockObj.m);
+      $("#dayCaption").textContent = clockObj.m < 600 ? "Primera luz" : clockObj.m < 960 ? "Luz del día" : "Última luz";
+    } }, 0)
+    .to("#dayDusk", { opacity: 1, ease: "none", duration: 1 }, 0)
+    .fromTo("#dayDawn", { scale: 1.15 }, { scale: 1, ease: "none", duration: 1 }, 0)
+    .fromTo("#dayDusk", { scale: 1 }, { scale: 1.12, ease: "none", duration: 1 }, 0)
+    .to(".floater.f1", { yPercent: -60, ease: "none", duration: 1 }, 0)
+    .to(".floater.f2", { yPercent: 40, ease: "none", duration: 1 }, 0)
+    .to(".floater.f3", { yPercent: -90, ease: "none", duration: 1 }, 0);
+
+  // Contadores
+  document.querySelectorAll(".count").forEach((el) => {
+    const o = { v: 0 };
+    gsap.to(o, { v: +el.dataset.v, duration: 2, ease: "power2.out", scrollTrigger: { trigger: el, start: "top 90%", once: true }, onUpdate: () => (el.textContent = Math.round(o.v)) });
+  });
+  gsap.from(".contact h2", { y: 60, opacity: 0, duration: 1.1, ease: "power4.out", scrollTrigger: { trigger: ".contact", start: "top 70%" } });
+
+  ScrollTrigger.create({ trigger: "#material", start: "top 60px", end: "bottom top", toggleClass: { targets: document.documentElement, className: "on-light" } });
+
+  setTimeout(() => { if ($("#preloader").style.display !== "none") { $("#preloader").style.display = "none"; intro(); } }, 6000);
+} else {
+  document.documentElement.classList.remove("anim");
+}
+</script>

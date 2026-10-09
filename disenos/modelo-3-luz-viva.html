@@ -106,6 +106,8 @@ html.on-light .nav { color: #1c1712; }
 html.on-light .spec-toggle { background: rgba(255,255,255,0.5); }
 html.on-light .spec-toggle[aria-pressed="true"] { color: #c4501f; border-color: #c4501f; }
 html.on-light .clock { opacity: 0; }
+.nav::before { content: ""; position: absolute; inset: 0 0 -40px; z-index: -1; pointer-events: none; background: linear-gradient(180deg, rgba(13, 11, 20, 0.7), transparent); transition: opacity 0.4s; }
+html.nav-dark .nav::before, html.on-light .nav::before { opacity: 0; }
 html.nav-dark .nav { color: #1b1826; }
 html.nav-dark .spec-toggle { background: rgba(255,255,255,0.5); }
 html.nav-dark .spec-toggle[aria-pressed="true"] { color: #b4501f; border-color: #b4501f; }
@@ -279,18 +281,30 @@ html.has-cursor .cursor { display: grid; place-items: center; position: fixed; t
 .cursor span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); opacity: 0; transition: opacity 0.2s; }
 .cursor.is-label span { opacity: 1; }
 
-/* ---------- Sol con destellos ---------- */
-/* El sol vive en el cielo, detrás del contenido: nunca tapa un video ni una foto */
-.sunwrap { position: fixed; inset: 0; z-index: 0; pointer-events: none; mix-blend-mode: screen; transition: opacity 0.6s; }
-html.on-light .sunwrap { opacity: 0; }
-.sun-disc { position: absolute; left: 0; top: 0; width: 16vmin; height: 16vmin; margin: -8vmin 0 0 -8vmin; border-radius: 50%;
-  background: radial-gradient(circle, #fffaf0 0%, #ffe6bb 40%, #ffb56e 62%, rgba(255, 140, 70, 0) 72%);
-  box-shadow: 0 0 120px 50px rgba(255, 160, 90, 0.35), 0 0 320px 160px rgba(255, 120, 60, 0.16); transform: translate(10vw, 110vh); }
-.flare { position: absolute; left: 0; top: 0; border-radius: 50%; }
-.flare.a { width: 7vmin; height: 7vmin; margin: -3.5vmin 0 0 -3.5vmin; background: radial-gradient(circle, rgba(255, 200, 140, 0.32), transparent 70%); }
-.flare.b { width: 2.4vmin; height: 2.4vmin; margin: -1.2vmin 0 0 -1.2vmin; background: rgba(160, 220, 255, 0.35); filter: blur(1px); }
-.flare.c { width: 13vmin; height: 13vmin; margin: -6.5vmin 0 0 -6.5vmin; border: 1px solid rgba(255, 190, 130, 0.22); background: radial-gradient(circle, transparent 55%, rgba(255, 170, 110, 0.12)); }
-.flare.d { width: 4vmin; height: 4vmin; margin: -2vmin 0 0 -2vmin; background: radial-gradient(circle, rgba(255, 120, 180, 0.28), transparent 70%); }
+/* ---------- Posicionamiento ---------- */
+.position-statement { font-family: var(--serif); font-size: clamp(38px, 5.6vw, 92px); line-height: 1.04; letter-spacing: -0.015em; margin-top: 28px; max-width: 18ch; }
+.position-statement em { color: var(--gold); }
+.position-lead { margin-top: 30px; max-width: 56ch; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.65; color: rgba(246, 238, 226, 0.86); }
+.pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); margin-top: clamp(56px, 8vw, 110px); }
+.pillar { display: grid; gap: 14px; align-content: start; padding-top: 22px; border-top: 1px solid var(--line); }
+.pillar span { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; color: var(--sun); }
+.pillar h3 { font-family: var(--serif); font-size: clamp(28px, 2.6vw, 40px); line-height: 1.05; }
+.pillar p { font-size: 15px; line-height: 1.65; color: var(--mist); max-width: 40ch; }
+.ally { margin-top: clamp(56px, 8vw, 100px); display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+.ally p { font-family: var(--serif); font-style: italic; font-size: clamp(24px, 2.6vw, 38px); }
+.ally .btn-play { margin-left: auto; }
+@media (max-width: 860px) { .pillars { grid-template-columns: 1fr; } .ally .btn-play { margin-left: 0; } }
+
+/* ---------- Agendar reunión ---------- */
+.contact-lead { margin-top: 24px; max-width: 46ch; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.6; color: rgba(246, 238, 226, 0.88); }
+.btn-book { margin-top: 30px; display: inline-flex; align-items: center; gap: 14px; padding: 20px 30px; border-radius: 999px; background: var(--sun); color: var(--ink); font-size: 16px; font-weight: 500; transition: background 0.35s; }
+.btn-book:hover { background: var(--gold); }
+.btn-book small { font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; }
+.meeting { margin-top: 30px; display: grid; gap: 10px; max-width: 460px; }
+.meeting li { list-style: none; display: flex; gap: 12px; font-size: 14.5px; line-height: 1.5; color: rgba(246, 238, 226, 0.85); }
+.meeting li::before { content: ""; flex: 0 0 6px; height: 6px; margin-top: 8px; border-radius: 50%; background: var(--gold); }
+.panel-title { font-family: var(--serif); font-size: 28px; }
+.panel-title + p { font-size: 14px; color: var(--mist); margin-top: -12px; }
 
 /* ---------- Neblina ---------- */
 .fog { position: relative; height: 100svh; min-height: 560px; overflow: hidden; touch-action: pan-y; }
@@ -338,10 +352,6 @@ footer > *:not(.stars) { position: relative; }
 </style>
 
 <div class="sky" id="sky" aria-hidden="true"></div>
-<div class="sunwrap" id="sunwrap" aria-hidden="true">
-  <div class="flare c"></div><div class="flare a"></div><div class="flare b"></div><div class="flare d"></div>
-  <div class="sun-disc" id="sunDisc"></div>
-</div>
 <div class="cursor" id="cursor" aria-hidden="true"><span></span></div>
 <div class="grain" aria-hidden="true"></div>
 
@@ -356,7 +366,7 @@ footer > *:not(.stars) { position: relative; }
   <div class="nav-right">
     <button class="nav-link" data-go="films">Films</button>
     <button class="nav-link" data-go="categorias">Categorías</button>
-    <button class="nav-link" data-go="contacto">Contacto</button>
+    <button class="nav-link" data-go="contacto">Agendar</button>
     <button class="spec-toggle" id="specToggle" aria-pressed="true">Specs ✓</button>
   </div>
 </header>
@@ -379,7 +389,7 @@ footer > *:not(.stars) { position: relative; }
         <span class="mask"><span class="hero-char"><em>del&nbsp;sol.</em></span></span>
       </h1>
       <div class="hero-row">
-        <p class="hero-fade">Films y reels para hoteles, proyectos inmobiliarios, salud y documental. Más de 10 años persiguiendo la mejor luz del día.</p>
+        <p class="hero-fade">Posicionamiento audiovisual de lujo para hoteles, proyectos inmobiliarios, salud y documental. Más de 10 años encontrando la mejor versión de cada lugar.</p>
         <button class="btn-play hero-fade" data-go="films"><i>▶</i> Ver showreel</button>
       </div>
     </div>
@@ -408,6 +418,22 @@ footer > *:not(.stars) { position: relative; }
       <div class="slot ph-dawn s1 par" data-speed="-8"><span class="tag"><b>F01 · RETRATO / DETRÁS DE CÁMARA</b>Vertical 4:5 · 1600×2000</span></div>
       <div class="slot ph-jungle s2 par" data-speed="10"><span class="tag"><b>F02 · FOTO AMANECER</b>Horizontal 3:2 · 2400×1600</span></div>
       <div class="slot ph-dusk s3 par" data-speed="-14"><span class="tag"><b>F03 · FOTO ATARDECER</b>Vertical 4:5 · 1600×2000</span></div>
+    </div>
+  </section>
+
+  <!-- POSICIONAMIENTO -->
+  <section class="section position" id="posicionamiento">
+    <p class="eyebrow"><time>08:20</time> Lo que hacemos</p>
+    <h2 class="position-statement" id="statement">Más que videos, construimos <em>el posicionamiento de lujo</em> de tu lugar.</h2>
+    <p class="position-lead">No vendemos entregables. Encontramos los ángulos más atractivos de tu espacio y los convertimos en contenido que detiene el scroll y atrae a tus clientes ideales más rápido.</p>
+    <div class="pillars">
+      <article class="pillar"><span>01 · Descubrimos</span><h3>Tus ángulos más atractivos</h3><p>Recorremos tu lugar a la hora exacta y encontramos lo que lo hace único: la luz, los espacios, las experiencias y su gente.</p></article>
+      <article class="pillar"><span>02 · Creamos</span><h3>Contenido que impacta</h3><p>Piezas pensadas para captar la atención en los primeros segundos y despertar las ganas de vivir tu lugar.</p></article>
+      <article class="pillar"><span>03 · Posicionamos</span><h3>Una estética que se reconoce</h3><p>Construimos una imagen audiovisual coherente y aspiracional que eleva la percepción de tu marca en cada publicación.</p></article>
+    </div>
+    <div class="ally">
+      <p>Tu aliado en la construcción estética de tu marca audiovisual.</p>
+      <button class="btn-play" data-go="contacto"><i>→</i> Agendar reunión</button>
     </div>
   </section>
 
@@ -495,8 +521,16 @@ footer > *:not(.stars) { position: relative; }
     <div class="slot ph-dusk" style="--sy: 88%"><span class="tag contact-tag"><b>V06 · FONDO CONTACTO</b>Horizontal 16:9 · 1920×1080 · 10–20 s · atardecer tranquilo, loop</span></div>
     <div class="contact-wrap">
       <div>
-        <p class="eyebrow"><time>19:05</time> Hora azul · Contacto</p>
-        <h2>Tu lugar merece <em>su mejor luz.</em></h2>
+        <p class="eyebrow"><time>19:05</time> Hora azul · Agendemos</p>
+        <h2>Hagamos de tu lugar <em>su mejor versión.</em></h2>
+        <p class="contact-lead">Agenda una reunión con nosotros. Conocemos tu lugar y tus objetivos, y te mostramos cómo lograr que tu contenido llame la atención de tus clientes más rápido.</p>
+        <button class="btn-book" type="button" id="bookBtn">Agendar reunión <small>Videollamada</small> →</button>
+        <p class="form-ok" id="bookOk" hidden style="margin-top:12px">Vista previa: aquí se abrirá tu calendario de citas (Calendly o Google Calendar).</p>
+        <ul class="meeting">
+          <li>Revisamos tu lugar, tu público y lo que quieres lograr.</li>
+          <li>Te mostramos los ángulos y el estilo que proponemos para tu marca.</li>
+          <li>Definimos juntos el plan de contenido y los siguientes pasos.</li>
+        </ul>
         <div class="contact-alt">
           <div><span>WhatsApp</span><em>Por definir</em></div>
           <div><span>Instagram</span><em>Por definir</em></div>
@@ -504,15 +538,17 @@ footer > *:not(.stars) { position: relative; }
         </div>
       </div>
       <form class="panel" id="form">
+        <p class="panel-title">¿Prefieres escribirnos?</p>
+        <p>Déjanos tus datos y te contactamos para coordinar la reunión.</p>
         <div class="two">
           <label class="field" for="c-nombre"><span>Nombre</span><input id="c-nombre" required autocomplete="name"></label>
           <label class="field" for="c-email"><span>Email</span><input id="c-email" type="email" required autocomplete="email"></label>
         </div>
         <label class="field" for="c-marca"><span>Hotel, empresa o marca</span><input id="c-marca"></label>
-        <fieldset class="chips" id="chips"><legend>¿Qué quieres contar?</legend></fieldset>
-        <label class="field" for="c-msg"><span>Cuéntanos del proyecto</span><textarea id="c-msg" rows="3" required></textarea></label>
-        <button class="send" type="submit">Enviar mensaje →</button>
-        <p class="form-ok" id="formOk" hidden>Vista previa: en el sitio real este mensaje te llegará al correo.</p>
+        <fieldset class="chips" id="chips"><legend>¿Qué tipo de lugar o proyecto?</legend></fieldset>
+        <label class="field" for="c-msg"><span>¿Qué te gustaría lograr?</span><textarea id="c-msg" rows="3" required></textarea></label>
+        <button class="send" type="submit">Solicitar reunión →</button>
+        <p class="form-ok" id="formOk" hidden>Vista previa: en el sitio real esta solicitud te llegará al correo.</p>
       </form>
     </div>
   </section>
@@ -613,6 +649,7 @@ const types = ["Hotel", "Inmobiliario", "Documental", "Salud", "Otro"];
 $("#chips").insertAdjacentHTML("beforeend", types.map((t, i) => `<button type="button" class="chip" aria-pressed="${i === 0}">${t}</button>`).join(""));
 document.querySelectorAll(".chip").forEach((c) => c.addEventListener("click", () => document.querySelectorAll(".chip").forEach((x) => x.setAttribute("aria-pressed", x === c))));
 $("#form").addEventListener("submit", (e) => { e.preventDefault(); $("#formOk").hidden = false; });
+$("#bookBtn").addEventListener("click", () => ($("#bookOk").hidden = false));
 
 // Etiquetas de especificaciones
 $("#specToggle").addEventListener("click", (e) => {
@@ -669,7 +706,6 @@ function setClock(p) {
 // ---------- Animaciones ----------
 const mouse = { x: innerWidth * 0.3, y: innerHeight * 0.6 };
 addEventListener("pointermove", (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
-const sunState = { p: 0, lift: 0, mx: mouse.x, my: mouse.y };
 const animated = document.documentElement.classList.contains("anim");
 if (window.gsap && window.ScrollTrigger && animated) {
   gsap.registerPlugin(ScrollTrigger);
@@ -709,7 +745,6 @@ if (window.gsap && window.ScrollTrigger && animated) {
     onUpdate: (self) => {
       const p = self.progress, seg = p * (skyStops.length - 1), i = Math.min(Math.floor(seg), skyStops.length - 2), f = seg - i;
       ["--sky-top", "--sky-mid", "--sky-glow"].forEach((v, k) => sky.style.setProperty(v, lerp(skyStops[i][k], skyStops[i + 1][k], f)));
-      sunState.p = p;
       setClock(p);
     },
   });
@@ -753,29 +788,15 @@ if (window.gsap && window.ScrollTrigger && animated) {
   });
   gsap.from(".contact h2", { y: 60, opacity: 0, duration: 1.1, ease: "power4.out", scrollTrigger: { trigger: ".contact", start: "top 70%" } });
 
+  // Frase de posicionamiento: las palabras se iluminan con el scroll
+  const st = $("#statement");
+  st.innerHTML = st.innerHTML.replace(/(<em>.*?<\/em>)|([^\s<]+)/g, (m) => `<span class="w">${m}</span>`);
+  gsap.fromTo("#statement .w", { opacity: 0.18 }, { opacity: 1, stagger: 0.08, ease: "none", scrollTrigger: { trigger: "#statement", start: "top 80%", end: "bottom 40%", scrub: true } });
+  gsap.from(".pillar", { y: 50, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".pillars", start: "top 85%" } });
+
   ScrollTrigger.create({ trigger: "#neblina", start: "top 40px", end: "bottom 40px", toggleClass: { targets: document.documentElement, className: "nav-dark" } });
   ScrollTrigger.create({ trigger: "#material", start: "top 60px", end: "bottom top", toggleClass: { targets: document.documentElement, className: "on-light" } });
 
-  // ===== Sol: sale en la portada, cruza el cielo, sigue un poco al mouse y se esconde en la noche =====
-  gsap.to(sunState, { lift: 1, duration: 3.2, ease: "power2.out", delay: 2.2 });
-  const disc = $("#sunDisc"), flares = [...document.querySelectorAll(".flare")];
-  const flareT = [0.55, 0.85, 1.25, 1.6];
-  gsap.ticker.add(() => {
-    const vw = innerWidth / 100, vh = innerHeight / 100;
-    const q = Math.min(sunState.p / 0.86, 1);
-    const arc = Math.sin(Math.PI * q);
-    let x = (10 + 80 * q) * vw, y = (108 - Math.max(arc * 86, sunState.lift * 34 * (1 - q * 2 > 0 ? 1 : arc))) * vh;
-    if (q >= 1) y = 120 * vh;
-    sunState.mx += (mouse.x - sunState.mx) * 0.05; sunState.my += (mouse.y - sunState.my) * 0.05;
-    x += (sunState.mx - innerWidth / 2) * 0.05; y += (sunState.my - innerHeight / 2) * 0.05;
-    disc.style.transform = `translate(${x}px, ${y}px)`;
-    // los destellos van del sol hacia el lado opuesto del cursor
-    const cx = innerWidth - sunState.mx, cy = innerHeight - sunState.my;
-    flares.forEach((f, i) => { const t = flareT[i]; f.style.transform = `translate(${x + (cx - x) * t}px, ${y + (cy - y) * t}px)`; });
-    const vis = y < innerHeight * 1.02 ? 1 : 0;
-    $("#sunwrap").style.opacity = document.documentElement.classList.contains("on-light") ? 0 : vis * (0.38 + arc * 0.3);
-    flares.forEach((f) => (f.style.opacity = Math.max(0, 1 - Math.hypot(sunState.mx - x, sunState.my - y) / (innerWidth * 0.9))));
-  });
 
   // ===== Neblina que se despeja con el cursor o el dedo =====
   (function fog() {
@@ -937,7 +958,7 @@ if (window.gsap && window.ScrollTrigger && animated) {
     });
 
     // Botones magnéticos
-    document.querySelectorAll(".btn-play, .send, .spec-toggle").forEach((b) => {
+    document.querySelectorAll(".btn-play, .send, .spec-toggle, .btn-book").forEach((b) => {
       b.addEventListener("pointermove", (e) => { const r = b.getBoundingClientRect(); gsap.to(b, { x: (e.clientX - r.left - r.width / 2) * 0.3, y: (e.clientY - r.top - r.height / 2) * 0.4, duration: 0.4, ease: "power3.out" }); });
       b.addEventListener("pointerleave", () => gsap.to(b, { x: 0, y: 0, duration: 0.7, ease: "elastic.out(1, 0.4)" }));
     });

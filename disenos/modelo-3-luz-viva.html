@@ -84,12 +84,23 @@ html.no-specs .tag { display: none; }
 /* ---------- Preloader ---------- */
 .preloader { display: none; }
 html.anim .preloader { display: grid; position: fixed; inset: 0; z-index: 100; background: var(--ink); place-items: center; align-content: center; gap: 22px; overflow: hidden; }
-.pl-scene { position: relative; width: min(420px, 80vw); height: 120px; overflow: hidden; }
-.pl-sun { position: absolute; left: 50%; bottom: -70px; width: 140px; height: 140px; margin-left: -70px; border-radius: 50%;
-  background: radial-gradient(circle, #fff3dc 0%, var(--gold) 35%, var(--sun) 62%, transparent 72%); }
-.pl-horizon { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--cream); transform: scaleX(0); }
-.pl-word { font-family: var(--serif); font-style: italic; font-size: clamp(44px, 9vw, 96px); line-height: 1; }
-.pl-time { font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; color: var(--mist); }
+.pl-day { position: absolute; inset: 0; background: radial-gradient(90% 70% at 50% 60%, #f3a56b 0%, #b8566a 45%, #3a2340 100%); }
+.pl-stars { position: absolute; inset: 0; opacity: 0; }
+.pl-stars i { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #fff4e1; }
+.pl-orb { position: relative; width: clamp(120px, 22vmin, 180px); aspect-ratio: 1; }
+.pl-sun, .pl-moon { position: absolute; inset: 0; border-radius: 50%; }
+.pl-sun { background: radial-gradient(circle, #fffaf0 0%, #ffe3b0 45%, #ffb36b 70%, #ff8a4c 100%);
+  box-shadow: 0 0 60px 20px rgba(255, 170, 100, 0.55), 0 0 160px 70px rgba(255, 130, 70, 0.3); }
+.pl-rays { position: absolute; inset: -55%; border-radius: 50%; opacity: 0.55;
+  background: repeating-conic-gradient(from 0deg, rgba(255, 220, 170, 0.35) 0deg 4deg, transparent 4deg 18deg);
+  -webkit-mask: radial-gradient(circle, transparent 34%, #000 36%, transparent 70%); mask: radial-gradient(circle, transparent 34%, #000 36%, transparent 70%); }
+.pl-moon { overflow: hidden; opacity: 0;
+  background: radial-gradient(circle at 32% 30%, rgba(0, 0, 0, 0.08) 0 9%, transparent 10%), radial-gradient(circle at 62% 58%, rgba(0, 0, 0, 0.07) 0 13%, transparent 14%), radial-gradient(circle at 40% 72%, rgba(0, 0, 0, 0.06) 0 6%, transparent 7%), radial-gradient(circle at 45% 40%, #fbf8f0, #d9d4c8);
+  box-shadow: 0 0 50px 12px rgba(190, 210, 255, 0.28), 0 0 140px 50px rgba(150, 170, 230, 0.14); }
+.pl-shadow { position: absolute; inset: -2%; border-radius: 50%; background: var(--ink); transform: translateX(110%); }
+.pl-word { position: relative; font-family: var(--serif); font-style: italic; font-size: clamp(44px, 9vw, 96px); line-height: 1; }
+.pl-time { position: relative; display: flex; gap: 12px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; color: var(--cream); }
+.pl-time span:last-child { color: var(--gold); text-transform: uppercase; }
 
 /* ---------- Nav + reloj ---------- */
 .nav { position: fixed; z-index: 50; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; gap: 16px;
@@ -273,13 +284,18 @@ tr.group td { font-family: var(--serif); font-style: italic; font-size: 22px; co
 /* ---------- Cursor ---------- */
 .cursor { display: none; }
 html.has-cursor body, html.has-cursor button, html.has-cursor a { cursor: none; }
-html.has-cursor .cursor { display: grid; place-items: center; position: fixed; top: 0; left: 0; z-index: 96; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%;
-  background: var(--cream); pointer-events: none; mix-blend-mode: difference; opacity: 0; transition: width 0.35s, height 0.35s, margin 0.35s, opacity 0.3s, background 0.3s; }
-.cursor.is-moving { opacity: 1; }
-.cursor.is-hover { width: 46px; height: 46px; margin: -23px 0 0 -23px; }
-.cursor.is-label { width: 94px; height: 94px; margin: -47px 0 0 -47px; mix-blend-mode: normal; background: var(--sun); }
-.cursor span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); opacity: 0; transition: opacity 0.2s; }
-.cursor.is-label span { opacity: 1; }
+html.has-cursor .cursor { display: block; }
+.cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; z-index: 96; pointer-events: none; border-radius: 50%; opacity: 0; transition: opacity 0.3s; }
+.cursor.is-moving .cursor-dot, .cursor.is-moving .cursor-ring { opacity: 1; }
+.cursor-dot { width: 8px; height: 8px; margin: -4px 0 0 -4px; background: var(--gold); box-shadow: 0 0 0 1.5px rgba(13, 11, 20, 0.6); }
+.cursor-ring { display: grid; place-items: center; width: 38px; height: 38px; margin: -19px 0 0 -19px; border: 1.5px solid var(--gold); box-shadow: 0 0 0 1px rgba(13, 11, 20, 0.25);
+  transition: width 0.35s, height 0.35s, margin 0.35s, background 0.35s, border-color 0.35s, opacity 0.3s; }
+.cursor.is-hover .cursor-ring { width: 58px; height: 58px; margin: -29px 0 0 -29px; background: rgba(255, 194, 122, 0.14); }
+.cursor.is-label .cursor-ring { width: 96px; height: 96px; margin: -48px 0 0 -48px; background: var(--sun); border-color: var(--sun); }
+.cursor.is-label .cursor-dot { opacity: 0; }
+.cursor-ring span { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); opacity: 0; transition: opacity 0.2s; }
+.cursor.is-label .cursor-ring span { opacity: 1; }
+.cursor.is-down .cursor-ring { transform: scale(0.85); }
 
 /* ---------- Posicionamiento ---------- */
 .position-statement { font-family: var(--serif); font-size: clamp(38px, 5.6vw, 92px); line-height: 1.04; letter-spacing: -0.015em; margin-top: 28px; max-width: 18ch; }
@@ -352,13 +368,19 @@ footer > *:not(.stars) { position: relative; }
 </style>
 
 <div class="sky" id="sky" aria-hidden="true"></div>
-<div class="cursor" id="cursor" aria-hidden="true"><span></span></div>
+<div class="cursor" id="cursor" aria-hidden="true"><div class="cursor-ring" id="cursorRing"><span></span></div><div class="cursor-dot" id="cursorDot"></div></div>
 <div class="grain" aria-hidden="true"></div>
 
 <div class="preloader" id="preloader" aria-hidden="true">
-  <div class="pl-scene"><div class="pl-sun"></div><div class="pl-horizon"></div></div>
+  <div class="pl-day" id="plDay"></div>
+  <div class="pl-stars" id="plStars"></div>
+  <div class="pl-orb">
+    <div class="pl-rays"></div>
+    <div class="pl-sun"></div>
+    <div class="pl-moon"><div class="pl-shadow"></div></div>
+  </div>
   <p class="pl-word">Redsight</p>
-  <p class="pl-time" id="plTime">05:00</p>
+  <p class="pl-time"><span id="plTime">06:00</span><span id="plPhase">Día</span></p>
 </div>
 
 <header class="nav">
@@ -716,18 +738,25 @@ if (window.gsap && window.ScrollTrigger && animated) {
     gsap.ticker.lagSmoothing(0);
   }
 
-  // Preloader: el sol sale sobre el horizonte
+  // Entrada a la portada
   const intro = () => gsap.timeline()
     .fromTo("#heroSlot", { scale: 1.2 }, { scale: 1, duration: 2.4, ease: "expo.out" })
     .to(".hero-char", { y: 0, stagger: 0.09, duration: 1.2, ease: "power4.out" }, 0.1)
     .to(".hero-fade", { opacity: 1, y: 0, stagger: 0.12, duration: 0.9, ease: "power3.out" }, 0.6);
-  const t = { m: 300 };
+  // Preloader: el sol recorre el día y se convierte en luna
+  $("#plStars").innerHTML = Array.from({ length: 50 }, () => `<i style="left:${Math.random() * 100}%;top:${Math.random() * 100}%;opacity:${0.3 + Math.random() * 0.7}"></i>`).join("");
+  const t = { m: 360 };
+  gsap.to(".pl-rays", { rotate: 90, duration: 4, ease: "none" });
   gsap.timeline({ onComplete: () => { $("#preloader").style.display = "none"; intro(); } })
-    .to(".pl-horizon", { scaleX: 1, duration: 0.7, ease: "power3.inOut" })
-    .to(".pl-sun", { y: -110, duration: 1.4, ease: "power2.out" }, 0.3)
-    .to(t, { m: 342, duration: 1.4, ease: "power2.out", onUpdate: () => ($("#plTime").textContent = fmt(t.m)) }, 0.3)
-    .from(".pl-word", { opacity: 0, y: 16, duration: 0.8, ease: "power3.out" }, 0.6)
-    .to("#preloader", { yPercent: -100, duration: 0.9, ease: "expo.inOut" }, "+=0.25");
+    .from(".pl-orb", { scale: 0.6, opacity: 0, duration: 0.9, ease: "power3.out" })
+    .from(".pl-word, .pl-time", { opacity: 0, y: 14, stagger: 0.1, duration: 0.7, ease: "power3.out" }, 0.2)
+    .to(t, { m: 1260, duration: 1.9, ease: "power1.inOut", onUpdate: () => { $("#plTime").textContent = fmt(t.m); $("#plPhase").textContent = t.m < 1050 ? "Día" : t.m < 1140 ? "Atardecer" : "Noche"; } }, 0.5)
+    .to("#plDay", { opacity: 0, duration: 1.2, ease: "power2.inOut" }, 1.1)
+    .to(".pl-sun, .pl-rays", { opacity: 0, scale: 0.92, duration: 0.9, ease: "power2.inOut" }, 1.3)
+    .to(".pl-moon", { opacity: 1, duration: 0.9, ease: "power2.inOut" }, 1.3)
+    .to(".pl-shadow", { xPercent: -72, duration: 1.2, ease: "power2.inOut" }, 1.5)
+    .to("#plStars", { opacity: 1, duration: 1, ease: "power2.out" }, 1.6)
+    .to("#preloader", { yPercent: -100, duration: 0.9, ease: "expo.inOut" }, "+=0.35");
 
   // Cielo y sol a lo largo de toda la página
   const skyStops = [
@@ -946,10 +975,14 @@ if (window.gsap && window.ScrollTrigger && animated) {
 
   // ===== Cursor personalizado =====
   if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
-    const cur = $("#cursor"), lab = cur.querySelector("span");
+    const cur = $("#cursor"), ring = $("#cursorRing"), dot = $("#cursorDot"), lab = ring.querySelector("span");
     document.documentElement.classList.add("has-cursor");
-    const cx = gsap.quickTo(cur, "x", { duration: 0.35, ease: "power3" }), cy = gsap.quickTo(cur, "y", { duration: 0.35, ease: "power3" });
-    addEventListener("pointermove", (e) => { cur.classList.add("is-moving"); cx(e.clientX); cy(e.clientY); });
+    const dx = gsap.quickTo(dot, "x", { duration: 0.08, ease: "power3" }), dy = gsap.quickTo(dot, "y", { duration: 0.08, ease: "power3" });
+    const rx = gsap.quickTo(ring, "x", { duration: 0.45, ease: "power3" }), ry = gsap.quickTo(ring, "y", { duration: 0.45, ease: "power3" });
+    addEventListener("pointermove", (e) => { cur.classList.add("is-moving"); dx(e.clientX); dy(e.clientY); rx(e.clientX); ry(e.clientY); });
+    addEventListener("pointerdown", () => cur.classList.add("is-down"));
+    addEventListener("pointerup", () => cur.classList.remove("is-down"));
+    document.documentElement.addEventListener("pointerleave", () => cur.classList.remove("is-moving"));
     addEventListener("pointerover", (e) => {
       const el = e.target.closest("button, a, input, textarea, .card, [data-cursor]");
       const isCard = el?.classList.contains("card");

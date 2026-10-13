@@ -346,6 +346,7 @@ main, footer { position: relative; z-index: 1; }
 .pack ul { list-style: none; display: grid; gap: 9px; border-top: 1px solid var(--line); padding-top: 18px; font-size: 15px; }
 .pack li { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 10px; }
 .pack li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; margin-top: 8px; background: var(--gold); }
+.pack li b.n-reels { font-weight: 500; color: var(--gold); }
 .pack li.no { color: var(--mist); }
 .pack li.no::before { background: transparent; border: 1px solid var(--mist); }
 .pack .choose { margin-top: auto; padding-top: 6px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); }
@@ -356,9 +357,16 @@ main, footer { position: relative; z-index: 1; }
 .packs-label { margin-top: 34px; }
 .days-why { margin-top: 18px; max-width: 70ch; padding: 14px 18px; border-left: 2px solid var(--gold); background: rgba(247,239,230,0.04); border-radius: 0 10px 10px 0; color: var(--mist); font-size: 15px; }
 .days-why b { color: var(--cream); font-weight: 400; }
+.scale { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
+.scale-col { cursor: pointer; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: rgba(247,239,230,0.03); display: grid; gap: 2px; transition: border-color 0.3s, background 0.3s; }
+.scale-col strong { font-family: var(--serif); font-weight: 400; font-size: clamp(40px, 4.4vw, 60px); line-height: 0.9; color: var(--cream); }
+.scale-col span { font-size: 15px; }
+.scale-col small { color: var(--mist); font-size: 13px; }
+.scale-col.is-on { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, transparent); }
+.scale-col.is-on strong { color: var(--gold); }
 .packs-note { color: var(--mist); font-size: 15px; margin-top: 18px; }
 .link { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; font-size: inherit; }
-.summary { position: sticky; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 5; margin-top: 26px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px 24px;
+.summary { position: relative; margin-top: 26px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px 24px;
   padding: 16px 16px 16px 24px; border-radius: 18px; border: 1px solid var(--line); background: rgba(18,12,8,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
 .summary-text { min-width: 0; }
 .summary-text small { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); }
@@ -564,8 +572,8 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
 
       <div class="mix reveal">
         <div class="mix-head">
-          <h3>12 videos, <em>dos misiones</em></h3>
-          <p>De los 12 videos, organizamos 8 para publicación orgánica y 4 para pauta.</p>
+          <h3>Cada video, <em>una misión</em></h3>
+          <p>En el paquete de 12 videos, organizamos 8 para publicación orgánica y 4 para pauta. En los de 4 y 8 videos se mantiene la misma lógica: 3 + 1 y 5 + 3.</p>
         </div>
         <div class="mix-bar" aria-hidden="true">
           <i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="a"></i><i class="a"></i><i class="a"></i><i class="a"></i>
@@ -600,13 +608,18 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       <div class="picker">
         <span class="picker-label" id="lblDays">1 · Días de grabación</span>
         <div class="seg" role="group" aria-labelledby="lblDays" id="segDays">
-          <button id="d1" data-days="1" aria-pressed="true">1 jornada · atardecer + amanecer</button>
-          <button id="d2" data-days="2" aria-pressed="false">2 días completos</button>
-          <button id="d3" data-days="3" aria-pressed="false">3 días completos</button>
+          <button id="d1" data-days="1" aria-pressed="true">1 jornada · 4 reels</button>
+          <button id="d2" data-days="2" aria-pressed="false">2 días · 8 reels</button>
+          <button id="d3" data-days="3" aria-pressed="false">3 días · 12 reels</button>
         </div>
         <p class="days-note" id="daysNote"></p>
       </div>
-      <p class="days-why reveal"><b>Más días no suman reels</b>, el máximo sigue siendo 12. Lo que suman son oportunidades: más amaneceres, más atardeceres y más experiencias capturadas, para que cada reel tenga tomas más ricas y variadas.</p>
+      <div class="scale reveal" aria-label="Entregables según los días de grabación">
+        <div class="scale-col"><strong>4</strong><span>reels</span><small>1 jornada · atardecer + amanecer</small></div>
+        <div class="scale-col"><strong>8</strong><span>reels</span><small>2 días completos</small></div>
+        <div class="scale-col"><strong>12</strong><span>reels</span><small>3 días completos</small></div>
+      </div>
+      <p class="days-why reveal"><b>Más días, más entregables.</b> Cada reel dura de 20 a 30 segundos. Y con más días también suman amaneceres, atardeceres y experiencias capturadas, para que cada reel tenga tomas más ricas y variadas.</p>
 
       <p class="picker-label packs-label">2 · Paquete</p>
       <div class="packs" role="group" aria-label="Paquetes">
@@ -632,12 +645,12 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
           <div>
             <p class="pack-kicker">Producción + creación de videos</p>
             <h3>Mano a mano</h3>
-            <p class="who">Trabajamos en conjunto. Yo grabo y creo 12 reels con la estrategia; tu hotel los publica y juntos leemos qué le funciona a tu público.</p>
+            <p class="who">Trabajamos en conjunto. Yo grabo y creo los reels con la estrategia; tu hotel los publica y juntos leemos qué le funciona a tu público.</p>
           </div>
           <div><div class="price"><span data-price="reels">$3.900.000</span><small>COP</small></div><p class="per" data-per="reels"></p></div>
           <ul>
             <li>Grabación en los días que elijas</li>
-            <li>12 reels de 20 s editados por mí: 8 orgánicos + 4 para pauta</li>
+            <li><span><b class="n-reels">4</b> reels de 20 a 30 s editados por mí: <span class="n-org">3</span> orgánicos + <span class="n-ads">1</span> para pauta</span></li>
             <li>Estrategia de alcance: tomas, frase y música</li>
             <li class="no">Entrega de los clips</li>
           </ul>
@@ -649,12 +662,12 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
           <div>
             <p class="pack-kicker">Producción + clips + videos</p>
             <h3>Un solo equipo</h3>
-            <p class="who">Nuestros equipos trabajan juntos. Recibes los 12 reels con la estrategia y además todos los clips colorizados, para que tu equipo siga creando cuando quiera.</p>
+            <p class="who">Nuestros equipos trabajan juntos. Recibes los reels con la estrategia y además todos los clips colorizados, para que tu equipo siga creando cuando quiera.</p>
           </div>
           <div><div class="price"><span data-price="full">$4.500.000</span><small>COP</small></div><p class="per" data-per="full"></p></div>
           <ul>
             <li>Grabación en los días que elijas</li>
-            <li>12 reels de 20 s editados por mí: 8 orgánicos + 4 para pauta</li>
+            <li><span><b class="n-reels">4</b> reels de 20 a 30 s editados por mí: <span class="n-org">3</span> orgánicos + <span class="n-ads">1</span> para pauta</span></li>
             <li>Estrategia de alcance: tomas, frase y música</li>
             <li>Todos los clips colorizados, organizados por espacio</li>
           </ul>
@@ -666,7 +679,7 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       <div class="summary" id="summary">
         <div class="summary-text">
           <small>Tu selección</small>
-          <b id="sumText">1 jornada · Un solo equipo · 12 reels</b>
+          <b id="sumText">1 jornada · Un solo equipo · 4 reels</b>
         </div>
         <div class="summary-total" id="sumTotal">$4.500.000</div>
         <div class="summary-actions">
@@ -707,7 +720,7 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
           <div class="feed" role="group" aria-label="Formato del feed mensual">
             <p class="feed-label">Cada mes, de 4 a 12 videos según el formato</p>
             <div class="feed-opts">
-              <div class="feed-opt"><strong>12</strong><span>reels de 20 s</span><small>Máximo al mes. Ritmo constante: casi 3 publicaciones por semana.</small></div>
+              <div class="feed-opt"><strong>12</strong><span>reels de 20 a 30 s</span><small>Máximo al mes. Ritmo constante: casi 3 publicaciones por semana.</small></div>
               <span class="feed-or">o</span>
               <div class="feed-opt"><strong>4</strong><span>videos de 45 a 60 s</span><small>Mínimo al mes. Historias más largas: una pieza fuerte por semana.</small></div>
             </div>
@@ -774,7 +787,9 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
 // Número de WhatsApp en formato internacional sin "+" ni espacios (ej. "573001234567"). Vacío = solo "Copiar resumen".
 const WHATSAPP = "573122853795";
 const PROD = { 1: 2500000, 2: 3500000, 3: 4500000 };          // producción + clips por días
-const REELS = 2000000;                                        // 12 reels de 20 s + estrategia (máximo por paquete)
+const REELS = 2000000;                                        // edición de reels de 20 a 30 s + estrategia
+const N_REELS = { 1: 4, 2: 8, 3: 12 };                         // reels entregados según los días de grabación
+const split = (n) => ({ org: Math.round((n * 2) / 3), ads: n - Math.round((n * 2) / 3) }); // orgánicos / pauta
 const SIN_CLIPS = { 1: 600000, 2: 700000, 3: 800000 };        // descuento cuando no se entregan los clips en bruto
 const DAYS_NOTE = {
   1: "Tarde de 3:00 a 7:00 p. m. (atardecer) y mañana siguiente de 5:00 a 9:00 a. m. (amanecer), en la fecha que mejor le funcione a tu hotel.",
@@ -891,7 +906,8 @@ const priceOf = (mode, days) =>
 const daysLabel = (d) => (d === 1 ? "1 jornada (atardecer + amanecer)" : `${d} días completos`);
 
 function summaryText() {
-  const reels = state.mode === "clips" ? " · clips colorizados" : state.mode === "full" ? " · 12 reels + clips colorizados" : " · 12 reels";
+  const n = N_REELS[state.days];
+  const reels = state.mode === "clips" ? " · clips colorizados" : state.mode === "full" ? ` · ${n} reels + clips colorizados` : ` · ${n} reels`;
   return `${daysLabel(state.days)} · ${MODE_NAME[state.mode]}${reels}`;
 }
 function render() {
@@ -904,12 +920,18 @@ function render() {
   $$(".pack").forEach((p) => p.setAttribute("aria-pressed", p.dataset.mode === state.mode));
   $("#daysNote").textContent = DAYS_NOTE[state.days];
   $("#sumText").textContent = summaryText();
+  const sp = split(N_REELS[state.days]);
+  $$(".n-reels").forEach((e) => (e.textContent = N_REELS[state.days]));
+  $$(".n-org").forEach((e) => (e.textContent = sp.org));
+  $$(".n-ads").forEach((e) => (e.textContent = sp.ads));
+  $$(".scale-col").forEach((c, k) => c.classList.toggle("is-on", k + 1 === state.days));
   $("#sumTotal").textContent = fmtCOP(priceOf(state.mode, state.days)) + " COP";
   const msg = `Hola Juan, me interesa la propuesta de contenido para mi hotel: ${summaryText()} — ${fmtCOP(priceOf(state.mode, state.days))} COP. ¿Qué fechas tienes disponibles?`;
   const wa = $("#waBtn");
   if (WHATSAPP) { wa.hidden = false; wa.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`; }
 }
 $$("#segDays button").forEach((b) => b.addEventListener("click", () => { state.days = +b.dataset.days; render(); bump(); }));
+$$(".scale-col").forEach((c, k) => c.addEventListener("click", () => { state.days = k + 1; render(); bump(); }));
 $$(".pack").forEach((p) => p.addEventListener("click", () => { state.mode = p.dataset.mode; render(); bump(); }));
 function fallbackCopy(text, ok) {
   const ta = document.createElement("textarea");
@@ -926,7 +948,8 @@ function bump() {
 
 // Tabla completa
 const rows = [];
-[["clips", "Vuelo propio", "producción + clips"], ["reels", "Mano a mano", "producción + 12 reels"], ["full", "Un solo equipo", "producción + clips + 12 reels"]].forEach(([m, n, t]) => {
+rows.push(`<tr><td>Reels incluidos <small class="t-sub">20 a 30 s</small></td>${[1, 2, 3].map((d) => `<td>${N_REELS[d]}</td>`).join("")}</tr>`);
+[["clips", "Vuelo propio", "producción + clips"], ["reels", "Mano a mano", "producción + reels"], ["full", "Un solo equipo", "producción + clips + reels"]].forEach(([m, n, t]) => {
   rows.push(`<tr><td>${n} <small class="t-sub">${t}</small></td>${[1, 2, 3].map((d) => `<td>${fmtCOP(priceOf(m, d))}</td>`).join("")}</tr>`);
 });
 $("#priceTable").innerHTML = rows.join("");

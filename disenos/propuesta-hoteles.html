@@ -253,6 +253,25 @@ th { font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing
 td.group { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); text-align: left; padding-top: 18px; }
 @media (max-width: 900px) { .packs { grid-template-columns: 1fr; } }
 
+/* ---------- Plan mensual ---------- */
+.monthly { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(12px, 1.6vw, 20px); margin-top: clamp(36px, 4vw, 56px); }
+.monthly-main, .monthly-renew { padding: clamp(20px, 2.6vw, 34px); border: 1px solid var(--line); border-radius: 18px; background: var(--panel); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+.monthly-main { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold) inset; display: flex; flex-direction: column; gap: 20px; }
+.monthly-main .price { margin-top: -6px; }
+.monthly-main ul { list-style: none; display: grid; gap: 10px; border-top: 1px solid var(--line); padding-top: 18px; font-size: 15px; }
+.monthly-main li { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 10px; }
+.monthly-main li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; margin-top: 8px; background: var(--gold); }
+.monthly-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: auto; }
+.monthly-renew h3 { font-family: var(--serif); font-size: clamp(30px, 3.2vw, 44px); line-height: 1.05; margin-top: 8px; }
+.monthly-renew h3 em { color: var(--gold); }
+.monthly-renew > p { color: var(--mist); font-size: 15px; margin-top: 10px; max-width: 46ch; }
+.renew-list { margin-top: 20px; border-top: 1px solid var(--line); }
+.renew-list div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.renew-list dd { display: flex; gap: 10px; align-items: baseline; font-variant-numeric: tabular-nums; }
+.renew-list s { color: var(--mist); font-size: 13px; }
+.renew-list b { font-weight: 400; color: var(--gold); }
+@media (max-width: 820px) { .monthly { grid-template-columns: 1fr; } }
+
 /* ---------- Términos ---------- */
 .terms { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: clamp(32px, 4vw, 52px); border-top: 1px solid var(--line); }
 .term { padding: 22px 22px 22px 0; }
@@ -294,6 +313,7 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
     <button data-go="resultados">Resultados</button>
     <button data-go="plan">El plan</button>
     <button data-go="estrategia">Estrategia</button>
+    <button data-go="mensual">Plan mensual</button>
     <button class="cta-link" data-go="paquetes">Paquetes</button>
   </nav>
 </header>
@@ -309,15 +329,16 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
         <span class="l1 split" data-text="Potencia la estética"></span>
         <span class="l2 split" data-text="de tu hotel"></span>
       </h1>
-      <p class="hero-sub hero-fade">y descubre sus <em>mejores ángulos.</em></p>
+      <p class="hero-sub hero-fade">y conviértela en <em>atención real.</em></p>
       <div class="hero-bottom">
-        <p class="hero-fade">Grabamos tu hotel en las horas en que mejor luce: el atardecer y el amanecer. Te entrego los clips para que armes tus videos, o los convierto en reels con una estrategia para encontrar el que más se comparte.</p>
+        <p class="hero-fade">Mi trabajo no termina en la grabación. Primero elevamos la imagen de tu hotel con producción de cine, en las horas en que mejor luce. Después ponemos esa estética a trabajar: contenido pensado y medido para que más personas se detengan, lo guarden, lo compartan y piensen en tu hotel cuando decidan dónde quedarse.</p>
         <ol class="hero-index hero-fade" aria-label="Contenido de la propuesta">
           <li><button data-go="quien"><span>Quién soy</span><span>01</span></button></li>
           <li><button data-go="resultados"><span>Resultados en hoteles</span><span>02</span></button></li>
-          <li><button data-go="plan"><span>Plan de clips: un día de grabación</span><span>03</span></button></li>
-          <li><button data-go="estrategia"><span>Estrategia de 12 reels</span><span>04</span></button></li>
+          <li><button data-go="plan"><span>La producción: la estética de tu hotel</span><span>03</span></button></li>
+          <li><button data-go="estrategia"><span>La estrategia: atraer más miradas</span><span>04</span></button></li>
           <li><button data-go="paquetes"><span>Paquetes y precios</span><span>05</span></button></li>
+          <li><button data-go="mensual"><span>Plan mensual</span><span>06</span></button></li>
         </ol>
       </div>
     </div>
@@ -330,7 +351,7 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       <h2 class="h2 reveal">Juan José <em>Rojas Cano</em></h2>
       <div class="about-grid">
         <div class="about-text reveal">
-          <p>Llevo más de 10 años creando contenido audiovisual especializado en storytelling y turismo. Ayudo a hoteles a elevar su imagen visual y a generar más interés en quienes están buscando dónde quedarse.</p>
+          <p>Llevo más de 10 años creando contenido audiovisual especializado en storytelling y turismo. Mi meta con cada hotel es clara: que su imagen esté a la altura de lo que ofrece y que esa imagen atraiga la atención de quienes están buscando dónde quedarse.</p>
           <p>He grabado en diferentes regiones de Colombia y en proyectos internacionales en Italia y República Dominicana. Viajo a donde esté tu hotel; actualmente tengo mi base en Medellín.</p>
           <div class="brands" aria-label="Marcas con las que he trabajado">
             <span>Termales Santa Rosa de Cabal</span><span>Hilton Cartagena</span><span>Casa Tuirák</span><span>Hotel Spa La Colina</span><span>Balcón del Cielo</span><span>Attraversiamo</span>
@@ -363,18 +384,18 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
   <!-- PLAN -->
   <section class="section wrap" id="plan">
     <div class="inner">
-      <p class="eyebrow reveal"><time>11:00</time><span>Plan de clips para hoteles</span></p>
-      <h2 class="h2 reveal">Un día de grabación, <em>dos luces</em></h2>
-      <p class="lead reveal">Un día completo dividido en dos jornadas. Así tu hotel sale con la luz dorada de la tarde y con la calma de la primera luz de la mañana.</p>
+      <p class="eyebrow reveal"><time>11:00</time><span>La producción</span></p>
+      <h2 class="h2 reveal">La estética de tu hotel, <em>en su mejor luz</em></h2>
+      <p class="lead reveal">La atención empieza por cómo se ve tu hotel. Por eso grabamos en dos jornadas: la luz dorada de la tarde y la calma de la primera luz de la mañana siguiente. Es la base visual sobre la que se construye todo lo demás.</p>
 
       <div class="day reveal">
-        <p class="eyebrow">Fin de semana de grabación</p>
+        <p class="eyebrow">Una jornada de grabación · el día que elijas</p>
         <div class="day-scale" aria-hidden="true">
           <div class="track"></div>
-          <!-- escala: sábado 12:00 m. (0%) → domingo 12:00 m. (100%) -->
+          <!-- escala: día 1 12:00 m. (0%) → día 2 12:00 m. (100%) -->
           <div class="block dusk" style="left:12.5%;width:16.67%">Atardecer</div>
           <div class="block dawn" style="left:70.83%;width:16.67%">Amanecer</div>
-          <span class="tick" style="left:0%">Sáb 12 m</span>
+          <span class="tick" style="left:0%">12 m</span>
           <span class="tick" style="left:12.5%">3 p.m.</span>
           <span class="tick" style="left:29.17%">7 p.m.</span>
           <span class="tick" style="left:50%">12 a.m.</span>
@@ -383,19 +404,19 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
         </div>
         <div class="day-split">
           <div class="jornada">
-            <h3>Sábado, <em>atardecer</em></h3>
+            <h3>Primera jornada, <em>atardecer</em></h3>
             <p class="when num">3:00 p. m. – 7:00 p. m.</p>
             <p>Espacios, piscina, terrazas y experiencias con el sol bajo, hasta que se prenden las luces del hotel.</p>
           </div>
           <div class="jornada">
-            <h3>Domingo, <em>amanecer</em></h3>
+            <h3>A la mañana siguiente, <em>amanecer</em></h3>
             <p class="when num">5:00 a. m. – 9:00 a. m.</p>
             <p>Neblina, primera luz, desayuno y tomas de dron con el aire quieto de la mañana.</p>
           </div>
         </div>
         <dl class="day-facts">
           <div class="fact"><dt>Formato</dt><dd>Todo en vertical 9:16, listo para redes sociales.</dd></div>
-          <div class="fact"><dt>Entregables</dt><dd>Clips de todos los espacios, ambientes, actividades y experiencias que planeemos.</dd></div>
+          <div class="fact"><dt>Qué capturamos</dt><dd>Los espacios, ambientes y experiencias que hacen único a tu hotel, planeados contigo antes de grabar.</dd></div>
           <div class="fact"><dt>Equipos</dt><dd>
             <div class="gear"><span>Sony FX30 Cinema Line</span><span>Ronin RS 4 Pro</span><span>Dron DJI Air 3S</span><span>Lentes 11 · 35 · 85 mm</span><span>DJI Mic 2</span></div>
           </dd></div>
@@ -407,9 +428,9 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
   <!-- ESTRATEGIA -->
   <section class="section wrap" id="estrategia">
     <div class="inner">
-      <p class="eyebrow reveal"><time>15:30</time><span>Estrategia de contenido</span></p>
+      <p class="eyebrow reveal"><time>15:30</time><span>La estrategia</span></p>
       <h2 class="h2 reveal">12 reels para buscar <em>la mayor viralidad</em></h2>
-      <p class="lead reveal">Con el material grabado armamos <strong>12 reels de 20 segundos</strong>. No publicamos al azar: cada grupo de 4 cambia una sola cosa, medimos cuál retiene más gente y esa se queda para el siguiente grupo.</p>
+      <p class="lead reveal">Una imagen bonita no basta si nadie la ve. Con el material grabado armamos <strong>12 reels de 20 segundos</strong> y no publicamos al azar: cada grupo de 4 cambia una sola cosa, medimos cuál retiene más gente y esa se queda para el siguiente grupo. Así cada publicación acerca a tu hotel a más personas.</p>
 
       <div class="rounds">
         <article class="round reveal" data-round="0">
@@ -465,12 +486,12 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
     <div class="inner">
       <p class="eyebrow reveal"><time>17:45</time><span>Paquetes y precios</span></p>
       <h2 class="h2 reveal">Arma tu <em>paquete</em></h2>
-      <p class="lead reveal">Elige cuántos días grabamos y qué te entrego. El precio se actualiza solo.</p>
+      <p class="lead reveal">Elige el alcance de la producción y hasta dónde quieres que llevemos la estrategia. El precio se actualiza solo.</p>
 
       <div class="picker">
         <span class="picker-label" id="lblDays">Días de grabación</span>
         <div class="seg" role="group" aria-labelledby="lblDays" id="segDays">
-          <button id="d1" data-days="1" aria-pressed="true">1 día · atardecer + amanecer</button>
+          <button id="d1" data-days="1" aria-pressed="true">1 jornada · atardecer + amanecer</button>
           <button id="d2" data-days="2" aria-pressed="false">2 días completos</button>
           <button id="d3" data-days="3" aria-pressed="false">3 días completos</button>
         </div>
@@ -480,9 +501,9 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       <div class="packs" role="group" aria-label="Qué te entrego">
         <button class="pack" id="p-clips" data-mode="clips" aria-pressed="false">
           <div>
-            <p class="pack-kicker">Producción + clips</p>
-            <h3>Clips</h3>
-            <p class="who">Para el hotel que tiene quién edite y quiere armar sus propios videos.</p>
+            <p class="pack-kicker">Producción</p>
+            <h3>Imagen</h3>
+            <p class="who">Para el hotel con equipo propio de contenido que quiere renovar su imagen con material de cine.</p>
           </div>
           <div><div class="price"><span data-price="clips">$2.500.000</span><small>COP</small></div><p class="per" data-per="clips"></p></div>
           <ul>
@@ -496,9 +517,9 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
 
         <button class="pack" id="p-reels" data-mode="reels" aria-pressed="false">
           <div>
-            <p class="pack-kicker">Producción + edición</p>
-            <h3>Reels</h3>
-            <p class="who">Para el hotel que quiere recibir los videos listos para publicar.</p>
+            <p class="pack-kicker">Producción + estrategia</p>
+            <h3>Atención</h3>
+            <p class="who">Para el hotel que quiere que su imagen salga a buscar público desde el primer día.</p>
           </div>
           <div><div class="price"><span data-price="reels">$3.900.000</span><small>COP</small></div><p class="per" data-per="reels"></p></div>
           <ul>
@@ -513,9 +534,9 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
         <button class="pack" id="p-full" data-mode="full" aria-pressed="true">
           <span class="tag">El más completo</span>
           <div>
-            <p class="pack-kicker">Producción + clips + edición</p>
+            <p class="pack-kicker">Producción + estrategia + archivo</p>
             <h3>Completo</h3>
-            <p class="who">Para el hotel que quiere los reels listos y además todo el material para usarlo cuando quiera.</p>
+            <p class="who">Para el hotel que quiere la estrategia funcionando y además todo el material de cine para usarlo cuando quiera.</p>
           </div>
           <div><div class="price"><span data-price="full">$4.500.000</span><small>COP</small></div><p class="per" data-per="full"></p></div>
           <ul>
@@ -540,7 +561,7 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       <div class="summary" id="summary">
         <div class="summary-text">
           <small>Tu selección</small>
-          <b id="sumText">1 día · Completo · 12 reels</b>
+          <b id="sumText">1 jornada · Completo · 12 reels</b>
         </div>
         <div class="summary-total" id="sumTotal">$4.500.000</div>
         <div class="summary-actions">
@@ -554,11 +575,42 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
         <summary>Ver todos los precios</summary>
         <div class="table-scroll">
           <table aria-label="Precios por paquete, días y cantidad de reels">
-            <thead><tr><th>Paquete</th><th>1 día</th><th>2 días</th><th>3 días</th></tr></thead>
+            <thead><tr><th>Paquete</th><th>1 jornada</th><th>2 días</th><th>3 días</th></tr></thead>
             <tbody id="priceTable"></tbody>
           </table>
         </div>
       </details>
+    </div>
+  </section>
+
+  <!-- PLAN MENSUAL -->
+  <section class="section wrap" id="mensual">
+    <div class="inner">
+      <p class="eyebrow reveal"><time>18:05</time><span>Plan mensual · acompañamiento</span></p>
+      <h2 class="h2 reveal">Que la atención <em>no se apague</em></h2>
+      <p class="lead reveal">Un video viral es un momento; una presencia constante es lo que hace que la gente recuerde tu hotel. Para los hoteles que quieren seguir creciendo después de la producción, sigo trabajando su material mes a mes.</p>
+      <div class="monthly reveal">
+        <div class="monthly-main">
+          <p class="pack-kicker">Plan mensual</p>
+          <div class="price"><span class="num">$1.900.000</span><small>COP / mes</small></div>
+          <ul>
+            <li>Nuevos reels cada mes con el material de tu hotel</li>
+            <li>Aplicamos y seguimos afinando la fórmula ganadora: toma, frase y música</li>
+            <li>Lectura mensual de resultados y ajustes de rumbo</li>
+            <li>Prioridad en mi agenda para grabaciones y temporadas especiales</li>
+          </ul>
+          <div class="monthly-actions">
+            <button class="btn btn-sun" id="copyMonthly" type="button">Me interesa el plan mensual</button>
+            <span class="copied" id="copiedMonthly" hidden>Mensaje copiado</span>
+          </div>
+        </div>
+        <div class="monthly-renew">
+          <p class="pack-kicker">Renovar la producción</p>
+          <h3>50% de descuento <em>por fidelidad</em></h3>
+          <p>Cuando quieras renovar la imagen (una temporada nueva, espacios remodelados o experiencias nuevas), los hoteles del plan mensual graban con la mitad del precio.</p>
+          <dl class="renew-list" id="renewList"></dl>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -579,8 +631,8 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
   <section class="section wrap close" id="cierre">
     <div class="inner">
       <p class="eyebrow reveal"><time>19:20</time><span>Hora azul</span></p>
-      <h2 class="h2 reveal">¿Descubrimos los mejores <em>ángulos de tu hotel?</em></h2>
-      <p class="lead reveal">Escríbeme con el paquete que elegiste y miramos fechas para el próximo fin de semana disponible.</p>
+      <h2 class="h2 reveal">¿Hacemos que tu hotel <em>se note?</em></h2>
+      <p class="lead reveal">Escríbeme con el paquete que elegiste y buscamos la fecha que mejor le funcione a tu hotel.</p>
       <div class="close-actions reveal">
         <button class="btn btn-sun" data-go="paquetes">Volver a los paquetes</button>
         <a class="btn" href="https://redsightagency.my.canva.site/portafolio-hoteles-redsight-by-juanjoreds" target="_blank" rel="noopener">Portafolio completo ↗</a>
@@ -607,11 +659,11 @@ const PROD = { 1: 2500000, 2: 3500000, 3: 4500000 };          // producción + c
 const REELS = { 12: 2000000, 24: 3600000, 36: 4900000 };      // edición + estrategia por cantidad
 const SIN_CLIPS = { 1: 600000, 2: 700000, 3: 800000 };        // descuento cuando no se entregan los clips en bruto
 const DAYS_NOTE = {
-  1: "Sábado de 3:00 a 7:00 p. m. (atardecer) y domingo de 5:00 a 9:00 a. m. (amanecer).",
+  1: "Tarde de 3:00 a 7:00 p. m. (atardecer) y mañana siguiente de 5:00 a 9:00 a. m. (amanecer), en la fecha que mejor le funcione a tu hotel.",
   2: "Dos días completos de grabación: más espacios, más experiencias y más variedad de luz.",
   3: "Tres días completos: ideal para hoteles grandes, varias sedes o temporada de eventos.",
 };
-const MODE_NAME = { clips: "Clips", reels: "Reels", full: "Completo" };
+const MODE_NAME = { clips: "Imagen", reels: "Atención", full: "Completo" };
 
 const hotels = [
   { name: "Casa Tuirák", cat: "Hotel boutique", years: "3 años", views: [[1.8, "M"], [708, "mil"], [248, "mil"]], a: "#3b4a26", b: "#0e140b" },
@@ -648,7 +700,7 @@ $("#results").innerHTML = hotels.map((h, i) => `
 const state = { days: 1, mode: "full", qty: 12 };
 const priceOf = (mode, days, qty) =>
   mode === "clips" ? PROD[days] : mode === "reels" ? PROD[days] - SIN_CLIPS[days] + REELS[qty] : PROD[days] + REELS[qty];
-const daysLabel = (d) => (d === 1 ? "1 día (atardecer + amanecer)" : `${d} días completos`);
+const daysLabel = (d) => (d === 1 ? "1 jornada (atardecer + amanecer)" : `${d} días completos`);
 
 function summaryText() {
   const reels = state.mode === "clips" ? "" : ` · ${state.qty} reels`;
@@ -699,13 +751,24 @@ function bump() {
 
 // Tabla completa
 const rows = [];
-rows.push(`<tr><td class="group" colspan="4">Clips · producción + clips</td></tr>`);
-rows.push(`<tr><td>Clips</td>${[1, 2, 3].map((d) => `<td>${fmtCOP(priceOf("clips", d, 12))}</td>`).join("")}</tr>`);
-[["reels", "Reels · producción + edición"], ["full", "Completo · producción + clips + edición"]].forEach(([m, t]) => {
+rows.push(`<tr><td class="group" colspan="4">Imagen · producción + clips</td></tr>`);
+rows.push(`<tr><td>Imagen</td>${[1, 2, 3].map((d) => `<td>${fmtCOP(priceOf("clips", d, 12))}</td>`).join("")}</tr>`);
+[["reels", "Atención · producción + estrategia"], ["full", "Completo · producción + estrategia + archivo"]].forEach(([m, t]) => {
   rows.push(`<tr><td class="group" colspan="4">${t}</td></tr>`);
   [12, 24, 36].forEach((q) => rows.push(`<tr><td>${q} reels</td>${[1, 2, 3].map((d) => `<td>${fmtCOP(priceOf(m, d, q))}</td>`).join("")}</tr>`));
 });
 $("#priceTable").innerHTML = rows.join("");
+
+// Plan mensual: renovación con 50% por fidelidad
+const MENSUAL = 1900000;
+const FIDELIDAD = 0.5;
+$("#renewList").innerHTML = [1, 2, 3].map((d) => `<div><dt>${daysLabel(d)}</dt><dd><s>${fmtCOP(PROD[d])}</s><b>${fmtCOP(PROD[d] * (1 - FIDELIDAD))}</b></dd></div>`).join("");
+$("#copyMonthly").addEventListener("click", () => {
+  const msg = `Hola Juan, me interesa el plan mensual de contenido para mi hotel (${fmtCOP(MENSUAL)} COP / mes). ¿Cómo empezamos?`;
+  const ok = () => { $("#copiedMonthly").hidden = false; setTimeout(() => ($("#copiedMonthly").hidden = true), 1800); };
+  if (WHATSAPP) { window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank", "noopener"); return; }
+  try { navigator.clipboard.writeText(msg).then(ok).catch(() => fallbackCopy(msg, ok)); } catch (_) { fallbackCopy(msg, ok); }
+});
 render();
 
 // ---------- Texto partido en letras ----------

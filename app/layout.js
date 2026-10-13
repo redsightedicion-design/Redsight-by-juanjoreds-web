@@ -1,12 +1,28 @@
 import "./globals.css";
+import { site } from "./data";
+
+const title = "Redsight by juanjoreds — Contenido audiovisual para hoteles";
+const description =
+  "Producción audiovisual para hoteles, spas y marcas de turismo: reels, films de marca y estrategia de contenido para atraer más miradas.";
 
 export const metadata = {
-  title: "Redsight by juanjoreds — Contenido audiovisual para hoteles",
-  description:
-    "Productora audiovisual de Pereira, Colombia. Reels, films de marca, fotografía y documental para hoteles, spas y marcas de turismo.",
+  ...(site.url ? { metadataBase: new URL(site.url) } : {}),
+  title,
+  description,
+  // Vista previa al compartir el enlace (WhatsApp, Facebook, Instagram, LinkedIn, X)
+  openGraph: {
+    type: "website",
+    locale: "es_CO",
+    siteName: "Redsight by juanjoreds",
+    title,
+    description,
+    url: "/",
+    images: [{ url: site.ogImage, width: 1200, height: 630, alt: "Redsight by juanjoreds — portada" }],
+  },
+  twitter: { card: "summary_large_image", title, description, images: [site.ogImage] },
 };
 
-export const viewport = { themeColor: "#0a0a0a" };
+export const viewport = { themeColor: "#120c08" };
 
 export default function RootLayout({ children }) {
   return (

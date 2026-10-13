@@ -1,6 +1,10 @@
 // Todo el contenido del sitio vive aquí: cambia textos, proyectos y contacto sin tocar el diseño.
 
 export const site = {
+  // Dirección pública de la web (con https://). Necesaria para que WhatsApp y redes muestren la imagen de vista previa.
+  url: process.env.NEXT_PUBLIC_SITE_URL || "",
+  // Imagen de vista previa al compartir el enlace (1200×630): /public/og.jpg
+  ogImage: "/og.jpg",
   brand: "Redsight",
   by: "by juanjoreds",
   director: "Juan José Rojas Cano",

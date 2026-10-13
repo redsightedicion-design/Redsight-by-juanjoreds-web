@@ -321,7 +321,7 @@ main, footer { position: relative; z-index: 1; }
 .mix-bar i { aspect-ratio: 9 / 16; border-radius: 6px; }
 .mix-bar i.o { background: linear-gradient(170deg, var(--gold), color-mix(in srgb, var(--gold) 45%, transparent)); }
 .mix-bar i.a { background: linear-gradient(170deg, var(--sun), color-mix(in srgb, var(--sun) 40%, transparent)); }
-.mix-cols { display: grid; grid-template-columns: 2fr 1fr; gap: clamp(16px, 3vw, 40px); margin-top: 22px; }
+.mix-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 3vw, 40px); margin-top: 22px; }
 .mix-col strong { font-family: var(--serif); font-weight: 400; font-size: clamp(56px, 6vw, 84px); line-height: 0.9; }
 .mix-tag { display: inline-block; margin-left: 10px; vertical-align: super; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; color: var(--ink); }
 .mix-tag.o { background: var(--gold); } .mix-tag.a { background: var(--sun); }
@@ -367,10 +367,13 @@ main, footer { position: relative; z-index: 1; }
 .packs-label { margin-top: 34px; }
 .days-why { margin-top: 18px; max-width: 70ch; padding: 14px 18px; border-left: 2px solid var(--gold); background: rgba(247,239,230,0.04); border-radius: 0 10px 10px 0; color: var(--mist); font-size: 15px; }
 .days-why b { color: var(--cream); font-weight: 400; }
+.scale-label { margin-top: 22px; font-size: 14px; color: var(--mist); }
+.scale-label + .scale { margin-top: 10px; }
 .scale { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
 .scale-col { cursor: pointer; padding: 14px 16px; border: 1px solid var(--line); border-radius: 12px; background: rgba(247,239,230,0.03); display: grid; gap: 2px; transition: border-color 0.3s, background 0.3s; }
 .scale-col strong { font-family: var(--serif); font-weight: 400; font-size: clamp(40px, 4.4vw, 60px); line-height: 0.9; color: var(--cream); }
 .scale-col span { font-size: 15px; }
+.scale-col .scale-car { color: var(--gold); font-size: 14px; }
 .scale-col small { color: var(--mist); font-size: 13px; }
 .scale-col.is-on { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, transparent); }
 .scale-col.is-on strong { color: var(--gold); }
@@ -595,14 +598,14 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       <div class="mix reveal">
         <div class="mix-head">
           <h3>Cada video, <em>una misión</em></h3>
-          <p>En el paquete de 12 videos, organizamos 8 para publicación orgánica y 4 para pauta. En los de 4 y 8 videos se mantiene la misma lógica: 3 + 1 y 5 + 3.</p>
+          <p>Mitad y mitad: la mitad de los reels va a publicación orgánica y la otra mitad a pauta. Con 4 reels son 2 + 2, con 8 son 4 + 4 y con 12 son 6 + 6.</p>
         </div>
         <div class="mix-bar" aria-hidden="true">
-          <i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="a"></i><i class="a"></i><i class="a"></i><i class="a"></i>
+          <i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="a"></i><i class="a"></i><i class="a"></i><i class="a"></i><i class="a"></i><i class="a"></i>
         </div>
         <div class="mix-cols">
-          <div class="mix-col"><strong>8</strong><span class="mix-tag o">Orgánicos</span><p>Frases aspiracionales que enamoran, inspiran y hacen crecer la comunidad de tu hotel.</p></div>
-          <div class="mix-col"><strong>4</strong><span class="mix-tag a">Pauta</span><p>Venta directa de tus paquetes promocionales, para convertir esa atención en reservas.</p></div>
+          <div class="mix-col"><strong>6</strong><span class="mix-tag o">Orgánicos</span><p>Frases aspiracionales que enamoran, inspiran y hacen crecer la comunidad de tu hotel.</p></div>
+          <div class="mix-col"><strong>6</strong><span class="mix-tag a">Pauta</span><p>Venta directa de tus paquetes promocionales, para convertir esa atención en reservas.</p></div>
         </div>
       </div>
 
@@ -630,26 +633,27 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       <div class="picker">
         <span class="picker-label" id="lblDays">1 · Días de grabación</span>
         <div class="seg" role="group" aria-labelledby="lblDays" id="segDays">
-          <button id="d1" data-days="1" aria-pressed="true">1 jornada · 4 reels</button>
-          <button id="d2" data-days="2" aria-pressed="false">2 días · 8 reels</button>
-          <button id="d3" data-days="3" aria-pressed="false">3 días · 12 reels</button>
+          <button id="d1" data-days="1" aria-pressed="true">1 jornada · 4 reels + 1 carrusel</button>
+          <button id="d2" data-days="2" aria-pressed="false">2 días · 8 reels + 2 carruseles</button>
+          <button id="d3" data-days="3" aria-pressed="false">3 días · 12 reels + 3 carruseles</button>
         </div>
         <p class="days-note" id="daysNote"></p>
       </div>
+      <p class="scale-label">Entregables de los paquetes 2 y 3 según los días (el paquete 1 entrega todos los clips):</p>
       <div class="scale reveal" aria-label="Entregables según los días de grabación">
-        <div class="scale-col"><strong>4</strong><span>reels × 3 versiones</span><small>1 jornada · atardecer + amanecer</small></div>
-        <div class="scale-col"><strong>8</strong><span>reels × 3 versiones</span><small>2 días completos</small></div>
-        <div class="scale-col"><strong>12</strong><span>reels × 3 versiones</span><small>3 días completos</small></div>
+        <div class="scale-col"><strong>4</strong><span>reels × 3 versiones</span><span class="scale-car">+ 1 carrusel</span><small>1 jornada · atardecer + amanecer</small></div>
+        <div class="scale-col"><strong>8</strong><span>reels × 3 versiones</span><span class="scale-car">+ 2 carruseles</span><small>2 días completos</small></div>
+        <div class="scale-col"><strong>12</strong><span>reels × 3 versiones</span><span class="scale-car">+ 3 carruseles</span><small>3 días completos</small></div>
       </div>
-      <p class="days-why reveal"><b>Más días, más entregables.</b> Cada reel dura de 20 a 30 segundos y se entrega en 3 versiones con distinto inicio. Y con más días también suman amaneceres, atardeceres y experiencias capturadas, para que cada reel tenga tomas más ricas y variadas.</p>
+      <p class="days-why reveal"><b>Más días, más entregables.</b> Cada reel dura de 20 a 30 segundos y se entrega en 3 versiones con distinto inicio; la mitad son para publicación orgánica y la otra mitad para pauta. Y con más días también suman amaneceres, atardeceres y experiencias capturadas, para que cada reel tenga tomas más ricas y variadas.</p>
 
       <p class="picker-label packs-label">2 · Paquete</p>
       <div class="packs" role="group" aria-label="Paquetes">
         <button class="pack" id="p-clips" data-mode="clips" aria-pressed="false">
           <div>
-            <p class="pack-kicker">Producción + clips</p>
-            <h3>Vuelo propio</h3>
-            <p class="who">Para el hotel independiente. Grabamos tu hotel con estética de cine y tu equipo edita y publica a su ritmo.</p>
+            <p class="pack-kicker">Paquete 1</p>
+            <h3>Producción y clips</h3>
+            <p class="who">Grabamos tu hotel con estética de cine y te entregamos todos los clips. Ideal si tu equipo edita y publica.</p>
           </div>
           <div><div class="price"><span data-price="clips">$2.500.000</span><small>COP</small></div><p class="per" data-per="clips"></p></div>
           <ul>
@@ -659,43 +663,45 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
             <li class="no">Reels editados</li>
             <li class="no">Estrategia de publicación</li>
           </ul>
-          <span class="choose">Elegir Vuelo propio</span>
+          <span class="choose">Elegir paquete 1</span>
         </button>
 
         <button class="pack" id="p-reels" data-mode="reels" aria-pressed="false">
           <span class="tag">Recomendado</span>
           <div>
-            <p class="pack-kicker">Producción + creación de videos</p>
-            <h3>Mano a mano</h3>
-            <p class="who">Trabajamos en conjunto. Yo grabo y creo los reels con la estrategia; tu hotel los publica y juntos leemos qué le funciona a tu público.</p>
+            <p class="pack-kicker">Paquete 2</p>
+            <h3>Producción y edición</h3>
+            <p class="who">Grabamos tu hotel y te entregamos los reels y carruseles editados, con la estrategia, listos para publicar.</p>
           </div>
           <div><div class="price"><span data-price="reels">$3.900.000</span><small>COP</small></div><p class="per" data-per="reels"></p></div>
           <ul>
             <li>Grabación en los días que elijas</li>
-            <li><span><b class="n-reels">4</b> reels de 20 a 30 s editados por mí: <span class="n-org">3</span> orgánicos + <span class="n-ads">1</span> para pauta</span></li>
+            <li><span><b class="n-reels">4</b> reels de 20 a 30 s: <span class="n-org">2</span> orgánicos + <span class="n-ads">2</span> para pauta</span></li>
+            <li><span><b class="n-car">1</b> <span class="n-car-w">carrusel</span></span></li>
             <li>Cada reel en 3 versiones: 3 tomas y 3 frases de inicio distintas, para probar en pauta cuál funciona mejor</li>
             <li>Estrategia de alcance: tomas, frase y música</li>
             <li class="no">Entrega de los clips</li>
           </ul>
-          <span class="choose">Elegir Mano a mano</span>
+          <span class="choose">Elegir paquete 2</span>
         </button>
 
         <button class="pack" id="p-full" data-mode="full" aria-pressed="true">
           <span class="tag">El más completo</span>
           <div>
-            <p class="pack-kicker">Producción + clips + videos</p>
-            <h3>Un solo equipo</h3>
-            <p class="who">Nuestros equipos trabajan juntos. Recibes los reels con la estrategia y además todos los clips colorizados, para que tu equipo siga creando cuando quiera.</p>
+            <p class="pack-kicker">Paquete 3</p>
+            <h3>Todo incluido</h3>
+            <p class="who">Producción, reels y carruseles editados con la estrategia, y además todos los clips para que tu equipo siga creando.</p>
           </div>
           <div><div class="price"><span data-price="full">$4.500.000</span><small>COP</small></div><p class="per" data-per="full"></p></div>
           <ul>
             <li>Grabación en los días que elijas</li>
-            <li><span><b class="n-reels">4</b> reels de 20 a 30 s editados por mí: <span class="n-org">3</span> orgánicos + <span class="n-ads">1</span> para pauta</span></li>
+            <li><span><b class="n-reels">4</b> reels de 20 a 30 s: <span class="n-org">2</span> orgánicos + <span class="n-ads">2</span> para pauta</span></li>
+            <li><span><b class="n-car">1</b> <span class="n-car-w">carrusel</span></span></li>
             <li>Cada reel en 3 versiones: 3 tomas y 3 frases de inicio distintas, para probar en pauta cuál funciona mejor</li>
             <li>Estrategia de alcance: tomas, frase y música</li>
             <li>Todos los clips colorizados, organizados por espacio</li>
           </ul>
-          <span class="choose">Elegir Un solo equipo</span>
+          <span class="choose">Elegir paquete 3</span>
         </button>
       </div>
       <p class="packs-note reveal">Cada paquete incluye como máximo 12 reels. ¿Necesitas más contenido? Lo cotizamos aparte. Para seguir publicando cada mes está la <button class="link" data-go="mensual">contratación fija</button>.</p>
@@ -703,7 +709,7 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       <div class="summary" id="summary">
         <div class="summary-text">
           <small>Tu selección</small>
-          <b id="sumText">1 jornada · Un solo equipo · 4 reels</b>
+          <b id="sumText">1 jornada · Todo incluido · 4 reels + 1 carrusel</b>
         </div>
         <div class="summary-total" id="sumTotal">$4.500.000</div>
         <div class="summary-actions">
@@ -730,7 +736,7 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       <h2 class="h2 reveal">Que la atención <em>no se apague</em></h2>
       <p class="lead reveal">Un video viral es un momento; una presencia constante es lo que hace que la gente recuerde tu hotel. La contratación fija es el siguiente paso para los hoteles que ya trabajaron conmigo en uno de los paquetes iniciales y quieren mantener su contenido activo mes a mes.</p>
       <ol class="path reveal" aria-label="Cómo funciona">
-        <li><b>01</b><span>Paquete inicial</span><small>Vuelo propio, Mano a mano o Un solo equipo</small></li>
+        <li><b>01</b><span>Paquete inicial</span><small>Paquete 1, 2 o 3</small></li>
         <li><b>02</b><span>Contratación fija</span><small>Referencia $1.900.000 al mes · mínimo 6 meses</small></li>
         <li><b>03</b><span>Renovación de producción</span><small>Tarifa de cliente fijo</small></li>
       </ol>
@@ -813,14 +819,15 @@ const WHATSAPP = "573122853795";
 const PROD = { 1: 2500000, 2: 3500000, 3: 4500000 };          // producción + clips por días
 const REELS = 2000000;                                        // edición de reels de 20 a 30 s + estrategia
 const N_REELS = { 1: 4, 2: 8, 3: 12 };                         // reels entregados según los días de grabación
-const split = (n) => ({ org: Math.round((n * 2) / 3), ads: n - Math.round((n * 2) / 3) }); // orgánicos / pauta
+const split = (n) => ({ org: n / 2, ads: n / 2 });          // mitad orgánicos / mitad pauta
+const N_CAR = { 1: 1, 2: 2, 3: 3 };                            // carruseles según los días
 const SIN_CLIPS = { 1: 600000, 2: 700000, 3: 800000 };        // descuento cuando no se entregan los clips en bruto
 const DAYS_NOTE = {
   1: "Tarde de 3:00 a 7:00 p. m. (atardecer) y mañana siguiente de 5:00 a 9:00 a. m. (amanecer), en la fecha que mejor le funcione a tu hotel.",
   2: "Dos días completos: dos amaneceres, dos atardeceres y más experiencias para elegir las mejores tomas.",
   3: "Tres días completos: ideal para hoteles grandes, varias sedes o temporada de eventos. Tres amaneceres y tres atardeceres.",
 };
-const MODE_NAME = { clips: "Vuelo propio", reels: "Mano a mano", full: "Un solo equipo" };
+const MODE_NAME = { clips: "Producción y clips", reels: "Producción y edición", full: "Todo incluido" };
 
 // Videos: archivos en media/ (nombre-n.mp4 + nombre-n.jpg como portada). wide: video horizontal.
 const hotels = [
@@ -931,7 +938,8 @@ const daysLabel = (d) => (d === 1 ? "1 jornada (atardecer + amanecer)" : `${d} d
 
 function summaryText() {
   const n = N_REELS[state.days];
-  const reels = state.mode === "clips" ? " · clips colorizados" : state.mode === "full" ? ` · ${n} reels (×3 versiones) + clips colorizados` : ` · ${n} reels (×3 versiones)`;
+  const c = N_CAR[state.days], car = `${c} ${c === 1 ? "carrusel" : "carruseles"}`;
+  const reels = state.mode === "clips" ? " · clips colorizados" : state.mode === "full" ? ` · ${n} reels (×3 versiones) + ${car} + clips colorizados` : ` · ${n} reels (×3 versiones) + ${car}`;
   return `${daysLabel(state.days)} · ${MODE_NAME[state.mode]}${reels}`;
 }
 function render() {
@@ -948,6 +956,8 @@ function render() {
   $$(".n-reels").forEach((e) => (e.textContent = N_REELS[state.days]));
   $$(".n-org").forEach((e) => (e.textContent = sp.org));
   $$(".n-ads").forEach((e) => (e.textContent = sp.ads));
+  $$(".n-car").forEach((e) => (e.textContent = N_CAR[state.days]));
+  $$(".n-car-w").forEach((e) => (e.textContent = N_CAR[state.days] === 1 ? "carrusel" : "carruseles"));
   $$(".scale-col").forEach((c, k) => c.classList.toggle("is-on", k + 1 === state.days));
   $("#sumTotal").textContent = fmtCOP(priceOf(state.mode, state.days)) + " COP";
   const msg = `Hola Juan, me interesa la propuesta de contenido para mi hotel: ${summaryText()} — ${fmtCOP(priceOf(state.mode, state.days))} COP. ¿Qué fechas tienes disponibles?`;
@@ -972,8 +982,8 @@ function bump() {
 
 // Tabla completa
 const rows = [];
-rows.push(`<tr><td>Reels incluidos <small class="t-sub">20 a 30 s</small></td>${[1, 2, 3].map((d) => `<td>${N_REELS[d]}</td>`).join("")}</tr>`);
-[["clips", "Vuelo propio", "producción + clips"], ["reels", "Mano a mano", "producción + reels"], ["full", "Un solo equipo", "producción + clips + reels"]].forEach(([m, n, t]) => {
+rows.push(`<tr><td>Reels incluidos <small class="t-sub">20 a 30 s · paquetes 2 y 3</small></td>${[1, 2, 3].map((d) => `<td>${N_REELS[d]} + ${N_CAR[d]} car.</td>`).join("")}</tr>`);
+[["clips", "Paquete 1", "producción y clips"], ["reels", "Paquete 2", "producción y edición"], ["full", "Paquete 3", "todo incluido"]].forEach(([m, n, t]) => {
   rows.push(`<tr><td>${n} <small class="t-sub">${t}</small></td>${[1, 2, 3].map((d) => `<td>${fmtCOP(priceOf(m, d))}</td>`).join("")}</tr>`);
 });
 $("#priceTable").innerHTML = rows.join("");

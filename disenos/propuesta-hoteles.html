@@ -102,21 +102,44 @@ main, footer { position: relative; z-index: 1; }
   padding-top: clamp(120px, 18vh, 200px); padding-bottom: clamp(56px, 8vw, 104px); }
 .hero > .inner { width: 100%; }
 .hero-bg { position: absolute; inset: 0; z-index: -1; background: var(--ink); }
-.hero-bg video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transform-origin: 50% 40%; }
-.hero-bg video { opacity: 0; transition: opacity 1.4s ease; }
-.hero-bg video.is-on { opacity: 1; }
+/* Mosaico: reels verticales lado a lado (escritorio) · un solo reel (celular) */
+.hero-grid { position: absolute; inset: -6% 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 0.9vw, 14px); padding-inline: clamp(8px, 0.9vw, 14px); transform-origin: 50% 45%; }
+.hc { position: relative; height: 100%; border-radius: 14px; overflow: hidden; background: #1c130d; transform: translateY(var(--y, 0)); }
+.hc:nth-child(odd) { --y: -4%; }
+.hc:nth-child(even) { --y: 4%; }
+.anim .hc { animation: hc-drift 18s ease-in-out infinite alternate; }
+.anim .hc:nth-child(2) { animation-delay: -6s; }
+.anim .hc:nth-child(3) { animation-delay: -11s; }
+.anim .hc:nth-child(4) { animation-delay: -3s; }
+@keyframes hc-drift { from { transform: translateY(calc(var(--y) - 2.5%)); } to { transform: translateY(calc(var(--y) + 2.5%)); } }
+.hc video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.82) saturate(0.9) sepia(0.15); }
+@media (max-width: 1100px) { .hero-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } .hc:nth-child(4) { display: none; } }
+@media (max-width: 700px) {
+  .hero-grid { inset: 0; grid-template-columns: 1fr; gap: 0; padding: 0; }
+  .hc { display: none; border-radius: 0; transform: none; animation: none !important; }
+  .hc.solo { display: block; }
+}
+/* Neblina */
+.fog { position: absolute; inset: -30%; pointer-events: none; mix-blend-mode: screen; filter: blur(28px); }
+.fog.f1 { background: radial-gradient(38% 22% at 28% 62%, rgba(236,220,200,0.22), transparent 70%), radial-gradient(30% 18% at 72% 48%, rgba(236,220,200,0.16), transparent 70%); }
+.fog.f2 { background: radial-gradient(45% 20% at 60% 72%, rgba(236,220,200,0.2), transparent 70%), radial-gradient(28% 16% at 18% 38%, rgba(236,220,200,0.12), transparent 70%); }
+.fog.f3 { inset: auto -10% -5% -10%; height: 55%; filter: blur(40px); background: radial-gradient(60% 60% at 50% 100%, rgba(236,220,200,0.18), transparent 70%); }
+.anim .fog.f1 { animation: fog-a 46s ease-in-out infinite alternate; }
+.anim .fog.f2 { animation: fog-b 58s ease-in-out infinite alternate; }
+.anim .fog.f3 { animation: fog-c 22s ease-in-out infinite alternate; }
+@keyframes fog-a { from { transform: translate3d(-8%, 2%, 0) scale(1); } to { transform: translate3d(10%, -3%, 0) scale(1.15); } }
+@keyframes fog-b { from { transform: translate3d(9%, -2%, 0) scale(1.1); } to { transform: translate3d(-10%, 3%, 0) scale(0.95); } }
+@keyframes fog-c { from { opacity: 0.6; transform: translateX(-4%); } to { opacity: 1; transform: translateX(4%); } }
 .hero-bg::after { content: ""; position: absolute; inset: 0; pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(18,12,8,0.6) 0%, rgba(28,17,10,0.32) 28%, rgba(18,12,8,0.45) 55%, rgba(18,12,8,0.94) 100%),
-    linear-gradient(90deg, rgba(18,12,8,0.6) 0%, rgba(18,12,8,0) 65%); }
+    linear-gradient(180deg, rgba(18,12,8,0.62) 0%, rgba(28,17,10,0.3) 30%, rgba(18,12,8,0.5) 60%, var(--ink) 100%),
+    linear-gradient(90deg, rgba(18,12,8,0.62) 0%, rgba(18,12,8,0.1) 70%),
+    radial-gradient(120% 90% at 50% 40%, transparent 50%, rgba(10,6,4,0.6) 100%); }
 .hero .eyebrow, .hero .eyebrow time, .hero h1, .hero-sub, .hero-sub em { color: #fff; }
 .hero-index { border-top-color: rgba(255,255,255,0.28) !important; }
 .hero-index li { border-bottom-color: rgba(255,255,255,0.28) !important; }
 .hero-index button { color: #fff; }
 .hero-index button span:last-child { color: rgba(255,255,255,0.72) !important; }
-.hero .sound { right: var(--gutter); bottom: auto; top: calc(84px + env(safe-area-inset-top, 0px)); width: 42px; height: 42px; font-size: 16px; z-index: 3; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-.hero-cap { position: absolute; right: calc(var(--gutter) + 54px); top: calc(96px + env(safe-area-inset-top, 0px)); z-index: 3; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(239,233,221,0.8); text-shadow: 0 1px 8px rgba(0,0,0,0.6); }
-@media (max-width: 720px) { .hero-cap { display: none; } }
 .hero h1, .hero-sub, .hero-bottom p { text-shadow: 0 2px 24px rgba(0,0,0,0.35); }
 .hero h1 { font-family: var(--serif); font-size: clamp(54px, 10.5vw, 168px); line-height: 0.9; letter-spacing: -0.02em; margin-top: 22px; }
 .hero h1 .l1 { display: block; }
@@ -275,8 +298,12 @@ main, footer { position: relative; z-index: 1; }
 .pack li.no::before { background: transparent; border: 1px solid var(--mist); }
 .pack .choose { margin-top: auto; padding-top: 6px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); }
 .pack[aria-pressed="true"] .choose { color: var(--gold); }
-.qty-row { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; margin-top: 22px; }
-.qty-row[data-off="true"] { opacity: 0.45; }
+.steps { list-style: none; display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 28px; font-size: 15px; color: var(--mist); }
+.steps li { display: flex; align-items: center; gap: 10px; }
+.steps b { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--gold); color: var(--gold); font-family: var(--mono); font-weight: 400; font-size: 12px; }
+.packs-label { margin-top: 34px; }
+.packs-note { color: var(--mist); font-size: 15px; margin-top: 18px; }
+.link { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; font-size: inherit; }
 .summary { position: sticky; bottom: calc(14px + env(safe-area-inset-bottom, 0px)); z-index: 5; margin-top: 26px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 14px 24px;
   padding: 16px 16px 16px 24px; border-radius: 18px; border: 1px solid var(--line); background: rgba(18,12,8,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
 .summary-text { min-width: 0; }
@@ -295,6 +322,7 @@ table { width: 100%; border-collapse: collapse; min-width: 560px; font-size: 14p
 th, td { text-align: right; padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
 th:first-child, td:first-child { text-align: left; }
 th { font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); }
+.t-sub { color: var(--mist); font-size: 12px; margin-left: 6px; }
 td.group { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); text-align: left; padding-top: 18px; }
 @media (max-width: 900px) { .packs { grid-template-columns: 1fr; } }
 
@@ -316,6 +344,15 @@ td.group { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; te
 .renew-list s { color: var(--mist); font-size: 13px; }
 .renew-list b { font-weight: 400; color: var(--gold); }
 .renew-fine { color: var(--mist); font-size: 13px; margin-top: 14px; }
+.feed { border: 1px solid var(--line); border-radius: 14px; padding: 16px; background: rgba(247,239,230,0.03); }
+.feed-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mist); }
+.feed-opts { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 12px; align-items: center; margin-top: 12px; }
+.feed-opt { display: grid; gap: 2px; }
+.feed-opt strong { font-family: var(--serif); font-weight: 400; font-size: clamp(48px, 5vw, 68px); line-height: 0.9; color: var(--gold); }
+.feed-opt span { font-size: 16px; color: var(--cream); }
+.feed-opt small { font-size: 13px; color: var(--mist); }
+.feed-or { font-family: var(--serif); font-style: italic; font-size: 24px; color: var(--mist); }
+@media (max-width: 520px) { .feed-opts { grid-template-columns: 1fr; } .feed-or { justify-self: start; } }
 .monthly-note { color: var(--mist); font-size: 14px; margin-top: -8px; max-width: 48ch; }
 .path { list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: clamp(28px, 3vw, 40px); border-top: 1px solid var(--line); }
 .path li { display: grid; gap: 4px; padding: 18px 18px 18px 0; }
@@ -378,11 +415,14 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
   <!-- HERO -->
   <section class="hero wrap" id="inicio">
     <div class="hero-bg" aria-hidden="true">
-      <video class="is-on" src="media/showreel-tuirak.mp4" poster="media/showreel-tuirak.jpg" muted playsinline autoplay preload="auto"></video>
-      <video src="media/termales-1.mp4" poster="media/termales-1.jpg" muted loop playsinline preload="auto"></video>
+      <div class="hero-grid">
+        <div class="hc solo"><video data-src="media/hero-1.mp4" data-off="0" poster="media/hero-1.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="hc"><video data-src="media/hero-2.mp4" data-off="2" poster="media/hero-2.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="hc"><video data-src="media/hero-3.mp4" data-off="4" poster="media/hero-3.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="hc"><video data-src="media/hero-4.mp4" data-off="1" poster="media/hero-4.jpg" muted loop playsinline preload="none"></video></div>
+      </div>
+      <div class="fog f1"></div><div class="fog f2"></div><div class="fog f3"></div>
     </div>
-    <span class="hero-cap" id="heroCap">Casa Tuirák · Producción Redsight</span>
-    <button class="sound" type="button" aria-pressed="false" aria-label="Activar sonido" data-cursor="Sonido">♪</button>
     <div class="inner">
       <p class="eyebrow hero-fade"><span>Propuesta de contenido para hoteles</span><span>·</span><time>Producción audiovisual</time></p>
       <h1 aria-label="Potencia la estética de tu hotel">
@@ -535,7 +575,7 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       </div>
       <div class="formula reveal">
         <strong>La fórmula de tu hotel</strong>
-        <p>Al final del ciclo sabes qué toma, qué frase y qué música le funcionan a tu público. Esa combinación es la que repites en los siguientes videos y en la pauta. <small>(Las barras son un ejemplo de cómo se ve la medición.)</small></p>
+        <p>Al final de los 12 reels sabes qué toma, qué frase y qué música le funcionan a tu público. Esa combinación es la que repites en los siguientes videos y en la pauta. <small>(Las barras son un ejemplo de cómo se ve la medición.)</small></p>
       </div>
       <p class="viral-note reveal"><strong>Sobre la viralidad.</strong> Hacemos todo el proceso con rigor —grabación, edición, pruebas y medición— para darle a tu hotel el mayor alcance posible. Aun así, la viralidad depende de personas reales: de cómo ven, comparten y reaccionan a cada video. Por eso los resultados son distintos en cada hotel y no se pueden garantizar.</p>
     </div>
@@ -545,11 +585,17 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
   <section class="section wrap" id="paquetes">
     <div class="inner">
       <p class="eyebrow reveal"><time>17:45</time><span>Paquetes y precios</span></p>
-      <h2 class="h2 reveal">Arma tu <em>paquete</em></h2>
-      <p class="lead reveal">Elige el alcance de la producción y hasta dónde quieres que llevemos la estrategia. El precio se actualiza solo.</p>
+      <h2 class="h2 reveal">Elige tu <em>paquete</em></h2>
+      <p class="lead reveal">Tres formas de empezar. Todas incluyen la producción de cine en tu hotel; cambia lo que hacemos después con ese material. Elige primero cuántos días grabamos y luego el paquete.</p>
+
+      <ol class="steps reveal" aria-label="Cómo elegir">
+        <li><b>1</b> Días de grabación</li>
+        <li><b>2</b> Paquete</li>
+        <li><b>3</b> Copia el resumen y escríbeme</li>
+      </ol>
 
       <div class="picker">
-        <span class="picker-label" id="lblDays">Días de grabación</span>
+        <span class="picker-label" id="lblDays">1 · Días de grabación</span>
         <div class="seg" role="group" aria-labelledby="lblDays" id="segDays">
           <button id="d1" data-days="1" aria-pressed="true">1 jornada · atardecer + amanecer</button>
           <button id="d2" data-days="2" aria-pressed="false">2 días completos</button>
@@ -558,70 +604,65 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
         <p class="days-note" id="daysNote"></p>
       </div>
 
-      <div class="packs" role="group" aria-label="Qué te entrego">
+      <p class="picker-label packs-label">2 · Paquete</p>
+      <div class="packs" role="group" aria-label="Paquetes">
         <button class="pack" id="p-clips" data-mode="clips" aria-pressed="false">
           <div>
-            <p class="pack-kicker">Producción</p>
-            <h3>Imagen</h3>
-            <p class="who">Para el hotel con equipo propio de contenido que quiere renovar su imagen con material de cine.</p>
+            <p class="pack-kicker">Solo producción</p>
+            <h3>Esencia</h3>
+            <p class="who">Tu hotel grabado con estética de cine. Ideal si ya tienes quién edite y publique.</p>
           </div>
           <div><div class="price"><span data-price="clips">$2.500.000</span><small>COP</small></div><p class="per" data-per="clips"></p></div>
           <ul>
-            <li>Grabación de los días que elijas</li>
-            <li>Todos los clips en vertical 9:16, organizados por espacio</li>
-            <li>Tomas con dron, estabilizador y lentes de cine</li>
+            <li>Grabación en los días que elijas</li>
+            <li>Todo el material en bruto, vertical 9:16, organizado por espacio</li>
+            <li>Dron, estabilizador y lentes de cine</li>
             <li class="no">Reels editados</li>
+            <li class="no">Estrategia de publicación</li>
           </ul>
-          <span class="choose">Elegir este paquete</span>
+          <span class="choose">Elegir Esencia</span>
         </button>
 
         <button class="pack" id="p-reels" data-mode="reels" aria-pressed="false">
+          <span class="tag">Recomendado</span>
           <div>
-            <p class="pack-kicker">Producción + estrategia</p>
-            <h3>Atención</h3>
-            <p class="who">Para el hotel que quiere que su imagen salga a buscar público desde el primer día.</p>
+            <p class="pack-kicker">Producción + 12 reels</p>
+            <h3>Alcance</h3>
+            <p class="who">Tu hotel grabado y convertido en 12 reels listos para publicar, con la estrategia para encontrar el que más gente atrae.</p>
           </div>
           <div><div class="price"><span data-price="reels">$3.900.000</span><small>COP</small></div><p class="per" data-per="reels"></p></div>
           <ul>
-            <li>Grabación de los días que elijas</li>
-            <li><span><span data-n>12</span> reels de 20 s editados por mí</span></li>
+            <li>Grabación en los días que elijas</li>
+            <li>12 reels de 20 s editados por mí</li>
             <li>Estrategia de prueba: toma, frase y música</li>
-            <li class="no">Entrega de los clips en bruto</li>
+            <li class="no">Material en bruto</li>
           </ul>
-          <span class="choose">Elegir este paquete</span>
+          <span class="choose">Elegir Alcance</span>
         </button>
 
         <button class="pack" id="p-full" data-mode="full" aria-pressed="true">
           <span class="tag">El más completo</span>
           <div>
-            <p class="pack-kicker">Producción + estrategia + archivo</p>
-            <h3>Completo</h3>
-            <p class="who">Para el hotel que quiere la estrategia funcionando y además todo el material de cine para usarlo cuando quiera.</p>
+            <p class="pack-kicker">Producción + 12 reels + material</p>
+            <h3>Total</h3>
+            <p class="who">Todo lo de Alcance y además todo el material en bruto, para que tu equipo lo use cuando quiera.</p>
           </div>
           <div><div class="price"><span data-price="full">$4.500.000</span><small>COP</small></div><p class="per" data-per="full"></p></div>
           <ul>
-            <li>Grabación de los días que elijas</li>
-            <li><span><span data-n>12</span> reels de 20 s editados por mí</span></li>
+            <li>Grabación en los días que elijas</li>
+            <li>12 reels de 20 s editados por mí</li>
             <li>Estrategia de prueba: toma, frase y música</li>
-            <li>Todos los clips en vertical, organizados por espacio</li>
+            <li>Todo el material en bruto, organizado por espacio</li>
           </ul>
-          <span class="choose">Elegir este paquete</span>
+          <span class="choose">Elegir Total</span>
         </button>
       </div>
-
-      <div class="qty-row" id="qtyRow">
-        <span class="picker-label" id="lblQty">Cantidad de reels</span>
-        <div class="seg" role="group" aria-labelledby="lblQty" id="segQty">
-          <button id="q12" data-qty="12" aria-pressed="true">12 reels · 1 ciclo</button>
-          <button id="q24" data-qty="24" aria-pressed="false">24 reels · 2 ciclos</button>
-          <button id="q36" data-qty="36" aria-pressed="false">36 reels · 3 ciclos</button>
-        </div>
-      </div>
+      <p class="packs-note reveal">Cada paquete incluye como máximo 12 reels. Para seguir publicando cada mes está la <button class="link" data-go="mensual">contratación fija</button>.</p>
 
       <div class="summary" id="summary">
         <div class="summary-text">
           <small>Tu selección</small>
-          <b id="sumText">1 jornada · Completo · 12 reels</b>
+          <b id="sumText">1 jornada · Total · 12 reels</b>
         </div>
         <div class="summary-total" id="sumTotal">$4.500.000</div>
         <div class="summary-actions">
@@ -632,9 +673,9 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       </div>
 
       <details class="table-box reveal">
-        <summary>Ver todos los precios</summary>
+        <summary>Ver la tabla de precios</summary>
         <div class="table-scroll">
-          <table aria-label="Precios por paquete, días y cantidad de reels">
+          <table aria-label="Precios por paquete y días de grabación">
             <thead><tr><th>Paquete</th><th>1 jornada</th><th>2 días</th><th>3 días</th></tr></thead>
             <tbody id="priceTable"></tbody>
           </table>
@@ -650,7 +691,7 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       <h2 class="h2 reveal">Que la atención <em>no se apague</em></h2>
       <p class="lead reveal">Un video viral es un momento; una presencia constante es lo que hace que la gente recuerde tu hotel. La contratación fija es el siguiente paso para los hoteles que ya trabajaron conmigo en uno de los paquetes iniciales y quieren mantener su contenido activo mes a mes.</p>
       <ol class="path reveal" aria-label="Cómo funciona">
-        <li><b>01</b><span>Paquete inicial</span><small>Imagen, Atención o Completo</small></li>
+        <li><b>01</b><span>Paquete inicial</span><small>Esencia, Alcance o Total</small></li>
         <li><b>02</b><span>Contratación fija</span><small>$1.900.000 al mes · mínimo 6 meses</small></li>
         <li><b>03</b><span>Renovación de producción</span><small>Tarifa de cliente fijo</small></li>
       </ol>
@@ -659,8 +700,16 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
           <p class="pack-kicker">Contratación fija mensual</p>
           <div class="price"><span class="num">$1.900.000</span><small>COP / mes</small></div>
           <p class="monthly-note">Solo para hoteles que ya contrataron uno de los paquetes iniciales. Permanencia mínima de 6 meses, con pago anticipado cada mes.</p>
+          <div class="feed" role="group" aria-label="Formato del feed mensual">
+            <p class="feed-label">Cada mes eliges el formato de tu feed</p>
+            <div class="feed-opts">
+              <div class="feed-opt"><strong>12</strong><span>reels de 20 s</span><small>Ritmo constante: casi 3 publicaciones por semana.</small></div>
+              <span class="feed-or">o</span>
+              <div class="feed-opt"><strong>4</strong><span>videos de 45 a 60 s</span><small>Historias más largas: una pieza fuerte por semana.</small></div>
+            </div>
+          </div>
           <ul>
-            <li>Hasta 8 reels nuevos al mes con el material de tu hotel</li>
+            <li>Editados con el material de tu hotel</li>
             <li>Aplicamos y seguimos afinando la fórmula ganadora: toma, frase y música</li>
             <li>Lectura mensual de resultados y ajustes de rumbo</li>
             <li>Prioridad en mi agenda para grabaciones y temporadas especiales</li>
@@ -723,14 +772,14 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
 // Número de WhatsApp en formato internacional sin "+" ni espacios (ej. "573001234567"). Vacío = solo "Copiar resumen".
 const WHATSAPP = "";
 const PROD = { 1: 2500000, 2: 3500000, 3: 4500000 };          // producción + clips por días
-const REELS = { 12: 2000000, 24: 3600000, 36: 4900000 };      // edición + estrategia por cantidad
+const REELS = 2000000;                                        // 12 reels de 20 s + estrategia (máximo por paquete)
 const SIN_CLIPS = { 1: 600000, 2: 700000, 3: 800000 };        // descuento cuando no se entregan los clips en bruto
 const DAYS_NOTE = {
   1: "Tarde de 3:00 a 7:00 p. m. (atardecer) y mañana siguiente de 5:00 a 9:00 a. m. (amanecer), en la fecha que mejor le funcione a tu hotel.",
   2: "Dos días completos de grabación: más espacios, más experiencias y más variedad de luz.",
   3: "Tres días completos: ideal para hoteles grandes, varias sedes o temporada de eventos.",
 };
-const MODE_NAME = { clips: "Imagen", reels: "Atención", full: "Completo" };
+const MODE_NAME = { clips: "Esencia", reels: "Alcance", full: "Total" };
 
 // Videos: archivos en media/ (nombre-n.mp4 + nombre-n.jpg como portada). wide: video horizontal.
 const hotels = [
@@ -778,7 +827,7 @@ if ("IntersectionObserver" in window && !reduceMotion) {
   vids.forEach((v) => io.observe(v));
 }
 $$(".sound").forEach((btn) => btn.addEventListener("click", () => {
-  const v = btn.closest(".hero") ? $(".hero-bg video.is-on") : btn.parentElement.querySelector("video");
+  const v = btn.parentElement.querySelector("video");
   const on = v.muted;
   $$("video").forEach((o) => { o.muted = true; });
   $$(".sound").forEach((b) => { b.setAttribute("aria-pressed", "false"); b.setAttribute("aria-label", "Activar sonido"); });
@@ -788,67 +837,47 @@ $$(".sound").forEach((btn) => btn.addEventListener("click", () => {
 // El reloj flotante se esconde mientras se ve la portada
 if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => $(".clock").classList.toggle("is-hidden", e.isIntersecting), { threshold: 0.15 }).observe($(".hero"));
 
-// ---------- Portada: Casa Tuirák y Termales se intercalan ----------
-const heroVids = $$(".hero-bg video");
-const HERO_MS = [12000, 9000];
-const HERO_CAP = ["Casa Tuirák · Producción Redsight", "Termales Santa Rosa de Cabal · Producción Redsight"];
-let heroIdx = 0, heroTimer = null, heroVisible = true;
-function heroShow(i) {
-  const prev = heroVids[heroIdx];
-  heroIdx = i;
-  heroVids.forEach((v, j) => {
-    v.classList.toggle("is-on", j === i);
-    if (j === i) {
-      if (i === 1) v.currentTime = 0;
-      if (prev !== v) v.muted = prev.muted;
-      if (heroVisible) v.play().catch(() => {});
-    } else setTimeout(() => { if (!v.classList.contains("is-on")) { v.pause(); v.muted = true; } }, 1400);
+// ---------- Portada: mosaico de reels (solo carga los que se ven) ----------
+const heroTiles = $$(".hc video");
+let heroVisible = true;
+function heroSync() {
+  heroTiles.forEach((v) => {
+    const shown = v.parentElement.offsetParent !== null && getComputedStyle(v.parentElement).display !== "none";
+    if (shown && !v.src) { v.src = v.dataset.src; v.addEventListener("loadedmetadata", () => { v.currentTime = +v.dataset.off || 0; }, { once: true }); }
+    if (shown && heroVisible && !reduceMotion) v.play().catch(() => {}); else v.pause();
   });
-  $("#heroCap").textContent = HERO_CAP[i];
-  clearTimeout(heroTimer);
-  heroTimer = setTimeout(() => heroShow((heroIdx + 1) % heroVids.length), HERO_MS[i]);
 }
-if (!reduceMotion && heroVids.length) {
-  heroShow(0);
-  if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => {
-    heroVisible = e.isIntersecting;
-    const v = heroVids[heroIdx];
-    if (heroVisible) v.play().catch(() => {}); else v.pause();
-  }).observe($(".hero"));
-}
+heroSync();
+addEventListener("resize", heroSync, { passive: true });
+if ("IntersectionObserver" in window) new IntersectionObserver(([e]) => { heroVisible = e.isIntersecting; heroSync(); }).observe($(".hero"));
 
 // ---------- Configurador de paquetes ----------
-const state = { days: 1, mode: "full", qty: 12 };
-const priceOf = (mode, days, qty) =>
-  mode === "clips" ? PROD[days] : mode === "reels" ? PROD[days] - SIN_CLIPS[days] + REELS[qty] : PROD[days] + REELS[qty];
+const state = { days: 1, mode: "full" };
+const priceOf = (mode, days) =>
+  mode === "clips" ? PROD[days] : mode === "reels" ? PROD[days] - SIN_CLIPS[days] + REELS : PROD[days] + REELS;
 const daysLabel = (d) => (d === 1 ? "1 jornada (atardecer + amanecer)" : `${d} días completos`);
 
 function summaryText() {
-  const reels = state.mode === "clips" ? "" : ` · ${state.qty} reels`;
+  const reels = state.mode === "clips" ? " · material en bruto" : " · 12 reels";
   return `${daysLabel(state.days)} · ${MODE_NAME[state.mode]}${reels}`;
 }
 function render() {
   ["clips", "reels", "full"].forEach((m) => {
-    $(`[data-price="${m}"]`).textContent = fmtCOP(priceOf(m, state.days, state.qty));
+    $(`[data-price="${m}"]`).textContent = fmtCOP(priceOf(m, state.days));
     const per = $(`[data-per="${m}"]`);
-    if (m === "clips") per.textContent = state.days === 1 ? "2 jornadas de 4 horas" : `${fmtCOP(PROD[state.days] / state.days)} por día`;
-    else per.textContent = `Edición: ${fmtCOP(REELS[state.qty] / state.qty)} por reel`;
+    per.textContent = state.days === 1 ? "Atardecer + amanecer · 2 jornadas de 4 h" : `${state.days} días completos de grabación`;
   });
-  $$("[data-n]").forEach((n) => (n.textContent = state.qty));
   $$("#segDays button").forEach((b) => b.setAttribute("aria-pressed", +b.dataset.days === state.days));
-  $$("#segQty button").forEach((b) => b.setAttribute("aria-pressed", +b.dataset.qty === state.qty));
   $$(".pack").forEach((p) => p.setAttribute("aria-pressed", p.dataset.mode === state.mode));
-  $("#qtyRow").dataset.off = state.mode === "clips";
   $("#daysNote").textContent = DAYS_NOTE[state.days];
   $("#sumText").textContent = summaryText();
-  $("#sumTotal").textContent = fmtCOP(priceOf(state.mode, state.days, state.qty)) + " COP";
-  const msg = `Hola Juan, me interesa la propuesta de contenido para mi hotel: ${summaryText()} — ${fmtCOP(priceOf(state.mode, state.days, state.qty))} COP. ¿Qué fechas tienes disponibles?`;
+  $("#sumTotal").textContent = fmtCOP(priceOf(state.mode, state.days)) + " COP";
+  const msg = `Hola Juan, me interesa la propuesta de contenido para mi hotel: ${summaryText()} — ${fmtCOP(priceOf(state.mode, state.days))} COP. ¿Qué fechas tienes disponibles?`;
   $("#copyBtn").dataset.msg = msg;
   const wa = $("#waBtn");
   if (WHATSAPP) { wa.hidden = false; wa.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`; }
 }
 $$("#segDays button").forEach((b) => b.addEventListener("click", () => { state.days = +b.dataset.days; render(); bump(); }));
-$$("#segQty button").forEach((b) => b.addEventListener("click", () => { state.qty = +b.dataset.qty; if (state.mode === "clips") state.mode = "full"; render(); bump(); }));
 $$(".pack").forEach((p) => p.addEventListener("click", () => { state.mode = p.dataset.mode; render(); bump(); }));
 $("#copyBtn").addEventListener("click", (e) => {
   const msg = e.currentTarget.dataset.msg;
@@ -872,11 +901,8 @@ function bump() {
 
 // Tabla completa
 const rows = [];
-rows.push(`<tr><td class="group" colspan="4">Imagen · producción + clips</td></tr>`);
-rows.push(`<tr><td>Imagen</td>${[1, 2, 3].map((d) => `<td>${fmtCOP(priceOf("clips", d, 12))}</td>`).join("")}</tr>`);
-[["reels", "Atención · producción + estrategia"], ["full", "Completo · producción + estrategia + archivo"]].forEach(([m, t]) => {
-  rows.push(`<tr><td class="group" colspan="4">${t}</td></tr>`);
-  [12, 24, 36].forEach((q) => rows.push(`<tr><td>${q} reels</td>${[1, 2, 3].map((d) => `<td>${fmtCOP(priceOf(m, d, q))}</td>`).join("")}</tr>`));
+[["clips", "Esencia", "solo producción"], ["reels", "Alcance", "producción + 12 reels"], ["full", "Total", "producción + 12 reels + material"]].forEach(([m, n, t]) => {
+  rows.push(`<tr><td>${n} <small class="t-sub">${t}</small></td>${[1, 2, 3].map((d) => `<td>${fmtCOP(priceOf(m, d))}</td>`).join("")}</tr>`);
 });
 $("#priceTable").innerHTML = rows.join("");
 
@@ -885,7 +911,7 @@ const MENSUAL = 1900000;
 const FIDELIDAD = 0.2; // descuento sobre la producción para clientes fijos (desde el 6.º mes)
 $("#renewList").innerHTML = [1, 2, 3].map((d) => `<div><dt>${daysLabel(d)}</dt><dd><s>${fmtCOP(PROD[d])}</s><b>${fmtCOP(PROD[d] * (1 - FIDELIDAD))}</b></dd></div>`).join("");
 $("#copyMonthly").addEventListener("click", () => {
-  const msg = `Hola Juan, me interesa la contratación fija mensual para mi hotel (${fmtCOP(MENSUAL)} COP / mes, después del paquete inicial). ¿Cómo empezamos?`;
+  const msg = `Hola Juan, me interesa la contratación fija mensual para mi hotel (${fmtCOP(MENSUAL)} COP / mes: 12 reels de 20 s o 4 videos de 45 a 60 s, después del paquete inicial). ¿Cómo empezamos?`;
   const ok = () => { $("#copiedMonthly").hidden = false; setTimeout(() => ($("#copiedMonthly").hidden = true), 1800); };
   if (WHATSAPP) { window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank", "noopener"); return; }
   try { navigator.clipboard.writeText(msg).then(ok).catch(() => fallbackCopy(msg, ok)); } catch (_) { fallbackCopy(msg, ok); }
@@ -952,13 +978,19 @@ if (window.gsap && window.ScrollTrigger && animated) {
 
   ScrollTrigger.create({ start: 0, end: "max", onUpdate: (s) => setSky(s.progress) });
   gsap.to(".hero-bg", { yPercent: 18, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+  // Parallax suave del mosaico con el mouse
+  if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    const gx = gsap.quickTo(".hero-grid", "x", { duration: 1.2, ease: "power3" });
+    const gy = gsap.quickTo(".hero-grid", "y", { duration: 1.2, ease: "power3" });
+    addEventListener("pointermove", (e) => { gx((e.clientX / innerWidth - 0.5) * -28); gy((e.clientY / innerHeight - 0.5) * -16); });
+  }
 
   let introDone = false;
   const intro = () => {
     if (introDone) return; introDone = true;
     const pl = $("#preloader"); if (pl) pl.hidden = true;
     gsap.timeline()
-      .fromTo(".hero-bg video", { scale: 1.18 }, { scale: 1, duration: 2.4, ease: "expo.out" }, 0)
+      .fromTo(".hero-grid", { scale: 1.16, opacity: 0 }, { scale: 1, opacity: 1, duration: 2.4, ease: "expo.out" }, 0)
       .to(".hero-char", { y: 0, stagger: 0.035, duration: 1.2, ease: "power4.out" })
       .from(".hero-fade", { y: 24, opacity: 0, stagger: 0.12, duration: 0.9, ease: "power3.out", clearProps: "all" }, 0.4);
   };

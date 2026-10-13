@@ -7,29 +7,48 @@ import { site } from "../data";
 export default function Hero() {
   const root = useRef(null);
   const [reelOpen, setReelOpen] = useState(false);
-  const [current, setCurrent] = useState(0);
-  const videos = useRef([]);
+  const tiles = useRef([]);
 
-  // Portada: los videos se intercalan con un fundido
+  // Portada: carga y reproduce solo los reels visibles (en celular, uno)
   useEffect(() => {
-    const list = site.heroVideos;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || list.length < 2) {
-      videos.current[0]?.play().catch(() => {});
-      return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let visible = true;
+    const sync = () =>
+      tiles.current.forEach((v, i) => {
+        if (!v) return;
+        const shown = getComputedStyle(v.parentElement).display !== "none";
+        if (shown && !v.getAttribute("src")) {
+          v.src = site.heroVideos[i].src;
+          v.addEventListener("loadedmetadata", () => (v.currentTime = site.heroVideos[i].offset || 0), { once: true });
+        }
+        if (shown && visible && !reduce) v.play().catch(() => {});
+        else v.pause();
+      });
+    sync();
+    window.addEventListener("resize", sync, { passive: true });
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      sync();
+    });
+    io.observe(root.current);
+
+    // Parallax suave del mosaico con el mouse
+    let move;
+    if (!reduce && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      const gx = gsap.quickTo(".hero-grid", "x", { duration: 1.2, ease: "power3" });
+      const gy = gsap.quickTo(".hero-grid", "y", { duration: 1.2, ease: "power3" });
+      move = (e) => {
+        gx((e.clientX / window.innerWidth - 0.5) * -28);
+        gy((e.clientY / window.innerHeight - 0.5) * -16);
+      };
+      window.addEventListener("pointermove", move);
     }
-    const v = videos.current[current];
-    if (v) {
-      if (current > 0) v.currentTime = 0;
-      v.play().catch(() => {});
-    }
-    const prev = videos.current[(current - 1 + list.length) % list.length];
-    const pause = setTimeout(() => prev && prev !== v && prev.pause(), 1400);
-    const next = setTimeout(() => setCurrent((c) => (c + 1) % list.length), list[current].ms);
     return () => {
-      clearTimeout(pause);
-      clearTimeout(next);
+      window.removeEventListener("resize", sync);
+      if (move) window.removeEventListener("pointermove", move);
+      io.disconnect();
     };
-  }, [current]);
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -39,7 +58,7 @@ export default function Hero() {
         ctx.add(() =>
           gsap
             .timeline()
-          .fromTo(".hero-media", { scale: 1.25 }, { scale: 1, duration: 2.2, ease: "expo.out" })
+          .fromTo(".hero-grid", { scale: 1.16, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 2.4, ease: "expo.out" })
           .to(".hero-char", { yPercent: 0, stagger: 0.045, duration: 1.1, ease: "power4.out" }, 0.1)
           .to(".hero-fade", { autoAlpha: 1, y: 0, stagger: 0.12, duration: 0.9, ease: "power3.out" }, 0.6)
         );
@@ -70,19 +89,16 @@ export default function Hero() {
     <section className="hero" id="inicio" ref={root}>
       <div className="hero-media-wrap" data-cursor="Ver reel" onClick={() => setReelOpen(true)}>
         <div className="hero-media">
-          {site.heroVideos.map((v, i) => (
-            <video
-              key={v.src}
-              ref={(el) => (videos.current[i] = el)}
-              src={v.src}
-              poster={v.poster}
-              className={i === current ? "is-on" : ""}
-              muted
-              loop
-              playsInline
-              preload="auto"
-            />
-          ))}
+          <div className="hero-grid">
+            {site.heroVideos.map((v, i) => (
+              <div key={v.src} className={`hc ${v.solo ? "solo" : ""}`}>
+                <video ref={(el) => (tiles.current[i] = el)} poster={v.poster} muted loop playsInline preload="none" />
+              </div>
+            ))}
+          </div>
+          <div className="fog f1" />
+          <div className="fog f2" />
+          <div className="fog f3" />
         </div>
         <div className="hero-shade" />
       </div>

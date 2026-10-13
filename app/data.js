@@ -9,10 +9,12 @@ export const site = {
   // Reel principal (horizontal): archivo en /public/media (recomendado: 1080p, < 15 MB)
   reel: "/media/showreel-tuirak.mp4",
   reelPoster: "/media/showreel-tuirak.jpg",
-  // Portada: videos horizontales que se intercalan (ms = tiempo en pantalla)
+  // Portada: mosaico de reels verticales (clips de 6 s sin texto). solo: el que se ve en celular.
   heroVideos: [
-    { src: "/media/showreel-tuirak.mp4", poster: "/media/showreel-tuirak.jpg", ms: 12000 },
-    { src: "/media/termales-1.mp4", poster: "/media/termales-1.jpg", ms: 9000 },
+    { src: "/media/hero-1.mp4", poster: "/media/hero-1.jpg", offset: 0, solo: true },
+    { src: "/media/hero-2.mp4", poster: "/media/hero-2.jpg", offset: 2 },
+    { src: "/media/hero-3.mp4", poster: "/media/hero-3.jpg", offset: 4 },
+    { src: "/media/hero-4.mp4", poster: "/media/hero-4.jpg", offset: 1 },
   ],
 };
 

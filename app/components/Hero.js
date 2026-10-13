@@ -2,12 +2,34 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
-import Media from "./Media";
 import { site } from "../data";
 
 export default function Hero() {
   const root = useRef(null);
   const [reelOpen, setReelOpen] = useState(false);
+  const [current, setCurrent] = useState(0);
+  const videos = useRef([]);
+
+  // Portada: los videos se intercalan con un fundido
+  useEffect(() => {
+    const list = site.heroVideos;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || list.length < 2) {
+      videos.current[0]?.play().catch(() => {});
+      return;
+    }
+    const v = videos.current[current];
+    if (v) {
+      if (current > 0) v.currentTime = 0;
+      v.play().catch(() => {});
+    }
+    const prev = videos.current[(current - 1 + list.length) % list.length];
+    const pause = setTimeout(() => prev && prev !== v && prev.pause(), 1400);
+    const next = setTimeout(() => setCurrent((c) => (c + 1) % list.length), list[current].ms);
+    return () => {
+      clearTimeout(pause);
+      clearTimeout(next);
+    };
+  }, [current]);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -47,7 +69,21 @@ export default function Hero() {
   return (
     <section className="hero" id="inicio" ref={root}>
       <div className="hero-media-wrap" data-cursor="Ver reel" onClick={() => setReelOpen(true)}>
-        <Media className="hero-media" video={site.reel} image={site.reelPoster} tone={["#2a2f22", "#050505"]} />
+        <div className="hero-media">
+          {site.heroVideos.map((v, i) => (
+            <video
+              key={v.src}
+              ref={(el) => (videos.current[i] = el)}
+              src={v.src}
+              poster={v.poster}
+              className={i === current ? "is-on" : ""}
+              muted
+              loop
+              playsInline
+              preload="auto"
+            />
+          ))}
+        </div>
         <div className="hero-shade" />
       </div>
 

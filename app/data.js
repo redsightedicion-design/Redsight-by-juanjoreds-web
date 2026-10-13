@@ -102,7 +102,7 @@ export const projects = [
     category: "Hotel",
     region: "Guatapé",
     years: "",
-    views: [],
+    views: ["15 mil"],
     tone: ["#1d2f3a", "#08100f"],
     cover: "/media/bosko-1.jpg",
     preview: "/media/bosko-1.mp4",

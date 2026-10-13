@@ -298,6 +298,28 @@ main, footer { position: relative; z-index: 1; }
 .formula { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(16px, 3vw, 36px); align-items: center; margin-top: clamp(14px, 2vw, 22px); padding: clamp(18px, 2.4vw, 28px); border-radius: 16px; background: linear-gradient(100deg, color-mix(in srgb, var(--sun) 85%, #000 0%), var(--gold)); color: var(--ink); }
 .formula strong { font-family: var(--serif); font-weight: 400; font-size: clamp(36px, 4.4vw, 60px); line-height: 1; }
 .formula p { font-size: 16px; max-width: 60ch; }
+.keys { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 20px); margin-top: clamp(36px, 4vw, 56px); }
+.key { padding: clamp(20px, 2.4vw, 30px); border: 1px solid var(--line); border-radius: 16px; background: var(--panel); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.key b { font-family: var(--mono); font-weight: 400; font-size: 12px; letter-spacing: 0.12em; color: var(--gold); }
+.key h3 { font-family: var(--serif); font-size: clamp(28px, 2.8vw, 38px); line-height: 1.05; margin-top: 10px; }
+.key p { color: var(--mist); font-size: 15px; margin-top: 8px; }
+.mix { margin-top: clamp(14px, 2vw, 22px); padding: clamp(20px, 3vw, 36px); border-radius: 18px; border: 1px solid var(--line); background: var(--panel); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.mix-head h3 { font-family: var(--serif); font-size: clamp(34px, 4vw, 56px); line-height: 1; }
+.mix-head h3 em { color: var(--gold); }
+.mix-head p { color: var(--mist); margin-top: 10px; font-size: 16px; }
+.mix-bar { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 6px; margin-top: 24px; }
+.mix-bar i { aspect-ratio: 9 / 16; border-radius: 6px; }
+.mix-bar i.o { background: linear-gradient(170deg, var(--gold), color-mix(in srgb, var(--gold) 45%, transparent)); }
+.mix-bar i.a { background: linear-gradient(170deg, var(--sun), color-mix(in srgb, var(--sun) 40%, transparent)); }
+.mix-cols { display: grid; grid-template-columns: 2fr 1fr; gap: clamp(16px, 3vw, 40px); margin-top: 22px; }
+.mix-col strong { font-family: var(--serif); font-weight: 400; font-size: clamp(56px, 6vw, 84px); line-height: 0.9; }
+.mix-tag { display: inline-block; margin-left: 10px; vertical-align: super; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; color: var(--ink); }
+.mix-tag.o { background: var(--gold); } .mix-tag.a { background: var(--sun); }
+.mix-col p { color: var(--mist); font-size: 15px; margin-top: 8px; max-width: 46ch; }
+.teaser { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 28px; margin-top: clamp(14px, 2vw, 22px); padding: clamp(18px, 2.4vw, 28px); border-radius: 16px; background: linear-gradient(100deg, color-mix(in srgb, var(--sun) 30%, transparent), color-mix(in srgb, var(--gold) 18%, transparent)); border: 1px solid color-mix(in srgb, var(--gold) 40%, transparent); }
+.teaser p { max-width: 62ch; font-size: 16px; }
+.teaser b { font-weight: 400; color: var(--gold); }
+@media (max-width: 820px) { .keys { grid-template-columns: 1fr; } .mix-cols { grid-template-columns: 1fr; } .mix-bar { gap: 4px; } }
 .viral-note { margin-top: clamp(14px, 2vw, 22px); padding: clamp(16px, 2vw, 22px) clamp(18px, 2.4vw, 28px); border: 1px solid var(--line); border-left: 2px solid var(--gold); border-radius: 12px; background: var(--panel); color: var(--mist); font-size: 15px; max-width: 80ch; }
 .viral-note strong { color: var(--cream); font-weight: 400; }
 @media (max-width: 820px) { .round { grid-template-columns: 1fr; } .formula { grid-template-columns: 1fr; } }
@@ -438,7 +460,6 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
   <a class="logo" href="#inicio" data-go="inicio">Redsight<small>by juanjoreds</small></a>
   <nav class="nav-links" aria-label="Secciones">
     <button data-go="resultados">Resultados</button>
-    <button data-go="plan">El plan</button>
     <button data-go="estrategia">Estrategia</button>
     <button data-go="mensual">Contratación fija</button>
     <button class="cta-link" data-go="paquetes">Paquetes</button>
@@ -471,10 +492,9 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
         <ol class="hero-index hero-fade" aria-label="Contenido de la propuesta">
           <li><button data-go="quien"><span>Quién soy</span><span>01</span></button></li>
           <li><button data-go="resultados"><span>Resultados en hoteles</span><span>02</span></button></li>
-          <li><button data-go="plan"><span>La producción: la estética de tu hotel</span><span>03</span></button></li>
-          <li><button data-go="estrategia"><span>La estrategia: atraer más miradas</span><span>04</span></button></li>
-          <li><button data-go="paquetes"><span>Paquetes y precios</span><span>05</span></button></li>
-          <li><button data-go="mensual"><span>Contratación fija mensual</span><span>06</span></button></li>
+          <li><button data-go="estrategia"><span>La estrategia: el mayor alcance de tu hotel</span><span>03</span></button></li>
+          <li><button data-go="paquetes"><span>Paquetes y precios</span><span>04</span></button></li>
+          <li><button data-go="mensual"><span>Contratación fija mensual</span><span>05</span></button></li>
         </ol>
       </div>
     </div>
@@ -529,101 +549,36 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
     </div>
   </section>
 
-  <!-- PLAN -->
-  <section class="section wrap" id="plan">
-    <div class="inner">
-      <p class="eyebrow reveal"><time>11:00</time><span>La producción</span></p>
-      <h2 class="h2 reveal">La estética de tu hotel, <em>en su mejor luz</em></h2>
-      <p class="lead reveal">La atención empieza por cómo se ve tu hotel. Por eso grabamos en dos jornadas: la luz dorada de la tarde y la calma de la primera luz de la mañana siguiente. Es la base visual sobre la que se construye todo lo demás.</p>
-
-      <div class="day reveal">
-        <p class="eyebrow">Una jornada de grabación · el día que elijas</p>
-        <div class="day-scale" aria-hidden="true">
-          <div class="track"></div>
-          <!-- escala: día 1 12:00 m. (0%) → día 2 12:00 m. (100%) -->
-          <div class="block dusk" style="left:12.5%;width:16.67%"><span>Atardecer</span></div>
-          <div class="block dawn" style="left:70.83%;width:16.67%"><span>Amanecer</span></div>
-          <span class="tick" style="left:0%">12 m</span>
-          <span class="tick" style="left:12.5%">3 p.m.</span>
-          <span class="tick" style="left:29.17%">7 p.m.</span>
-          <span class="tick" style="left:50%">12 a.m.</span>
-          <span class="tick" style="left:70.83%">5 a.m.</span>
-          <span class="tick" style="left:87.5%">9 a.m.</span>
-        </div>
-        <div class="day-split">
-          <div class="jornada">
-            <h3>Primera jornada, <em>atardecer</em></h3>
-            <p class="when num">3:00 p. m. – 7:00 p. m.</p>
-            <p>Espacios, piscina, terrazas y experiencias con el sol bajo, hasta que se prenden las luces del hotel.</p>
-          </div>
-          <div class="jornada">
-            <h3>A la mañana siguiente, <em>amanecer</em></h3>
-            <p class="when num">5:00 a. m. – 9:00 a. m.</p>
-            <p>Neblina, primera luz, desayuno y tomas de dron con el aire quieto de la mañana.</p>
-          </div>
-        </div>
-        <dl class="day-facts">
-          <div class="fact"><dt>Formato</dt><dd>Todo en vertical 9:16, listo para redes sociales.</dd></div>
-          <div class="fact"><dt>Qué capturamos</dt><dd>Los espacios, ambientes y experiencias que hacen único a tu hotel, planeados contigo antes de grabar.</dd></div>
-          <div class="fact"><dt>Equipos</dt><dd>
-            <div class="gear"><span>Sony FX30 Cinema Line</span><span>Ronin RS 4 Pro</span><span>Dron DJI Air 3S</span><span>Lentes 11 · 35 · 85 mm</span><span>DJI Mic 2</span></div>
-          </dd></div>
-        </dl>
-      </div>
-    </div>
-  </section>
-
   <!-- ESTRATEGIA -->
   <section class="section wrap" id="estrategia">
     <div class="inner">
-      <p class="eyebrow reveal"><time>15:30</time><span>La estrategia</span></p>
-      <h2 class="h2 reveal">12 reels para buscar <em>la mayor viralidad</em></h2>
-      <p class="lead reveal">Una imagen bonita no basta si nadie la ve. Con el material grabado armamos <strong>12 reels de 20 segundos</strong> y no publicamos al azar: cada grupo de 4 cambia una sola cosa, medimos cuál retiene más gente y esa se queda para el siguiente grupo. Así cada publicación acerca a tu hotel a más personas.</p>
+      <p class="eyebrow reveal"><time>11:00</time><span>La estrategia</span></p>
+      <h2 class="h2 reveal">Un método para encontrar <em>el mayor alcance de tu hotel</em></h2>
+      <p class="lead reveal">No publicamos al azar. Con el material de tu hotel probamos, medimos y ajustamos las tres piezas que deciden si alguien se detiene en un video, hasta encontrar la combinación que lleva tu hotel a más personas.</p>
 
-      <div class="rounds">
-        <article class="round reveal" data-round="0">
-          <div>
-            <p class="round-label">Reels 1 al 4</p>
-            <h3>La toma de inicio</h3>
-            <p>Misma historia, cuatro primeras tomas distintas. Los primeros segundos deciden si alguien se queda.</p>
-          </div>
-          <div class="tests">
-            <div class="test"><small>Reel 1</small><span>Dron sobre la piscina</span><div class="bar"><i style="--w:46%"></i></div></div>
-            <div class="test" data-win><small>Reel 2</small><span>Neblina al amanecer</span><div class="bar"><i style="--w:88%"></i></div></div>
-            <div class="test"><small>Reel 3</small><span>Detalle del café</span><div class="bar"><i style="--w:38%"></i></div></div>
-            <div class="test"><small>Reel 4</small><span>Entrada a la habitación</span><div class="bar"><i style="--w:57%"></i></div></div>
-          </div>
-        </article>
-        <article class="round reveal" data-round="1">
-          <div>
-            <p class="round-label">Reels 5 al 8</p>
-            <h3>La frase en pantalla</h3>
-            <p>Con la toma ganadora, probamos cuatro frases diferentes para saber cuál engancha a tu cliente.</p>
-          </div>
-          <div class="tests">
-            <div class="test"><small>Reel 5</small><span>Frase A</span><div class="bar"><i style="--w:52%"></i></div></div>
-            <div class="test"><small>Reel 6</small><span>Frase B</span><div class="bar"><i style="--w:41%"></i></div></div>
-            <div class="test"><small>Reel 7</small><span>Frase C</span><div class="bar"><i style="--w:63%"></i></div></div>
-            <div class="test" data-win><small>Reel 8</small><span>Frase D</span><div class="bar"><i style="--w:91%"></i></div></div>
-          </div>
-        </article>
-        <article class="round reveal" data-round="2">
-          <div>
-            <p class="round-label">Reels 9 al 12</p>
-            <h3>La música</h3>
-            <p>Toma y frase ganadoras con cuatro audios distintos, entre tendencias y música de ambiente.</p>
-          </div>
-          <div class="tests">
-            <div class="test"><small>Reel 9</small><span>Audio 1</span><div class="bar"><i style="--w:58%"></i></div></div>
-            <div class="test" data-win><small>Reel 10</small><span>Audio 2</span><div class="bar"><i style="--w:94%"></i></div></div>
-            <div class="test"><small>Reel 11</small><span>Audio 3</span><div class="bar"><i style="--w:47%"></i></div></div>
-            <div class="test"><small>Reel 12</small><span>Audio 4</span><div class="bar"><i style="--w:61%"></i></div></div>
-          </div>
-        </article>
+      <div class="keys reveal">
+        <article class="key"><b>01</b><h3>El orden de las tomas</h3><p>Qué se ve primero y cómo avanza la historia.</p></article>
+        <article class="key"><b>02</b><h3>La frase</h3><p>Las palabras que hacen que tu cliente se quede.</p></article>
+        <article class="key"><b>03</b><h3>La música</h3><p>El audio que marca el ritmo y la emoción.</p></article>
       </div>
-      <div class="formula reveal">
-        <strong>La fórmula de tu hotel</strong>
-        <p>Al final de los 12 reels sabes qué toma, qué frase y qué música le funcionan a tu público. Esa combinación es la que repites en los siguientes videos y en la pauta. <small>(Las barras son un ejemplo de cómo se ve la medición.)</small></p>
+
+      <div class="mix reveal">
+        <div class="mix-head">
+          <h3>12 videos, <em>dos misiones</em></h3>
+          <p>De los 12 videos, organizamos 8 para publicación orgánica y 4 para pauta.</p>
+        </div>
+        <div class="mix-bar" aria-hidden="true">
+          <i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="o"></i><i class="a"></i><i class="a"></i><i class="a"></i><i class="a"></i>
+        </div>
+        <div class="mix-cols">
+          <div class="mix-col"><strong>8</strong><span class="mix-tag o">Orgánicos</span><p>Frases aspiracionales que enamoran, inspiran y hacen crecer la comunidad de tu hotel.</p></div>
+          <div class="mix-col"><strong>4</strong><span class="mix-tag a">Pauta</span><p>Venta directa de tus paquetes promocionales, para convertir esa atención en reservas.</p></div>
+        </div>
+      </div>
+
+      <div class="teaser reveal">
+        <p><b>Esto es solo un abrebocas.</b> El paso a paso de la estrategia, cómo probamos, medimos y combinamos cada pieza, te lo muestro en una reunión.</p>
+        <a class="btn btn-sun wa-link" data-wa="Hola Juan, vi tu propuesta y me gustaría agendar una reunión para conocer la estrategia para mi hotel." href="#" target="_blank" rel="noopener">Agendemos una reunión</a>
       </div>
       <p class="viral-note reveal"><strong>Sobre la viralidad.</strong> Hacemos todo el proceso con rigor —grabación, edición, pruebas y medición— para darle a tu hotel el mayor alcance posible. Aun así, la viralidad depende de personas reales: de cómo ven, comparten y reaccionan a cada video. Por eso los resultados son distintos en cada hotel y no se pueden garantizar.</p>
     </div>
@@ -682,8 +637,8 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
           <div><div class="price"><span data-price="reels">$3.900.000</span><small>COP</small></div><p class="per" data-per="reels"></p></div>
           <ul>
             <li>Grabación en los días que elijas</li>
-            <li>12 reels de 20 s editados por mí</li>
-            <li>Estrategia de prueba: toma, frase y música</li>
+            <li>12 reels de 20 s editados por mí: 8 orgánicos + 4 para pauta</li>
+            <li>Estrategia de alcance: tomas, frase y música</li>
             <li class="no">Entrega de los clips</li>
           </ul>
           <span class="choose">Elegir Mano a mano</span>
@@ -699,8 +654,8 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
           <div><div class="price"><span data-price="full">$4.500.000</span><small>COP</small></div><p class="per" data-per="full"></p></div>
           <ul>
             <li>Grabación en los días que elijas</li>
-            <li>12 reels de 20 s editados por mí</li>
-            <li>Estrategia de prueba: toma, frase y música</li>
+            <li>12 reels de 20 s editados por mí: 8 orgánicos + 4 para pauta</li>
+            <li>Estrategia de alcance: tomas, frase y música</li>
             <li>Todos los clips colorizados, organizados por espacio</li>
           </ul>
           <span class="choose">Elegir Un solo equipo</span>
@@ -834,7 +789,7 @@ const hotels = [
   { name: "La Colina Spa", cat: "Spa y bienestar", years: "4 años", views: [[950, "mil"], [368, "mil"], [66, "mil"]], videos: ["colina-1", "colina-2", "colina-3"], a: "#4a3a22", b: "#140f08" },
   { name: "Balcón del Cielo", cat: "Glamping", years: "1 año", views: [[901, "mil"], [139, "mil"], [35, "mil"]], videos: ["balcon-1", "balcon-2"], a: "#22344a", b: "#080c14" },
   { name: "Attraversiamo", cat: "Hotel y experiencias", years: "5 años", views: [[627, "mil"], [336, "mil"], [196, "mil"]], videos: ["attraversiamo-1", "attraversiamo-2"], a: "#4a2626", b: "#140808" },
-  { name: "Bosko", cat: "Hotel · Guatapé", years: "", views: [], videos: ["bosko-1"], a: "#22463f", b: "#08130f" },
+  { name: "Bosko", cat: "Hotel · Guatapé", years: "", views: [[15, "mil"]], videos: ["bosko-1"], a: "#22463f", b: "#08130f" },
   { name: "Termales Santa Rosa de Cabal", cat: "Termales", years: "", views: [[98.5, "mil"]], videos: ["termales-1"], wide: true, a: "#22463f", b: "#08130f" },
 ];
 
@@ -1103,7 +1058,7 @@ if (window.gsap && window.ScrollTrigger && animated) {
   });
 
   // Barras del día y de la estrategia
-  gsap.from(".day-scale .block", { scaleX: 0, duration: 1.1, ease: "power3.inOut", stagger: 0.25, scrollTrigger: { trigger: ".day-scale", start: "top 85%" } });
+  gsap.from(".mix-bar i", { scaleY: 0, transformOrigin: "50% 100%", duration: 0.7, ease: "power3.out", stagger: 0.05, scrollTrigger: { trigger: ".mix-bar", start: "top 85%" } });
   $$(".round").forEach((round) => {
     ScrollTrigger.create({ trigger: round, start: "top 72%", once: true, onEnter: () => {
       gsap.from($$(".bar i", round), { scaleX: 0, duration: 1.2, ease: "power2.out", stagger: 0.1, onComplete: () => markWinners(round) });

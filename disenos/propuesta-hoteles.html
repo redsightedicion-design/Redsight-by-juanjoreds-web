@@ -105,8 +105,8 @@ main, footer { position: relative; z-index: 1; }
 .hero > .inner { width: 100%; }
 .hero-bg { position: absolute; inset: 0; z-index: -1; background: var(--ink); }
 /* Mosaico: reels verticales lado a lado (escritorio) · un solo reel (celular) */
-.hero-grid { position: absolute; inset: -6% 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 0.9vw, 14px); padding-inline: clamp(8px, 0.9vw, 14px); transform-origin: 50% 45%; }
-.hc { position: relative; height: 100%; border-radius: 14px; overflow: hidden; background: #1c130d; transform: translateY(var(--y, 0)); }
+.hero-grid { position: absolute; inset: -6% 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(10px, 1.3vw, 20px); padding-inline: clamp(10px, 1.3vw, 20px); transform-origin: 50% 45%; }
+.hc { position: relative; height: 100%; border-radius: 14px; overflow: hidden; background: #1c130d; transform: translateY(var(--y, 0)); box-shadow: 0 0 0 1px rgba(247,239,230,0.12), 0 30px 60px rgba(0,0,0,0.5); }
 .hc:nth-child(odd) { --y: -4%; }
 .hc:nth-child(even) { --y: 4%; }
 .anim .hc { animation: hc-drift 18s ease-in-out infinite alternate; }
@@ -474,7 +474,7 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
     <div class="hero-bg" aria-hidden="true">
       <div class="hero-grid">
         <div class="hc solo"><video data-src="media/hero-1.mp4" data-off="0" poster="media/hero-1.jpg" muted loop playsinline preload="none"></video></div>
-        <div class="hc"><video data-src="media/hero-2.mp4" data-off="2" poster="media/hero-2.jpg" muted loop playsinline preload="none"></video></div>
+        <div class="hc"><video data-src="media/hero-2b.mp4" data-off="2" poster="media/hero-2b.jpg" muted loop playsinline preload="none"></video></div>
         <div class="hc"><video data-src="media/hero-3.mp4" data-off="4" poster="media/hero-3.jpg" muted loop playsinline preload="none"></video></div>
         <div class="hc"><video data-src="media/hero-4.mp4" data-off="1" poster="media/hero-4.jpg" muted loop playsinline preload="none"></video></div>
       </div>

@@ -16,7 +16,7 @@ export const site = {
   // Portada: mosaico de reels verticales (clips de 6 s sin texto). solo: el que se ve en celular.
   heroVideos: [
     { src: "/media/hero-1.mp4", poster: "/media/hero-1.jpg", offset: 0, solo: true },
-    { src: "/media/hero-2.mp4", poster: "/media/hero-2.jpg", offset: 2 },
+    { src: "/media/hero-2b.mp4", poster: "/media/hero-2b.jpg", offset: 2 },
     { src: "/media/hero-3.mp4", poster: "/media/hero-3.jpg", offset: 4 },
     { src: "/media/hero-4.mp4", poster: "/media/hero-4.jpg", offset: 1 },
   ],

@@ -139,8 +139,8 @@ body::after {
 .hero { position: relative; height: 100svh; min-height: 560px; overflow: hidden; }
 .hero-media-wrap { position: absolute; inset: 0; }
 .hero-media { position: absolute; inset: 0; background: var(--bg); }
-.hero-grid { position: absolute; inset: -6% 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 0.9vw, 14px); padding-inline: clamp(8px, 0.9vw, 14px); transform-origin: 50% 45%; }
-.hc { position: relative; height: 100%; border-radius: 14px; overflow: hidden; background: #1c130d; transform: translateY(var(--y, 0)); animation: hc-drift 18s ease-in-out infinite alternate; }
+.hero-grid { position: absolute; inset: -6% 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(10px, 1.3vw, 20px); padding-inline: clamp(10px, 1.3vw, 20px); transform-origin: 50% 45%; }
+.hc { position: relative; height: 100%; border-radius: 14px; overflow: hidden; background: #1c130d; transform: translateY(var(--y, 0)); box-shadow: 0 0 0 1px rgba(247,239,230,0.12), 0 30px 60px rgba(0,0,0,0.5); animation: hc-drift 18s ease-in-out infinite alternate; }
 .hc:nth-child(odd) { --y: -4%; }
 .hc:nth-child(even) { --y: 4%; }
 .hc:nth-child(2) { animation-delay: -6s; }

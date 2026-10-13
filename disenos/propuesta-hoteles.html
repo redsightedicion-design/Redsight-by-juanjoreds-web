@@ -351,6 +351,7 @@ td.group { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; te
 .feed-opt strong { font-family: var(--serif); font-weight: 400; font-size: clamp(48px, 5vw, 68px); line-height: 0.9; color: var(--gold); }
 .feed-opt span { font-size: 16px; color: var(--cream); }
 .feed-opt small { font-size: 13px; color: var(--mist); }
+.feed-more { font-size: 13px; color: var(--mist); margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
 .feed-or { font-family: var(--serif); font-style: italic; font-size: 24px; color: var(--mist); }
 @media (max-width: 520px) { .feed-opts { grid-template-columns: 1fr; } .feed-or { justify-self: start; } }
 .monthly-note { color: var(--mist); font-size: 14px; margin-top: -8px; max-width: 48ch; }
@@ -608,9 +609,9 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       <div class="packs" role="group" aria-label="Paquetes">
         <button class="pack" id="p-clips" data-mode="clips" aria-pressed="false">
           <div>
-            <p class="pack-kicker">Solo producción</p>
-            <h3>Esencia</h3>
-            <p class="who">Tu hotel grabado con estética de cine. Ideal si ya tienes quién edite y publique.</p>
+            <p class="pack-kicker">Producción + clips</p>
+            <h3>Vuelo propio</h3>
+            <p class="who">Para el hotel independiente. Grabamos tu hotel con estética de cine y tu equipo edita y publica a su ritmo.</p>
           </div>
           <div><div class="price"><span data-price="clips">$2.500.000</span><small>COP</small></div><p class="per" data-per="clips"></p></div>
           <ul>
@@ -620,15 +621,15 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
             <li class="no">Reels editados</li>
             <li class="no">Estrategia de publicación</li>
           </ul>
-          <span class="choose">Elegir Esencia</span>
+          <span class="choose">Elegir Vuelo propio</span>
         </button>
 
         <button class="pack" id="p-reels" data-mode="reels" aria-pressed="false">
           <span class="tag">Recomendado</span>
           <div>
-            <p class="pack-kicker">Producción + 12 reels</p>
-            <h3>Alcance</h3>
-            <p class="who">Tu hotel grabado y convertido en 12 reels listos para publicar, con la estrategia para encontrar el que más gente atrae.</p>
+            <p class="pack-kicker">Producción + creación de videos</p>
+            <h3>Mano a mano</h3>
+            <p class="who">Trabajamos en conjunto. Yo grabo y creo 12 reels con la estrategia; tu hotel los publica y juntos leemos qué le funciona a tu público.</p>
           </div>
           <div><div class="price"><span data-price="reels">$3.900.000</span><small>COP</small></div><p class="per" data-per="reels"></p></div>
           <ul>
@@ -637,15 +638,15 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
             <li>Estrategia de prueba: toma, frase y música</li>
             <li class="no">Material en bruto</li>
           </ul>
-          <span class="choose">Elegir Alcance</span>
+          <span class="choose">Elegir Mano a mano</span>
         </button>
 
         <button class="pack" id="p-full" data-mode="full" aria-pressed="true">
           <span class="tag">El más completo</span>
           <div>
-            <p class="pack-kicker">Producción + 12 reels + material</p>
-            <h3>Total</h3>
-            <p class="who">Todo lo de Alcance y además todo el material en bruto, para que tu equipo lo use cuando quiera.</p>
+            <p class="pack-kicker">Producción + clips + videos</p>
+            <h3>Un solo equipo</h3>
+            <p class="who">Nuestros equipos trabajan juntos. Recibes los 12 reels con la estrategia y además todo el material, para que tu equipo siga creando cuando quiera.</p>
           </div>
           <div><div class="price"><span data-price="full">$4.500.000</span><small>COP</small></div><p class="per" data-per="full"></p></div>
           <ul>
@@ -654,15 +655,15 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
             <li>Estrategia de prueba: toma, frase y música</li>
             <li>Todo el material en bruto, organizado por espacio</li>
           </ul>
-          <span class="choose">Elegir Total</span>
+          <span class="choose">Elegir Un solo equipo</span>
         </button>
       </div>
-      <p class="packs-note reveal">Cada paquete incluye como máximo 12 reels. Para seguir publicando cada mes está la <button class="link" data-go="mensual">contratación fija</button>.</p>
+      <p class="packs-note reveal">Cada paquete incluye como máximo 12 reels. ¿Necesitas más contenido? Lo cotizamos aparte. Para seguir publicando cada mes está la <button class="link" data-go="mensual">contratación fija</button>.</p>
 
       <div class="summary" id="summary">
         <div class="summary-text">
           <small>Tu selección</small>
-          <b id="sumText">1 jornada · Total · 12 reels</b>
+          <b id="sumText">1 jornada · Un solo equipo · 12 reels</b>
         </div>
         <div class="summary-total" id="sumTotal">$4.500.000</div>
         <div class="summary-actions">
@@ -691,7 +692,7 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       <h2 class="h2 reveal">Que la atención <em>no se apague</em></h2>
       <p class="lead reveal">Un video viral es un momento; una presencia constante es lo que hace que la gente recuerde tu hotel. La contratación fija es el siguiente paso para los hoteles que ya trabajaron conmigo en uno de los paquetes iniciales y quieren mantener su contenido activo mes a mes.</p>
       <ol class="path reveal" aria-label="Cómo funciona">
-        <li><b>01</b><span>Paquete inicial</span><small>Esencia, Alcance o Total</small></li>
+        <li><b>01</b><span>Paquete inicial</span><small>Vuelo propio, Mano a mano o Un solo equipo</small></li>
         <li><b>02</b><span>Contratación fija</span><small>$1.900.000 al mes · mínimo 6 meses</small></li>
         <li><b>03</b><span>Renovación de producción</span><small>Tarifa de cliente fijo</small></li>
       </ol>
@@ -701,12 +702,13 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
           <div class="price"><span class="num">$1.900.000</span><small>COP / mes</small></div>
           <p class="monthly-note">Solo para hoteles que ya contrataron uno de los paquetes iniciales. Permanencia mínima de 6 meses, con pago anticipado cada mes.</p>
           <div class="feed" role="group" aria-label="Formato del feed mensual">
-            <p class="feed-label">Cada mes eliges el formato de tu feed</p>
+            <p class="feed-label">Cada mes, de 4 a 12 videos según el formato</p>
             <div class="feed-opts">
-              <div class="feed-opt"><strong>12</strong><span>reels de 20 s</span><small>Ritmo constante: casi 3 publicaciones por semana.</small></div>
+              <div class="feed-opt"><strong>12</strong><span>reels de 20 s</span><small>Máximo al mes. Ritmo constante: casi 3 publicaciones por semana.</small></div>
               <span class="feed-or">o</span>
-              <div class="feed-opt"><strong>4</strong><span>videos de 45 a 60 s</span><small>Historias más largas: una pieza fuerte por semana.</small></div>
+              <div class="feed-opt"><strong>4</strong><span>videos de 45 a 60 s</span><small>Mínimo al mes. Historias más largas: una pieza fuerte por semana.</small></div>
             </div>
+            <p class="feed-more">¿Necesitas más de 12 al mes? Cotizamos aparte el paquete que necesites.</p>
           </div>
           <ul>
             <li>Editados con el material de tu hotel</li>
@@ -779,7 +781,7 @@ const DAYS_NOTE = {
   2: "Dos días completos de grabación: más espacios, más experiencias y más variedad de luz.",
   3: "Tres días completos: ideal para hoteles grandes, varias sedes o temporada de eventos.",
 };
-const MODE_NAME = { clips: "Esencia", reels: "Alcance", full: "Total" };
+const MODE_NAME = { clips: "Vuelo propio", reels: "Mano a mano", full: "Un solo equipo" };
 
 // Videos: archivos en media/ (nombre-n.mp4 + nombre-n.jpg como portada). wide: video horizontal.
 const hotels = [
@@ -901,7 +903,7 @@ function bump() {
 
 // Tabla completa
 const rows = [];
-[["clips", "Esencia", "solo producción"], ["reels", "Alcance", "producción + 12 reels"], ["full", "Total", "producción + 12 reels + material"]].forEach(([m, n, t]) => {
+[["clips", "Vuelo propio", "producción + clips"], ["reels", "Mano a mano", "producción + 12 reels"], ["full", "Un solo equipo", "producción + clips + 12 reels"]].forEach(([m, n, t]) => {
   rows.push(`<tr><td>${n} <small class="t-sub">${t}</small></td>${[1, 2, 3].map((d) => `<td>${fmtCOP(priceOf(m, d))}</td>`).join("")}</tr>`);
 });
 $("#priceTable").innerHTML = rows.join("");
@@ -911,7 +913,7 @@ const MENSUAL = 1900000;
 const FIDELIDAD = 0.2; // descuento sobre la producción para clientes fijos (desde el 6.º mes)
 $("#renewList").innerHTML = [1, 2, 3].map((d) => `<div><dt>${daysLabel(d)}</dt><dd><s>${fmtCOP(PROD[d])}</s><b>${fmtCOP(PROD[d] * (1 - FIDELIDAD))}</b></dd></div>`).join("");
 $("#copyMonthly").addEventListener("click", () => {
-  const msg = `Hola Juan, me interesa la contratación fija mensual para mi hotel (${fmtCOP(MENSUAL)} COP / mes: 12 reels de 20 s o 4 videos de 45 a 60 s, después del paquete inicial). ¿Cómo empezamos?`;
+  const msg = `Hola Juan, me interesa la contratación fija mensual para mi hotel (${fmtCOP(MENSUAL)} COP / mes: de 4 a 12 videos al mes, después del paquete inicial). ¿Cómo empezamos?`;
   const ok = () => { $("#copiedMonthly").hidden = false; setTimeout(() => ($("#copiedMonthly").hidden = true), 1800); };
   if (WHATSAPP) { window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`, "_blank", "noopener"); return; }
   try { navigator.clipboard.writeText(msg).then(ok).catch(() => fallbackCopy(msg, ok)); } catch (_) { fallbackCopy(msg, ok); }

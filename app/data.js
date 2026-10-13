@@ -94,7 +94,7 @@ export const projects = [
     wide: true,
     cover: "/media/termales-1.jpg",
     preview: "/media/termales-1.mp4",
-    reels: [], // su video es horizontal: no va en el muro de reels (solo verticales)
+    reels: ["termales-1"],
   },
   {
     slug: "bosko-guatape",

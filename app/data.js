@@ -119,7 +119,7 @@ export const contact = {
   // Correo de respaldo: si no hay endpoint, el formulario abre el correo con el mensaje ya escrito
   email: "",
   // Número en formato internacional sin "+" ni espacios (ej. "573001234567")
-  whatsapp: "",
+  whatsapp: "573122853795",
   instagram: "",
   projectTypes: ["Reels para redes", "Film de marca", "Fotografía", "Documental", "Otro"],
 };

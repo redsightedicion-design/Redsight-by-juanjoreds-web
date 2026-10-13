@@ -384,6 +384,7 @@ td.group { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; te
 .feed-more { font-size: 13px; color: var(--mist); margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
 .feed-or { font-family: var(--serif); font-style: italic; font-size: 24px; color: var(--mist); }
 @media (max-width: 520px) { .feed-opts { grid-template-columns: 1fr; } .feed-or { justify-self: start; } }
+.wa-link { align-self: flex-start; }
 .monthly-eval { font-size: 14px; color: var(--mist); padding: 12px 14px; border: 1px dashed rgba(232,183,131,0.45); border-radius: 10px; }
 .monthly-eval b { color: var(--gold); font-weight: 400; }
 .monthly-note { color: var(--mist); font-size: 14px; margin-top: -8px; max-width: 48ch; }
@@ -744,6 +745,7 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
           <p class="pack-kicker">Contratación fija mensual · valor de referencia</p>
           <div class="price"><span class="num">$1.900.000</span><small>COP / mes</small></div>
           <p class="monthly-note">Solo para hoteles que ya contrataron uno de los paquetes iniciales. Permanencia mínima de 6 meses, con pago anticipado cada mes.</p>
+          <a class="btn btn-sun wa-link" data-wa="Hola Juan, me interesa la contratación fija mensual para mi hotel. ¿Podemos hablar para evaluarla?" href="#" target="_blank" rel="noopener">Hablemos de tu hotel por WhatsApp</a>
           <p class="monthly-eval"><b>Cada contratación fija se evalúa por hotel.</b> El valor final depende del análisis de tu hotel y de su distancia de Medellín, y lo definimos conversando directamente.</p>
           <div class="feed" role="group" aria-label="Formato del feed mensual">
             <p class="feed-label">Cada mes, de 4 a 12 videos según el formato</p>
@@ -792,7 +794,8 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
       <h2 class="h2 reveal">¿Hacemos que tu hotel <em>se note?</em></h2>
       <p class="lead reveal">Escríbeme con el paquete que elegiste y buscamos la fecha que mejor le funcione a tu hotel.</p>
       <div class="close-actions reveal">
-        <button class="btn btn-sun" data-go="paquetes">Volver a los paquetes</button>
+        <a class="btn btn-sun wa-link" data-wa="Hola Juan, vi tu propuesta de contenido para hoteles y me gustaría hablar sobre mi hotel." href="#" target="_blank" rel="noopener">Escríbeme por WhatsApp</a>
+        <button class="btn" data-go="paquetes">Volver a los paquetes</button>
         <a class="btn" href="https://redsightagency.my.canva.site/portafolio-hoteles-redsight-by-juanjoreds" target="_blank" rel="noopener">Portafolio completo ↗</a>
       </div>
     </div>
@@ -812,7 +815,7 @@ footer { padding: 28px var(--gutter) calc(80px + env(safe-area-inset-bottom, 0px
 <script>
 // ====== Configuración: cambia aquí precios y contacto ======
 // Número de WhatsApp en formato internacional sin "+" ni espacios (ej. "573001234567"). Vacío = solo "Copiar resumen".
-const WHATSAPP = "";
+const WHATSAPP = "573122853795";
 const PROD = { 1: 2500000, 2: 3500000, 3: 4500000 };          // producción + clips por días
 const REELS = 2000000;                                        // 12 reels de 20 s + estrategia (máximo por paquete)
 const SIN_CLIPS = { 1: 600000, 2: 700000, 3: 800000 };        // descuento cuando no se entregan los clips en bruto
@@ -976,6 +979,8 @@ const MENSUAL = 1900000;
 const FIDELIDAD = 0.2; // descuento sobre la producción para clientes fijos (desde el 6.º mes)
 $("#renewList").innerHTML = [1, 2, 3].map((d) => `<div><dt>${daysLabel(d)}</dt><dd><s>${fmtCOP(PROD[d])}</s><b>${fmtCOP(PROD[d] * (1 - FIDELIDAD))}</b></dd></div>`).join("");
 render();
+// Enlaces directos a WhatsApp con el mensaje ya escrito
+$$(".wa-link").forEach((a) => { a.href = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(a.dataset.wa)}`; });
 
 // ---------- Texto partido en letras ----------
 $$(".split").forEach((el) => {

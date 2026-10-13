@@ -11,13 +11,14 @@ export default function Preloader() {
       const tl = gsap.timeline({
         onComplete: () => {
           if (root.current) root.current.style.display = "none";
-          window.dispatchEvent(new Event("preloader:done"));
         },
       });
-      tl.from(".pl-char", { yPercent: 110, stagger: 0.05, duration: 0.8, ease: "power4.out" })
-        .to(".pl-bar", { scaleX: 1, duration: 0.9, ease: "power2.inOut" }, "-=0.4")
-        .to(".pl-char", { yPercent: -110, stagger: 0.03, duration: 0.6, ease: "power4.in" }, "+=0.1")
-        .to(root.current, { yPercent: -100, duration: 0.9, ease: "expo.inOut" }, "-=0.2");
+      // Carga corta; la portada empieza a animarse mientras la cortina sube
+      tl.from(".pl-char", { yPercent: 110, stagger: 0.035, duration: 0.55, ease: "power4.out" })
+        .to(".pl-bar", { scaleX: 1, duration: 0.6, ease: "power2.inOut" }, "-=0.3")
+        .to(".pl-char", { yPercent: -110, stagger: 0.02, duration: 0.35, ease: "power4.in" }, "+=0.05")
+        .to(root.current, { yPercent: -100, duration: 0.6, ease: "expo.inOut" }, "-=0.15")
+        .call(() => window.dispatchEvent(new Event("preloader:done")), null, "-=0.4");
     }, root);
     return () => ctx.revert();
   }, []);

@@ -154,10 +154,10 @@ body::after {
   .hc { display: none; border-radius: 0; transform: none; animation: none; }
   .hc.solo { display: block; }
 }
-.fog { position: absolute; inset: -30%; pointer-events: none; mix-blend-mode: screen; filter: blur(28px); }
+.fog { position: absolute; inset: -30%; pointer-events: none; mix-blend-mode: screen; will-change: transform; }
 .fog.f1 { background: radial-gradient(38% 22% at 28% 62%, rgba(236,220,200,0.22), transparent 70%), radial-gradient(30% 18% at 72% 48%, rgba(236,220,200,0.16), transparent 70%); animation: fog-a 46s ease-in-out infinite alternate; }
 .fog.f2 { background: radial-gradient(45% 20% at 60% 72%, rgba(236,220,200,0.2), transparent 70%), radial-gradient(28% 16% at 18% 38%, rgba(236,220,200,0.12), transparent 70%); animation: fog-b 58s ease-in-out infinite alternate; }
-.fog.f3 { inset: auto -10% -5% -10%; height: 55%; filter: blur(40px); background: radial-gradient(60% 60% at 50% 100%, rgba(236,220,200,0.18), transparent 70%); animation: fog-c 22s ease-in-out infinite alternate; }
+.fog.f3 { inset: auto -10% -5% -10%; height: 55%; background: radial-gradient(60% 60% at 50% 100%, rgba(236,220,200,0.18), transparent 70%); animation: fog-c 22s ease-in-out infinite alternate; }
 @keyframes fog-a { from { transform: translate3d(-8%, 2%, 0) scale(1); } to { transform: translate3d(10%, -3%, 0) scale(1.15); } }
 @keyframes fog-b { from { transform: translate3d(9%, -2%, 0) scale(1.1); } to { transform: translate3d(-10%, 3%, 0) scale(0.95); } }
 @keyframes fog-c { from { opacity: 0.6; transform: translateX(-4%); } to { opacity: 1; transform: translateX(4%); } }

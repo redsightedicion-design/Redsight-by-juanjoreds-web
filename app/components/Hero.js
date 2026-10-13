@@ -51,18 +51,24 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
+    let safety;
     const ctx = gsap.context(() => {
       gsap.set(".hero-char", { yPercent: 120 });
       gsap.set(".hero-fade", { autoAlpha: 0, y: 20 });
-      const intro = () =>
+      let started = false;
+      const intro = () => {
+        if (started) return;
+        started = true;
         ctx.add(() =>
           gsap
             .timeline()
-          .fromTo(".hero-grid", { scale: 1.16, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 2.4, ease: "expo.out" })
-          .to(".hero-char", { yPercent: 0, stagger: 0.045, duration: 1.1, ease: "power4.out" }, 0.1)
-          .to(".hero-fade", { autoAlpha: 1, y: 0, stagger: 0.12, duration: 0.9, ease: "power3.out" }, 0.6)
+            .fromTo(".hero-grid", { scale: 1.16, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, duration: 2.2, ease: "expo.out" })
+            .to(".hero-char", { yPercent: 0, stagger: 0.035, duration: 0.95, ease: "power4.out" }, 0.05)
+            .to(".hero-fade", { autoAlpha: 1, y: 0, stagger: 0.1, duration: 0.8, ease: "power3.out" }, 0.45)
         );
+      };
       window.addEventListener("preloader:done", intro, { once: true });
+      safety = setTimeout(intro, 3000); // seguridad: si la carga se traba, la portada aparece igual
 
       gsap.to(".hero-media", {
         yPercent: 25,
@@ -76,7 +82,10 @@ export default function Hero() {
         scrollTrigger: { trigger: root.current, start: "top top", end: "bottom top", scrub: true },
       });
     }, root);
-    return () => ctx.revert();
+    return () => {
+      clearTimeout(safety);
+      ctx.revert();
+    };
   }, []);
 
   useEffect(() => {

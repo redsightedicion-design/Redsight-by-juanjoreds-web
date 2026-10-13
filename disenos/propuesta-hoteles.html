@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500&family=Geist+Mono:wght@400;500&display=swap">
 <script>
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("anim");
+  // Seguro: si las animaciones no arrancan en 3 s (internet lento), se muestra todo sin animar
+  setTimeout(() => { if (!window.__introStarted) document.documentElement.classList.remove("anim"); }, 3000);
 </script>
 <style>
 /* Concepto: la propuesta es un día de grabación. El fondo recorre tonos café (madrugada, amanecer, día, atardecer y noche) mientras el cliente baja. Paleta de colores marrones. */
@@ -120,10 +122,10 @@ main, footer { position: relative; z-index: 1; }
   .hc.solo { display: block; }
 }
 /* Neblina */
-.fog { position: absolute; inset: -30%; pointer-events: none; mix-blend-mode: screen; filter: blur(28px); }
+.fog { position: absolute; inset: -30%; pointer-events: none; mix-blend-mode: screen; will-change: transform; }
 .fog.f1 { background: radial-gradient(38% 22% at 28% 62%, rgba(236,220,200,0.22), transparent 70%), radial-gradient(30% 18% at 72% 48%, rgba(236,220,200,0.16), transparent 70%); }
 .fog.f2 { background: radial-gradient(45% 20% at 60% 72%, rgba(236,220,200,0.2), transparent 70%), radial-gradient(28% 16% at 18% 38%, rgba(236,220,200,0.12), transparent 70%); }
-.fog.f3 { inset: auto -10% -5% -10%; height: 55%; filter: blur(40px); background: radial-gradient(60% 60% at 50% 100%, rgba(236,220,200,0.18), transparent 70%); }
+.fog.f3 { inset: auto -10% -5% -10%; height: 55%; background: radial-gradient(60% 60% at 50% 100%, rgba(236,220,200,0.18), transparent 70%); }
 .anim .fog.f1 { animation: fog-a 46s ease-in-out infinite alternate; }
 .anim .fog.f2 { animation: fog-b 58s ease-in-out infinite alternate; }
 .anim .fog.f3 { animation: fog-c 22s ease-in-out infinite alternate; }
@@ -1070,18 +1072,20 @@ if (window.gsap && window.ScrollTrigger && animated) {
     if (introDone) return; introDone = true;
     const pl = $("#preloader"); if (pl) pl.hidden = true;
     gsap.timeline()
-      .fromTo(".hero-grid", { scale: 1.16, opacity: 0 }, { scale: 1, opacity: 1, duration: 2.4, ease: "expo.out" }, 0)
-      .to(".hero-char", { y: 0, stagger: 0.035, duration: 1.2, ease: "power4.out" })
-      .from(".hero-fade", { y: 24, opacity: 0, stagger: 0.12, duration: 0.9, ease: "power3.out", clearProps: "all" }, 0.4);
+      .fromTo(".hero-grid", { scale: 1.16, opacity: 0 }, { scale: 1, opacity: 1, duration: 2.2, ease: "expo.out" }, 0)
+      .to(".hero-char", { y: 0, stagger: 0.022, duration: 0.95, ease: "power4.out" }, 0.05)
+      .from(".hero-fade", { y: 24, opacity: 0, stagger: 0.1, duration: 0.8, ease: "power3.out", clearProps: "all" }, 0.45);
   };
-  // Preloader: el sol sale sobre el horizonte
+  // Preloader corto: el sol sale sobre el horizonte
+  window.__introStarted = true;
   gsap.timeline({ onComplete: intro })
-    .to(".pl-horizon", { scaleX: 1, duration: 0.6, ease: "power3.inOut" })
-    .to(".pl-sun", { y: -112, duration: 1.0, ease: "power2.out" }, "-=0.15")
-    .to(".pl-char", { y: 0, stagger: 0.05, duration: 0.7, ease: "power4.out" }, "-=0.8")
-    .to(".pl-char", { y: "-110%", stagger: 0.03, duration: 0.5, ease: "power4.in" }, "+=0.25")
-    .to("#preloader", { yPercent: -100, duration: 0.8, ease: "expo.inOut" }, "-=0.2");
-  setTimeout(intro, 4500); // seguridad si algo falla
+    .to(".pl-horizon", { scaleX: 1, duration: 0.35, ease: "power3.inOut" })
+    .to(".pl-sun", { y: -112, duration: 0.6, ease: "power2.out" }, "-=0.1")
+    .to(".pl-char", { y: 0, stagger: 0.03, duration: 0.45, ease: "power4.out" }, "-=0.5")
+    .to(".pl-char", { y: "-110%", stagger: 0.015, duration: 0.3, ease: "power4.in" }, "+=0.1")
+    .to("#preloader", { yPercent: -100, duration: 0.55, ease: "expo.inOut" }, "-=0.12")
+    .call(intro, null, "-=0.4");
+  setTimeout(intro, 2200); // seguridad si algo falla
 
   // Entradas al hacer scroll (parten de un estado visible)
   $$(".reveal").forEach((el) => {

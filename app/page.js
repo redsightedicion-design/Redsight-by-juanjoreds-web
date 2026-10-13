@@ -5,6 +5,7 @@ import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Work from "./components/Work";
+import Reels from "./components/Reels";
 import Marquee from "./components/Marquee";
 import Services from "./components/Services";
 import Contact from "./components/Contact";
@@ -20,6 +21,7 @@ export default function Home() {
         <Hero />
         <About />
         <Work />
+        <Reels />
         <Marquee />
         <Services />
         <Contact />

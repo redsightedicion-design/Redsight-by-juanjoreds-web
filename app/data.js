@@ -6,9 +6,9 @@ export const site = {
   director: "Juan José Rojas Cano",
   location: "Pereira, Colombia",
   tagline: "Contenido audiovisual para hoteles y marcas de turismo que quieren contar mejor su historia.",
-  // Reel principal: pon el archivo en /public/media/reel.mp4 (recomendado: 1080p, 20–40 s, sin audio, < 15 MB)
-  reel: "/media/reel.mp4",
-  reelPoster: "/media/reel-poster.jpg",
+  // Reel principal (horizontal): archivo en /public/media (recomendado: 1080p, < 15 MB)
+  reel: "/media/showreel-tuirak.mp4",
+  reelPoster: "/media/showreel-tuirak.jpg",
 };
 
 export const about =
@@ -22,6 +22,7 @@ export const stats = [
 ];
 
 // cover / preview: rutas en /public/media (imagen y clip corto en bucle). Mientras no existan se muestra un fondo de color.
+// reels: nombres de los videos en /public/media (nombre.mp4 + nombre.jpg de portada) para el muro de reels. wide: video horizontal.
 export const projects = [
   {
     slug: "casa-tuirak",
@@ -31,8 +32,9 @@ export const projects = [
     years: "3 años",
     views: ["1.8 M", "708 mil", "248 mil"],
     tone: ["#2b3a1f", "#0c120a"],
-    cover: "/media/casa-tuirak.jpg",
-    preview: "/media/casa-tuirak.mp4",
+    cover: "/media/tuirak-1.jpg",
+    preview: "/media/tuirak-1.mp4",
+    reels: ["tuirak-1", "tuirak-2", "tuirak-3"],
   },
   {
     slug: "la-colina-spa",
@@ -42,8 +44,9 @@ export const projects = [
     years: "4 años",
     views: ["950 mil", "368 mil", "66 mil"],
     tone: ["#3a2f1d", "#120e08"],
-    cover: "/media/la-colina-spa.jpg",
-    preview: "/media/la-colina-spa.mp4",
+    cover: "/media/colina-1.jpg",
+    preview: "/media/colina-1.mp4",
+    reels: ["colina-1", "colina-2", "colina-3"],
   },
   {
     slug: "balcon-del-cielo",
@@ -53,8 +56,9 @@ export const projects = [
     years: "1 año",
     views: ["901 mil", "139 mil", "35 mil"],
     tone: ["#1d2a3a", "#080c12"],
-    cover: "/media/balcon-del-cielo.jpg",
-    preview: "/media/balcon-del-cielo.mp4",
+    cover: "/media/balcon-1.jpg",
+    preview: "/media/balcon-1.mp4",
+    reels: ["balcon-1", "balcon-2"],
   },
   {
     slug: "attraversiamo",
@@ -64,8 +68,9 @@ export const projects = [
     years: "5 años",
     views: ["627 mil", "336 mil", "196 mil"],
     tone: ["#3a1d1d", "#120808"],
-    cover: "/media/attraversiamo.jpg",
-    preview: "/media/attraversiamo.mp4",
+    cover: "/media/attraversiamo-1.jpg",
+    preview: "/media/attraversiamo-1.mp4",
+    reels: ["attraversiamo-1", "attraversiamo-2"],
   },
   {
     slug: "termales-santa-rosa",
@@ -75,8 +80,22 @@ export const projects = [
     years: "4 años",
     views: ["98.5 k"],
     tone: ["#1d3a36", "#08120f"],
-    cover: "/media/termales-santa-rosa.jpg",
-    preview: "/media/termales-santa-rosa.mp4",
+    wide: true,
+    cover: "/media/termales-1.jpg",
+    preview: "/media/termales-1.mp4",
+    reels: ["termales-1"],
+  },
+  {
+    slug: "bosko-guatape",
+    name: "Bosko",
+    category: "Hotel",
+    region: "Guatapé",
+    years: "",
+    views: [],
+    tone: ["#1d2f3a", "#08100f"],
+    cover: "/media/bosko-1.jpg",
+    preview: "/media/bosko-1.mp4",
+    reels: ["bosko-1"],
   },
 ];
 

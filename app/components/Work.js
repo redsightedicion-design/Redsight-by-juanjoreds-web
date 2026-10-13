@@ -71,13 +71,15 @@ export default function Work() {
             <div className="work-main">
               <h3 className="work-name">{p.name}</h3>
               <p className="work-meta">
-                {p.category} · {p.region} · {p.years} de trabajo
+                {[p.category, p.region, p.years && `${p.years} de trabajo`].filter(Boolean).join(" · ")}
               </p>
             </div>
-            <div className="work-views">
-              <span className="work-views-num">{p.views[0]}</span>
-              <span className="work-views-label">vistas en su reel top</span>
-            </div>
+            {p.views.length > 0 && (
+              <div className="work-views">
+                <span className="work-views-num">{p.views[0]}</span>
+                <span className="work-views-label">vistas en su reel top</span>
+              </div>
+            )}
             {/* En móvil se muestra la imagen dentro de la fila */}
             <Media className="work-thumb" image={p.cover} video={p.preview} tone={p.tone} label={p.name} />
           </li>

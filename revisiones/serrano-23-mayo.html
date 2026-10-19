@@ -1,84 +1,318 @@
 <title>Guiones Serrano · 23 de mayo</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&text=0123456789&display=swap">
 <style>
-/* Mesa de revisión: pestañas por guion, arriba el gancho a elegir, luego cada bloque del guion editable, al final el envío */
-:root{
-  --bg:#f3f2ee; --panel:#ffffff; --line:#d9d6cd; --fg:#1d1c19; --muted:#6c6a62;
-  --accent:#b8772a; --accent-ink:#ffffff; --ok:#2f8a4f; --chg:#c0562b; --soft:#f6ecdf;
-  --display:"IBM Plex Sans Condensed",system-ui,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,monospace;
+/* Plantilla de entrega Redsight: misma piel que el sitio (oscuro, serif itálica, rojo). Portada → índice → un capítulo por pieza → versión final */
+:root {
+  color-scheme: dark;
+  --bg: #0a0a0a;
+  --bg-2: #121110;
+  --fg: #f2ede4;
+  --muted: #8d877d;
+  --line: rgba(242, 237, 228, 0.14);
+  --accent: #d6342b;
+  --ok: #8fbf7a;
+  --serif: "DM Serif Display", "Instrument Serif", "Times New Roman", serif; /* DM Serif solo trae dígitos: el 1 de Instrument se lee como l */
+  --sans: "Inter", system-ui, -apple-system, sans-serif;
+  --gutter: max(16px, clamp(16px, 4vw, 56px));
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#1d1e1f;--panel:#28292b;--line:#3a3b3e;--fg:#e7e5df;--muted:#9c9a92;--accent:#e3a548;--accent-ink:#1b1408;--ok:#6fbf86;--chg:#e2785c;--soft:#33291c;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#1d1e1f;--panel:#28292b;--line:#3a3b3e;--fg:#e7e5df;--muted:#9c9a92;--accent:#e3a548;--accent-ink:#1b1408;--ok:#6fbf86;--chg:#e2785c;--soft:#33291c;color-scheme:dark}
-html,body{background:var(--bg);color:var(--fg)}
-body{font-family:var(--display);font-size:15px;line-height:1.45;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 80px}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
-h1{font-size:1.6rem;font-weight:600;margin:0;text-wrap:balance}
-h2{font-size:1.3rem;font-weight:600;margin:0;text-wrap:balance}
-h3{font-size:.74rem;font-family:var(--mono);font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);margin:0}
-.intro{max-width:68ch;color:var(--muted);margin:.4rem 0 .6rem}
-.intro b{color:var(--fg);font-weight:500}
-.warn{background:var(--panel);border:1px solid var(--chg);border-radius:6px;padding:8px 12px;margin:8px 0;max-width:68ch}
-.recibido{background:var(--panel);border:1px solid var(--ok);border-radius:6px;padding:8px 12px;margin:8px 0;max-width:68ch}
-.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:6px;overflow-x:auto;padding-block:10px;border-bottom:1px solid var(--line);margin-bottom:16px;scrollbar-width:thin}
-.tabs button{font:inherit;font-size:.9rem;white-space:nowrap;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:6px 12px;cursor:pointer;display:flex;align-items:center;gap:6px}
-.tabs button[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-.dot{width:8px;height:8px;border-radius:50%;background:transparent;border:1px solid currentColor;opacity:.5;flex:none}
-.dot[data-e="aprobado"]{background:var(--ok);border-color:var(--ok);opacity:1}
-.dot[data-e="cambios"]{background:var(--chg);border-color:var(--chg);opacity:1}
-.cnt{font-family:var(--mono);font-size:.72rem;opacity:.8}
-button:focus-visible,textarea:focus-visible,a:focus-visible,input:focus-visible+.hk{outline:2px solid var(--accent);outline-offset:2px}
-.guion{display:flex;flex-direction:column;gap:18px;max-width:860px}
-.nota{font-size:.88rem;color:var(--muted);border-left:2px solid var(--line);padding-left:10px;max-width:68ch}
-.nota b{font-family:var(--mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:500;display:block}
-.block{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px}
-.block[data-ed="1"]{border-color:var(--accent)}
-.bhead{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between}
-.tag{font-family:var(--mono);font-size:.66rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase;color:var(--accent-ink);background:var(--accent);border-radius:4px;padding:1px 6px}
-.link{all:unset;cursor:pointer;font-size:.82rem;color:var(--accent);text-decoration:underline;text-underline-offset:2px}
-.hooks{display:flex;flex-direction:column;gap:8px}
-.hooks .hint{font-size:.85rem;color:var(--muted);margin:0;max-width:68ch}
-.opt{position:relative}
-.opt input{position:absolute;opacity:0;pointer-events:none}
-.hk{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;padding:10px;border:1px solid var(--line);border-radius:6px;cursor:pointer;background:var(--bg)}
-.hk .l{font-family:var(--mono);font-weight:500;width:26px;height:26px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:.8rem}
-.hk .t{min-width:0;padding-top:2px}
-.opt input:checked+.hk{border-color:var(--accent);background:var(--soft)}
-.opt input:checked+.hk .l{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-.opt .edit{margin:6px 0 0 38px;display:flex;flex-direction:column;gap:4px}
-textarea{font:inherit;font-size:.95rem;width:100%;box-sizing:border-box;min-height:52px;resize:vertical;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;line-height:1.5}
-.small{font-size:.8rem;color:var(--muted)}
-.est{display:flex;gap:6px;flex-wrap:wrap}
-.est button{font:inherit;font-size:.85rem;padding:6px 12px;border-radius:6px;border:1px solid var(--line);background:transparent;color:var(--fg);cursor:pointer}
-.est button[data-v="aprobado"][aria-pressed="true"]{background:var(--ok);border-color:var(--ok);color:var(--bg)}
-.est button[data-v="cambios"][aria-pressed="true"]{background:var(--chg);border-color:var(--chg);color:var(--bg)}
-.saved{font-family:var(--mono);font-size:.7rem;color:var(--muted);min-height:1em}
-.nav{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.btn{font:inherit;font-size:.92rem;padding:8px 14px;border-radius:6px;border:1px solid var(--line);background:var(--panel);color:var(--fg);cursor:pointer}
-.btn.primary{background:var(--fg);color:var(--bg);border-color:var(--fg)}
-.btn:disabled{opacity:.5;cursor:not-allowed}
-.sum{display:flex;flex-direction:column;gap:10px}
-.row{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:baseline}
-.row .n{font-weight:600}
-.row .st{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em}
-.row .st[data-e="aprobado"]{color:var(--ok)}.row .st[data-e="cambios"]{color:var(--chg)}
-.row .d{grid-column:1/-1;font-size:.88rem;color:var(--muted);min-width:0;overflow-wrap:anywhere}
-.row .d b{color:var(--fg);font-weight:500}
-.confirm{background:var(--soft);border:1px solid var(--accent);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;max-width:68ch}
-@media (prefers-reduced-motion: no-preference){.block,.hk{transition:border-color .2s,background-color .2s}}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--bg); -webkit-font-smoothing: antialiased; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-weight: 300; overflow-x: hidden;
+  padding-left: max(0px, env(safe-area-inset-left, 0px)); padding-right: max(0px, env(safe-area-inset-right, 0px)); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+em { font-family: var(--serif); font-style: italic; font-weight: 400; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+::selection { background: var(--accent); color: var(--fg); }
+:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
+.mask { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 0.04em 0.16em; margin: 0 -0.04em -0.16em; }
+.mask > span { display: inline-block; }
+.eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+.section { padding-block: clamp(96px, 14vw, 180px); padding-inline: var(--gutter); }
+
+/* Grano */
+body::after { content: ""; position: fixed; inset: -50%; pointer-events: none; z-index: 90; opacity: 0.07;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 0.8s steps(4) infinite; }
+@keyframes grain { 0%{transform:translate(0,0)} 25%{transform:translate(-3%,2%)} 50%{transform:translate(2%,-3%)} 75%{transform:translate(-2%,-1%)} 100%{transform:translate(0,0)} }
+
+/* Preloader */
+.preloader { position: fixed; inset: 0; z-index: 100; background: var(--bg); display: grid; place-items: center; align-content: center; gap: 28px; }
+.pl-word { font-family: var(--serif); font-style: italic; font-size: clamp(56px, 12vw, 160px); line-height: 1; }
+.pl-mask { display: inline-block; overflow: hidden; padding: 0 0.02em 0.1em; }
+.pl-char { display: inline-block; }
+.pl-bar { width: min(240px, 50vw); height: 1px; background: var(--accent); transform: scaleX(0); transform-origin: left; }
+
+/* Cursor */
+.cursor { display: none; }
+.has-cursor .cursor { display: grid; place-items: center; position: fixed; top: 0; left: 0; z-index: 95; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: var(--fg); pointer-events: none; mix-blend-mode: difference; opacity: 0; transition: width .35s, height .35s, margin .35s, opacity .3s; }
+.cursor.is-moving { opacity: 1; }
+.cursor.is-hover { width: 40px; height: 40px; margin: -20px 0 0 -20px; }
+.cursor.is-label { width: 88px; height: 88px; margin: -44px 0 0 -44px; mix-blend-mode: normal; background: var(--accent); }
+.cursor.is-text { width: 2px; height: 28px; margin: -14px 0 0 -1px; border-radius: 1px; }
+.cursor span { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; opacity: 0; transition: opacity .2s; }
+.cursor.is-label span { opacity: 1; }
+
+/* Nav */
+.nav { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; z-index: 50; display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  padding: 20px max(var(--gutter), env(safe-area-inset-right, 0px)) 20px max(var(--gutter), env(safe-area-inset-left, 0px)); mix-blend-mode: difference; }
+.nav-logo { font-size: 26px; }
+.nav-right { display: flex; align-items: center; gap: clamp(14px, 3vw, 32px); font-size: 13px; letter-spacing: .06em; }
+.nav-count { font-variant-numeric: tabular-nums; }
+.nav-link { position: relative; }
+.nav-link::after { content: ""; position: absolute; left: 0; right: 0; bottom: -3px; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform .5s cubic-bezier(.7,0,.2,1); }
+.nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
+.nav-bg { position: fixed; top: 0; left: 0; right: 0; height: calc(76px + env(safe-area-inset-top, 0px)); z-index: 49; pointer-events: none; background: linear-gradient(180deg, var(--bg) 35%, rgba(10,10,10,0)); }
+.progress { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; right: 0; height: 2px; z-index: 51; background: var(--accent); transform: scaleX(0); transform-origin: left; }
+
+/* Hero */
+.hero { position: relative; height: 100svh; min-height: 600px; overflow: hidden; background: radial-gradient(120% 90% at 70% 20%, #1c1a17 0%, var(--bg) 60%); }
+.truss { position: absolute; inset: 0; width: 100%; height: 100%; }
+.truss path { fill: none; stroke: rgba(242,237,228,.16); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.truss .t-acc { stroke: var(--accent); stroke-width: 1.5; }
+.truss circle { fill: var(--accent); }
+.hero-shade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,10,10,.2) 0%, rgba(10,10,10,0) 40%, rgba(10,10,10,.9) 100%); }
+.hero-content { position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(32px, 6vw, 72px); }
+.hero-title { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(80px, 19vw, 300px); line-height: .85; letter-spacing: -.02em; margin: 12px 0 0 -.04em; }
+.hero-title .mask { padding: 0 .04em .22em; margin: 0 -.04em -.22em; }
+.hero-by { font-family: var(--serif); font-style: italic; font-size: clamp(24px, 3.4vw, 44px); color: var(--muted); margin-top: -.1em; }
+.hero-by b { font-weight: 400; color: var(--fg); }
+.hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-top: 28px; flex-wrap: wrap; }
+.hero-tagline { max-width: 440px; font-size: 15px; line-height: 1.6; color: rgba(242,237,228,.82); }
+.btn-pill { display: inline-flex; align-items: center; gap: 12px; padding: 14px 22px 14px 14px; border: 1px solid var(--line); border-radius: 999px; backdrop-filter: blur(10px); background: rgba(10,10,10,.25); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; transition: background .4s, border-color .4s; }
+.btn-pill:hover { background: var(--accent); border-color: var(--accent); }
+.btn-pill i { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--fg); color: var(--bg); font-style: normal; font-size: 13px; }
+.scroll-hint { position: absolute; right: var(--gutter); top: 42%; display: flex; flex-direction: column; align-items: center; gap: 12px; font-size: 11px; letter-spacing: .2em; text-transform: uppercase; writing-mode: vertical-rl; color: var(--muted); }
+.scroll-hint i { width: 1px; height: 56px; background: var(--line); position: relative; overflow: hidden; }
+.scroll-hint i::after { content: ""; position: absolute; inset: 0; background: var(--fg); animation: drip 1.8s cubic-bezier(.7,0,.3,1) infinite; }
+@keyframes drip { 0%{transform:translateY(-100%)} 100%{transform:translateY(100%)} }
+@media (max-width: 640px) { .scroll-hint { display: none; } }
+
+/* Cómo funciona */
+.how-text { font-family: var(--serif); font-size: clamp(30px, 4.4vw, 68px); line-height: 1.12; letter-spacing: -.01em; margin-top: 32px; max-width: 1250px; }
+.how-text em { color: var(--accent); }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: clamp(56px, 9vw, 120px); border-top: 1px solid var(--line); }
+.step { padding: 28px 24px 0 0; }
+.step b { display: block; font-family: var(--serif); font-weight: 400; font-size: clamp(48px, 6vw, 96px); line-height: 1; }
+.step p { margin-top: 10px; font-size: 14px; line-height: 1.6; color: var(--muted); max-width: 260px; }
+@media (max-width: 760px) { .steps { grid-template-columns: 1fr; row-gap: 8px; } }
+
+/* Índice */
+.idx-heading { font-family: var(--serif); font-weight: 400; font-size: clamp(56px, 10vw, 160px); line-height: .95; letter-spacing: -.02em; margin: 24px 0 clamp(40px, 6vw, 88px); }
+.idx-heading em { color: var(--accent); }
+.idx { list-style: none; border-top: 1px solid var(--line); }
+.idx-row { display: grid; grid-template-columns: 56px 1fr auto; align-items: center; gap: 24px; padding: clamp(22px, 3vw, 40px) 0; border-bottom: 1px solid var(--line); cursor: pointer; transition: opacity .5s; }
+.idx:hover .idx-row:not(:hover) { opacity: .3; }
+.idx-n { font-size: 12px; color: var(--muted); letter-spacing: .1em; font-variant-numeric: tabular-nums; }
+.idx-name { font-family: var(--serif); font-weight: 400; font-size: clamp(32px, 5.4vw, 88px); line-height: 1; transition: transform .6s cubic-bezier(.2,.8,.2,1); }
+.idx-row:hover .idx-name { transform: translateX(24px); font-style: italic; }
+.idx-meta { margin-top: 10px; font-size: 13px; color: var(--muted); }
+.idx-st { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+.idx-hook { font-family: var(--serif); font-size: clamp(24px, 2.6vw, 40px); line-height: 1; }
+.idx-hook[data-on="0"] { color: var(--muted); font-style: italic; }
+.idx-lab { font-size: 11px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+.dot { width: 7px; height: 7px; border-radius: 50%; border: 1px solid var(--muted); }
+.dot[data-e="aprobado"] { background: var(--ok); border-color: var(--ok); }
+.dot[data-e="cambios"] { background: var(--accent); border-color: var(--accent); }
+@media (max-width: 640px) { .idx-row { grid-template-columns: 1fr; gap: 14px; } .idx-n { display: none; } .idx-st { align-items: flex-start; text-align: left; flex-direction: row-reverse; justify-content: flex-end; gap: 14px; } }
+
+/* Marquee */
+.marquee { overflow: hidden; border-block: 1px solid var(--line); padding: 28px 0; }
+.marquee-track { display: flex; gap: 48px; width: max-content; animation: marquee 36s linear infinite; }
+.marquee-track span { font-family: var(--serif); font-style: italic; font-size: clamp(40px, 7vw, 110px); line-height: 1; white-space: nowrap; }
+.marquee-track .star { color: var(--accent); font-style: normal; font-size: clamp(24px, 3vw, 48px); align-self: center; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* Capítulo */
+.chapter { border-top: 1px solid var(--line); scroll-margin-top: 0; }
+.ch-num { font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2vw, 28px); color: var(--accent); }
+.ch-title { font-family: var(--serif); font-weight: 400; font-size: clamp(54px, 9.5vw, 156px); line-height: .92; letter-spacing: -.02em; margin-top: 18px; max-width: 14ch; text-wrap: balance; }
+.ch-meta { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 28px; }
+.ch-note { margin-top: 28px; max-width: 62ch; font-size: 14px; line-height: 1.65; color: var(--muted); padding-left: 16px; border-left: 1px solid var(--line); }
+.ch-note span { display: block; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 6px; }
+.part { display: grid; grid-template-columns: minmax(150px, 220px) 1fr; gap: 16px clamp(24px, 5vw, 80px); padding-block: clamp(40px, 6vw, 80px); border-bottom: 1px solid var(--line); }
+.ch-head + .part { margin-top: clamp(56px, 8vw, 110px); border-top: 1px solid var(--line); }
+.part-lab { display: flex; flex-direction: column; gap: 10px; }
+.part-lab .eyebrow { color: var(--fg); }
+.part-lab small { font-size: 13px; color: var(--muted); line-height: 1.5; max-width: 22ch; }
+.part-body { min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+@media (max-width: 760px) { .part { grid-template-columns: 1fr; } }
+
+/* Texto editable en línea */
+.txt { white-space: pre-wrap; overflow-wrap: anywhere; font-size: clamp(19px, 1.75vw, 26px); line-height: 1.55; max-width: 34em; outline: none; border-radius: 2px; padding: 6px 10px; margin: -6px -10px; transition: background .3s, box-shadow .3s; cursor: text; }
+.txt:hover { background: rgba(242,237,228,.035); }
+.txt:focus { background: rgba(242,237,228,.05); box-shadow: inset 2px 0 0 var(--accent); }
+.txt.big { font-family: var(--serif); font-style: italic; font-size: clamp(32px, 4.4vw, 68px); line-height: 1.08; max-width: 18em; }
+.tools { display: flex; align-items: center; gap: 18px; min-height: 20px; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.edited { color: var(--accent); display: inline-flex; align-items: center; gap: 8px; }
+.edited::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+.restore { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line); padding-bottom: 2px; transition: color .3s, border-color .3s; }
+.restore:hover { color: var(--fg); border-color: var(--fg); }
+
+/* Ganchos */
+.hooks { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
+.hook { display: grid; grid-template-columns: 44px 1fr; gap: 18px; padding: clamp(18px, 2.4vw, 30px) 0; border-bottom: 1px solid var(--line); cursor: pointer; transition: opacity .5s; }
+.hooks[data-has="1"] .hook:not(.is-on) { opacity: .32; }
+.hooks[data-has="1"] .hook:not(.is-on):hover { opacity: .75; }
+.hook-l { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--line); display: grid; place-items: center; font-family: var(--serif); font-size: 20px; margin-top: .3em; transition: background .4s, border-color .4s; }
+.hook.is-on .hook-l { background: var(--accent); border-color: var(--accent); }
+.hook:hover:not(.is-on) .hook-l { border-color: var(--fg); }
+.hook .txt { font-family: var(--serif); font-size: clamp(28px, 3.6vw, 56px); line-height: 1.1; max-width: 20em; cursor: inherit; padding: 4px 10px; margin: -4px -10px; }
+.hook:not(.is-on) .txt:hover { background: none; }
+.hook.is-on .txt { cursor: text; }
+.hook-other .txt { font-style: italic; color: var(--muted); }
+.hook-other.is-on .txt { color: var(--fg); }
+.txt:empty::before { content: attr(data-ph); color: var(--muted); font-style: italic; }
+.hook-hint { grid-column: 2; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: flex; gap: 18px; flex-wrap: wrap; }
+.hook-hint b { font-weight: 400; color: var(--accent); }
+
+/* Veredicto */
+.pills { display: flex; flex-wrap: wrap; gap: 10px; }
+.pill { padding: 12px 22px; border: 1px solid var(--line); border-radius: 999px; font-size: 14px; transition: background .3s, border-color .3s, color .3s; }
+.pill:hover { border-color: var(--fg); }
+.pill[aria-pressed="true"][data-v="aprobado"] { background: var(--fg); color: var(--bg); border-color: var(--fg); }
+.pill[aria-pressed="true"][data-v="cambios"] { background: var(--accent); border-color: var(--accent); }
+.field { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; }
+.field span { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.field textarea { background: transparent; border: 0; border-bottom: 1px solid var(--line); color: var(--fg); font: inherit; font-size: 18px; padding: 10px 0; outline: none; resize: none; overflow: hidden; min-height: 48px; transition: border-color .4s; }
+.field textarea:focus { border-color: var(--fg); }
+.ch-next { margin-top: clamp(48px, 7vw, 96px); display: flex; justify-content: flex-end; }
+.next { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.next em { font-size: clamp(30px, 4vw, 60px); line-height: 1; transition: color .4s; }
+.next:hover em { color: var(--accent); }
+
+/* Final */
+.fin-title { font-family: var(--serif); font-weight: 400; font-size: clamp(52px, 9vw, 150px); line-height: .95; letter-spacing: -.02em; margin-top: 24px; max-width: 1200px; }
+.fin-title em { color: var(--accent); }
+.fin-lead { margin-top: 28px; max-width: 54ch; font-size: 16px; line-height: 1.6; color: rgba(242,237,228,.82); }
+.sum { margin-top: clamp(48px, 7vw, 96px); border-top: 1px solid var(--line); }
+.sum-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 24px; padding: 24px 0; border-bottom: 1px solid var(--line); cursor: pointer; transition: padding .5s; }
+.sum-row:hover { padding-left: 12px; }
+.sum-row h3 { font-family: var(--serif); font-weight: 400; font-size: clamp(24px, 2.6vw, 38px); line-height: 1.05; }
+.sum-row h3 span { font-family: var(--sans); font-size: 12px; letter-spacing: .1em; color: var(--muted); margin-right: 12px; vertical-align: middle; }
+.sum-st { display: flex; align-items: center; gap: 8px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.sum-d { grid-column: 1 / -1; font-size: 15px; line-height: 1.55; color: var(--muted); min-width: 0; overflow-wrap: anywhere; }
+.sum-d em { color: var(--fg); font-size: 1.25em; }
+.send-zone { margin-top: clamp(48px, 7vw, 88px); display: flex; flex-direction: column; align-items: flex-start; gap: 18px; }
+.btn-send { display: inline-flex; gap: 14px; align-items: center; padding: 20px 32px; border-radius: 999px; background: var(--accent); font-size: 15px; letter-spacing: .04em; transition: background .4s; }
+.btn-send:hover { background: #b82a22; }
+.btn-send span { transition: transform .4s; }
+.btn-send:hover span { transform: translateX(6px); }
+.btn-send:disabled { opacity: .6; cursor: progress; }
+.btn-ghost { padding: 20px 28px; border-radius: 999px; border: 1px solid var(--line); font-size: 15px; }
+.btn-ghost:hover { border-color: var(--fg); }
+.send-note { font-size: 14px; color: var(--muted); line-height: 1.6; max-width: 54ch; }
+.send-note b { color: var(--fg); font-weight: 400; }
+.confirm-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.done { font-family: var(--serif); font-style: italic; font-size: clamp(30px, 4vw, 56px); line-height: 1.1; }
+.done::before { content: "✦ "; color: var(--accent); font-style: normal; }
+
+/* Avisos */
+.toast { position: fixed; left: 50%; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); transform: translate(-50%, 20px); z-index: 60; background: rgba(20,18,16,.88); backdrop-filter: blur(8px); border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; font-size: 12px; color: var(--muted); white-space: nowrap; opacity: 0; transition: opacity .4s, transform .4s; pointer-events: none; }
+.toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+.toast.is-err { color: var(--fg); border-color: var(--accent); }
+.banner { position: relative; z-index: 2; margin: 0 var(--gutter); padding: 14px 18px; border: 1px solid var(--accent); border-radius: 999px; font-size: 13px; text-align: center; }
+
+/* Footer */
+.footer { padding: 40px var(--gutter) calc(28px + env(safe-area-inset-bottom, 0px)); border-top: 1px solid var(--line); overflow: hidden; }
+.footer-brand { font-size: clamp(90px, 25vw, 420px); line-height: .8; letter-spacing: -.03em; text-align: center; }
+.footer-row { display: flex; justify-content: space-between; gap: 16px; margin-top: 24px; font-size: 12px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; flex-wrap: wrap; }
+
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+html.anim .hero-char { transform: translateY(120%); }
+html.anim .hero-fade { opacity: 0; transform: translateY(20px); }
 </style>
 
-<h1>Guiones Serrano · grabación 23 de mayo</h1>
-<p class="intro">Aquí están los <b>6 guiones</b> de la grabación. En cada uno: <b>elige el gancho</b> que más te guste (puedes ajustarle las palabras o proponer otro), cambia lo que quieras del texto y marca si el guion queda <b>aprobado</b> o <b>necesita cambios</b>. Todo se guarda solo. Cuando termines, ve a la pestaña <b>Enviar revisión</b> y envíame la versión final.</p>
-<div id="warn" class="warn" hidden></div>
-<div id="recibido" class="recibido" hidden></div>
-<nav class="tabs" id="tabs" role="tablist" aria-label="Guiones"></nav>
-<section id="panel" class="guion" aria-live="polite"></section>
+<div class="preloader" id="preloader" aria-hidden="true"><div class="pl-word" id="plWord"></div><div class="pl-bar"></div></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span></span></div>
+<div class="nav-bg" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
 
+<header class="nav">
+  <button class="nav-logo" data-go="inicio"><em>Redsight</em></button>
+  <div class="nav-right">
+    <button class="nav-link" data-go="indice">Guiones</button>
+    <span class="nav-count" id="navCount"></span>
+    <button class="nav-link" data-go="final" id="navFinal">Versión final</button>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <svg class="truss" id="truss" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg>
+    <div class="hero-shade"></div>
+    <div class="hero-content">
+      <p class="hero-fade eyebrow" id="heroEyebrow"></p>
+      <h1 class="hero-title" id="heroTitle" aria-label="Guiones"></h1>
+      <p class="hero-fade hero-by" id="heroBy"></p>
+      <div class="hero-bottom">
+        <p class="hero-fade hero-tagline" id="heroTag"></p>
+        <button class="hero-fade btn-pill" data-go="como" data-cursor="Empezar"><i>↓</i> Empezar</button>
+      </div>
+    </div>
+    <div class="hero-fade scroll-hint"><span>Scroll</span><i></i></div>
+  </section>
+
+  <div class="banner" id="banner" hidden></div>
+  <div class="banner" id="warn" hidden></div>
+
+  <section class="section" id="como">
+    <p class="eyebrow">(01) Cómo funciona</p>
+    <p class="how-text" id="howText"></p>
+    <div class="steps">
+      <div class="step"><b>Elige</b><p>En cada guion, toca el gancho que más te guste. Puedes ajustar sus palabras o proponer otro.</p></div>
+      <div class="step"><b>Ajusta</b><p>Toca cualquier texto del guion y cámbialo ahí mismo. Lo que edites queda marcado y siempre puedes volver al original.</p></div>
+      <div class="step"><b>Envía</b><p>Al final, revisa el resumen y envía tu versión. Me llega a mí y con eso preparamos la grabación.</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="indice" style="padding-top:0">
+    <p class="eyebrow">(02) Los guiones</p>
+    <h2 class="idx-heading"><span class="mask"><span id="idxCount"></span></span> <span class="mask"><span><em>historias.</em></span></span></h2>
+    <ol class="idx" id="idx"></ol>
+  </section>
+
+  <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
+
+  <div id="chapters"></div>
+
+  <section class="section" id="final" style="border-top:1px solid var(--line)">
+    <p class="eyebrow" id="finEyebrow"></p>
+    <h2 class="fin-title">Tu <em>versión final.</em></h2>
+    <p class="fin-lead" id="finLead"></p>
+    <div class="sum" id="sum"></div>
+    <div class="send-zone" id="sendZone"></div>
+  </section>
+</main>
+
+<footer class="footer">
+  <p class="footer-brand"><em>Redsight</em></p>
+  <div class="footer-row"><span>by juanjoreds</span><span id="footClient"></span><span>© 2026</span></div>
+</footer>
+
+<p class="toast" id="toast" role="status" aria-live="polite"></p>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
 <script>
-const G=[
-{n:1,titulo:"El D1 que no es de D1",lugar:"D1 de Dosquebradas, en La Capilla",
+/* ======================================================================
+   CONTENIDO DE ESTA ENTREGA. Para otro cliente se cambia solo este bloque.
+   ====================================================================== */
+const ENTREGA = {
+  cliente: "Serrano",
+  titulo: "Guiones",
+  ocasion: "Grabación del 23 de mayo",
+  tagline: "Seis historias de estructura metálica para grabar el 23 de mayo. Elige el gancho de cada una, ajusta lo que quieras y envíame tu versión final.",
+  como: "Cada guion abre con <em>un gancho</em>: la primera frase, la que hace que alguien se quede viendo. Te propongo tres por historia. Tú eliges, cambias lo que no suene a ti, y me envías la versión con la que grabamos.",
+  marquee: ["El gancho","El problema","La solución","La pregunta"],
+  guiones: [
+{n:1,titulo:"El D1 que no es de D1",lugar:"D1 de Dosquebradas, La Capilla",
  nota:"D1 de Dosquebradas en La Capilla. Aquí no solo van a hacer la estructura metálica sino toda la obra civil.",
  ganchos:{A:"D1 abre casi una tienda por día. Y casi ninguna es suya.",B:"Este D1 no es de D1. Es de una persona como tú.",C:"Hay más de 2.600 D1 en Colombia. Casi todos están en locales arrendados."},
  secciones:[
@@ -94,7 +328,7 @@ const G=[
   ["solucion","Solución","Toda la estructura metálica del club house es nuestra.\nFíjate en las columnas. No son cuadradas. Son redondas.\nY la estructura metálica permite algo clave en un lugar así: espacios grandes y abiertos, sin columnas atravesadas en la mitad.\nPorque aquí la gente no viene a encerrarse. Viene a encontrarse.\nEsto era un render. Hoy ya está en pie."],
   ["cta","Llamado a la acción","Si estás desarrollando un proyecto pensado para un público específico, escríbenos. Nosotros le damos forma a la estructura."],
   ["cierre","Pregunta de cierre","¿Tú dónde te imaginas viviendo cuando tengas 60?"]]},
-{n:3,titulo:"La bodega que se hizo en otra bodega",lugar:"Bodega 2.4, Eje Nexus",
+{n:3,titulo:"La bodega que se hizo en otra bodega",lugar:"Bodega 2.4, Eje Nexus · 1.200 m²",
  nota:"Bodega de 1.200 metros cuadrados, diagonal Eje Nexus, bodega 2.4. Centro logístico lleno de bodegas.",
  ganchos:{A:"Para construir esta bodega, primero usamos otra bodega.",B:"Esta bodega todavía no está terminada. Y ya vale más de un millón de pesos al día.",C:"Hay gente ganando plata con bodegas sin mover una sola caja."},
  secciones:[
@@ -110,7 +344,7 @@ const G=[
   ["solucion","Solución","Por eso aquí casi nada se fabricó en obra.\nLa estructura de las ampliaciones y de los dos viaductos se cortó y se soldó en nuestra bodega.\nLejos del ruido. Lejos de los pacientes.\nA la obra llegaron las piezas listas. Solo había que montarlas.\nMientras adentro seguían atendiendo, afuera el edificio crecía.\nDos viaductos y nuevas áreas para que quepan los que llegaron de la otra sede."],
   ["cta","Llamado a la acción","Si tu edificio necesita crecer pero no puede dejar de funcionar, escríbenos."],
   ["cierre","Pregunta de cierre","¿Tú sabías que un edificio puede crecer sin cerrar sus puertas?"]]},
-{n:5,titulo:"De muros a techo",lugar:"Terra, condominio campestre en Cerritos",
+{n:5,titulo:"De muros a techo",lugar:"Terra, condominio campestre · Cerritos",
  nota:"Terra: 5 casas ya listas.",
  ganchos:{A:"¿Cuánto crees que tarda una casa en pasar de esto… a esto?",B:"Esta casa tiene muros. Esta tiene techo. ¿Cuánto tiempo crees que hay entre las dos?",C:"¿Cuánto tiempo crees que necesita esta casa para verse como la de al lado?"},
  secciones:[
@@ -119,146 +353,313 @@ const G=[
   ["cierre","Pregunta de cierre","¿Cuánto creías tú que tardaba? Te leo en los comentarios."]]},
 {n:6,titulo:"La de al lado",formato:"Formato entrevista",lugar:"Local reconstruido junto al anterior",
  nota:"Un local que hicimos enseguida del otro; ya empezaron con esa estructura. Es importante porque el cliente nos volvió a buscar para que le reconstruyeran (propuesta: convocar al cliente). El señor tiene un hijo de 11 años que mantiene todo el tiempo con él y es muy inteligente: meter al hijo.",
- hint:"Este gancho se arma en edición con lo que respondan. La primera pregunta está pensada para que de ahí salga. Elige cuál de estas tres frases te gustaría buscar en la respuesta:",
- ganchos:{A:"Cuando el papá cuenta que la suya se cayó y la de al lado no.",B:"Cuando el niño dice qué vio o qué pensó al ver las dos bodegas.",C:"Si Serrano necesita abrir él, su línea fija: “Su bodega se cayó en el terremoto. La de al lado, que hicimos nosotros, no. Y adivinen a quién llamó.”"},
+ hint:"Este gancho se arma en edición con lo que respondan. Elige cuál de estas frases quieres que busquemos en la entrevista.",
+ ganchos:{A:"Cuando el papá cuenta que la suya se cayó y la de al lado no.",B:"Cuando el niño dice qué vio o qué pensó al ver las dos bodegas.",C:"Su bodega se cayó en el terremoto. La de al lado, que hicimos nosotros, no. Y adivinen a quién llamó."},
  secciones:[
-  ["p_problema","Desarrollo: el problema (preguntas al papá)","1. ¿Qué pasó con su bodega en el terremoto?\n2. ¿Qué fue lo primero que vio cuando llegó?\n3. ¿Y la de al lado cómo estaba?\n4. ¿Qué pensó en ese momento?"],
-  ["p_nino","Desarrollo: la mirada del niño (preguntas al niño)","5. ¿Tú qué viste ese día?\n6. ¿Por qué crees que una se cayó y la otra no?\n7. Si tú fueras el dueño, ¿a quién habrías llamado?"],
-  ["p_solucion","Solución: por qué Serrano (preguntas al papá)","8. ¿Cómo llegó a nosotros?\n9. ¿Por qué no volvió a construir como antes?\n10. ¿Qué le pidió a esta nueva bodega?"],
-  ["p_cierre","Cierre: el niño (preguntas al niño)","11. ¿Qué te parece la bodega nueva?\n12. ¿Tú qué quieres ser cuando grande?\n13. ¿Qué le dirías a alguien que va a construir una bodega?"],
-  ["linea_corta","Línea fija de Serrano: respuesta corta","Si el niño o el papá preguntan por qué la suya no se cayó: “Antes de cortar una sola pieza, se hacen las cuentas del temblor. Y cada pieza se fabrica en nuestro taller con esas cuentas.”"],
-  ["cta","Llamado a la acción","Si vas a construir una bodega, no tienes que esperar un terremoto para saber cuál aguanta. Escríbenos."],
-  ["cierre","Pregunta de cierre","¿Tú sabes quién construyó el lugar donde trabajas?"]]}
-];
-const KEY="serrano23";
-const rev={};let fin=null;let db=null;let cur=0;let isOwner=false;let confirming=false;
-try{const s=localStorage.getItem(KEY+"_tab");if(s!==null&&+s>=0&&+s<=G.length)cur=+s}catch(e){}
-const tabs=document.getElementById("tabs"),panel=document.getElementById("panel");
-const did=g=>"g"+g.n;
-const R=g=>rev[did(g)]||{};
-const orig=(g,k)=>{const s=g.secciones.find(x=>x[0]===k);return s?s[2]:""};
-const edits=g=>{const r=R(g);let n=0;for(const[k]of g.secciones){const v=(r.textos||{})[k];if(v!=null&&v.trim()!==orig(g,k).trim())n++}
-  if(r.gancho&&r.gancho!=="otro"&&r.ganchoTexto!=null&&r.ganchoTexto.trim()!==g.ganchos[r.gancho].trim())n++;return n};
-function setTab(i){cur=i;confirming=false;try{localStorage.setItem(KEY+"_tab",String(i))}catch(e){}renderTabs();render();window.scrollTo({top:0})}
-function renderTabs(){tabs.innerHTML="";
-  G.forEach((g,i)=>{const r=R(g);const b=document.createElement("button");b.type="button";b.setAttribute("role","tab");b.setAttribute("aria-selected",String(i===cur));
-    const dot=document.createElement("span");dot.className="dot";dot.dataset.e=r.estado||"";
-    const t=document.createElement("span");t.textContent=g.n+" · "+g.titulo;
-    const c=document.createElement("span");c.className="cnt";c.textContent=r.gancho?(r.gancho==="otro"?"Otro":r.gancho):"";
-    b.append(dot,t,c);b.addEventListener("click",()=>setTab(i));tabs.appendChild(b)});
-  const b=document.createElement("button");b.type="button";b.setAttribute("role","tab");b.setAttribute("aria-selected",String(cur===G.length));
-  const dot=document.createElement("span");dot.className="dot";dot.dataset.e=fin?"aprobado":"";
-  const t=document.createElement("span");t.textContent=fin?"Revisión enviada":"Enviar revisión";b.append(dot,t);
-  b.addEventListener("click",()=>setTab(G.length));tabs.appendChild(b)}
-async function save(g,patch,el){const prev=R(g);const body={estado:prev.estado||"",gancho:prev.gancho||"",ganchoTexto:prev.ganchoTexto??null,ganchoOtro:prev.ganchoOtro||"",textos:{...(prev.textos||{})},nota:prev.nota||"",guion:g.n,titulo:g.titulo,...patch,t:new Date().toISOString()};
-  rev[did(g)]=body;renderTabs();paint();
-  const s=el&&el.querySelector(".saved")||document.getElementById("sv-"+g.n);
-  if(!db){if(s)s.textContent="Sin conexión: no se guardó";return}
-  if(s)s.textContent="Guardando…";
-  try{await db.doc("rev/"+did(g)).set(body);if(s)s.textContent="Guardado"}catch(e){if(s)s.textContent=e&&(e.code==="permission_denied"||e.code==="not_granted"||e.code==="invalid_argument")?"No tienes permiso para guardar":"No se guardó, intenta de nuevo"}}
-function debounce(fn){let tm=null;return v=>{clearTimeout(tm);tm=setTimeout(()=>fn(v),800)}}
-function el(tag,cls,txt){const e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
-function grow(ta){ta.style.height="auto";ta.style.height=(ta.scrollHeight+2)+"px"}
-function render(){panel.innerHTML="";if(cur===G.length)return renderSum();
-  const g=G[cur];const r=R(g);panel.dataset.n=g.n;
-  const head=el("div");head.style.display="flex";head.style.flexDirection="column";head.style.gap="4px";
-  head.append(el("h3",null,"Guion "+g.n+(g.formato?" · "+g.formato:"")),el("h2",null,g.titulo));
-  const nota=el("p","nota");nota.append(el("b",null,"Nota de producción"),document.createTextNode(g.nota));
+  ["p_problema","El problema","1. ¿Qué pasó con su bodega en el terremoto?\n2. ¿Qué fue lo primero que vio cuando llegó?\n3. ¿Y la de al lado cómo estaba?\n4. ¿Qué pensó en ese momento?","Preguntas al papá"],
+  ["p_nino","La mirada del niño","5. ¿Tú qué viste ese día?\n6. ¿Por qué crees que una se cayó y la otra no?\n7. Si tú fueras el dueño, ¿a quién habrías llamado?","Preguntas al niño"],
+  ["p_solucion","Por qué Serrano","8. ¿Cómo llegó a nosotros?\n9. ¿Por qué no volvió a construir como antes?\n10. ¿Qué le pidió a esta nueva bodega?","Preguntas al papá"],
+  ["p_cierre","Cierre: el niño","11. ¿Qué te parece la bodega nueva?\n12. ¿Tú qué quieres ser cuando grande?\n13. ¿Qué le dirías a alguien que va a construir una bodega?","Preguntas al niño"],
+  ["linea_corta","Respuesta corta","Antes de cortar una sola pieza, se hacen las cuentas del temblor. Y cada pieza se fabrica en nuestro taller con esas cuentas.","Línea fija de Serrano, si preguntan por qué la suya no se cayó"],
+  ["cta","Llamado a la acción","Si vas a construir una bodega, no tienes que esperar un terremoto para saber cuál aguanta. Escríbenos.","Línea fija de Serrano"],
+  ["cierre","Pregunta de cierre","¿Tú sabes quién construyó el lugar donde trabajas?","Línea fija de Serrano"]]}
+  ]
+};
+/* ====================================================================== */
+
+const G = ENTREGA.guiones;
+const rev = {}; let fin = null, db = null, isOwner = false, confirming = false;
+const $ = s => document.querySelector(s);
+const pad = n => String(n).padStart(2, "0");
+const did = g => "g" + g.n;
+const R = g => rev[did(g)] || {};
+const mk = (tag, cls, txt) => { const e = document.createElement(tag); if (cls) e.className = cls; if (txt != null) e.textContent = txt; return e; };
+const debounce = (fn, ms = 800) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; };
+const same = (a, b) => (a || "").trim() === (b || "").trim();
+const readTxt = el => el.innerText.replace(/ /g, " ").replace(/\n$/, "");
+
+/* ---------- Avisos ---------- */
+const toastEl = $("#toast"); let toastT;
+function toast(msg, err) { toastEl.textContent = msg; toastEl.classList.add("is-on"); toastEl.classList.toggle("is-err", !!err); clearTimeout(toastT); if (!err) toastT = setTimeout(() => toastEl.classList.remove("is-on"), 1800); }
+
+/* ---------- Guardado ---------- */
+async function save(g, patch) {
+  const p = R(g);
+  const body = { estado: p.estado || "", gancho: p.gancho || "", ganchoTexto: p.ganchoTexto ?? null, ganchoOtro: p.ganchoOtro || "", textos: { ...(p.textos || {}) }, nota: p.nota || "", guion: g.n, titulo: g.titulo, ...patch, t: new Date().toISOString() };
+  rev[did(g)] = body; paintAll();
+  if (!db) { toast("Sin conexión: este cambio no se guardó", true); return; }
+  toast("Guardando…");
+  try { await db.doc("rev/" + did(g)).set(body); toast("Guardado"); }
+  catch (e) { toast(e && (e.code === "permission_denied" || e.code === "not_granted") ? "No tienes permiso para guardar en esta página" : "No se guardó. Intenta de nuevo", true); }
+}
+const edits = g => { const r = R(g); let n = 0;
+  for (const [k, , t] of g.secciones) { const v = (r.textos || {})[k]; if (v != null && !same(v, t)) n++; }
+  if (r.gancho && r.gancho !== "otro" && r.ganchoTexto != null && !same(r.ganchoTexto, g.ganchos[r.gancho])) n++;
+  return n; };
+const hookFinal = g => { const r = R(g); if (!r.gancho) return ""; return r.gancho === "otro" ? (r.ganchoOtro || "") : (r.ganchoTexto ?? g.ganchos[r.gancho]); };
+
+/* ---------- Portada ---------- */
+$("#plWord").innerHTML = [...ENTREGA.cliente].map(c => `<span class="pl-mask"><span class="pl-char">${c}</span></span>`).join("");
+$("#heroTitle").innerHTML = [...ENTREGA.titulo].map(c => `<span class="mask"><span class="hero-char">${c}</span></span>`).join("");
+$("#heroEyebrow").textContent = "Redsight presenta — " + ENTREGA.ocasion;
+$("#heroBy").innerHTML = "para <b></b>"; $("#heroBy b").textContent = ENTREGA.cliente;
+$("#heroTag").textContent = ENTREGA.tagline;
+$("#howText").innerHTML = ENTREGA.como.split(/(<em>.*?<\/em>)/).flatMap(part => part.startsWith("<em>") ? [`<span class="w">${part} </span>`] : part.split(" ").filter(Boolean).map(w => `<span class="w">${w} </span>`)).join("");
+$("#idxCount").textContent = ["Cero","Una","Dos","Tres","Cuatro","Cinco","Seis","Siete","Ocho","Nueve","Diez"][G.length] || String(G.length);
+$("#footClient").textContent = "Para " + ENTREGA.cliente;
+$("#finEyebrow").textContent = "(" + pad(G.length + 3) + ") Revisión final";
+const mw = ENTREGA.marquee.flatMap(w => [w, "✦"]);
+$("#marquee").innerHTML = [...mw, ...mw].map(w => `<span class="${w === "✦" ? "star" : ""}">${w}</span>`).join("");
+
+/* Cercha (armadura Warren) dibujada en la portada: el oficio del cliente */
+(function truss() {
+  const svg = $("#truss"); const W = 1600; let out = "";
+  const row = (y, h, n, x0, x1, acc) => {
+    const step = (x1 - x0) / n; let d = `M${x0},${y} L${x1},${y} M${x0},${y + h} L${x1},${y + h}`;
+    for (let i = 0; i < n; i++) { const a = x0 + i * step; d += ` M${a},${y + h} L${a + step / 2},${y} L${a + step},${y + h}`; }
+    out += `<path class="t-line" d="${d}"/>`;
+    if (acc != null) { const a = x0 + acc * step; out += `<path class="t-line t-acc" d="M${a},${y + h} L${a + step / 2},${y} L${a + step},${y + h}"/><circle cx="${a + step / 2}" cy="${y}" r="4"/>`; }
+  };
+  row(170, 120, 9, -60, W + 60, 5);
+  row(420, 70, 16, -40, W + 40, null);
+  for (let x = 90; x < W; x += 240) out += `<path class="t-line" d="M${x},290 L${x},900"/>`;
+  svg.innerHTML = out;
+})();
+
+/* ---------- Índice ---------- */
+const idx = $("#idx");
+G.forEach(g => {
+  const li = mk("li", "idx-row"); li.dataset.n = g.n; li.dataset.cursor = "Abrir"; li.tabIndex = 0;
+  li.innerHTML = `<span class="idx-n">${pad(g.n)}</span><div><h3 class="idx-name"></h3><p class="idx-meta"></p></div><div class="idx-st"><span class="idx-hook"></span><span class="idx-lab"><i class="dot"></i><span></span></span></div>`;
+  li.querySelector(".idx-name").textContent = g.titulo;
+  li.querySelector(".idx-meta").textContent = g.lugar + (g.formato ? " · " + g.formato : "");
+  const open = () => go("g" + g.n);
+  li.addEventListener("click", open); li.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+  idx.appendChild(li);
+});
+
+/* ---------- Capítulos ---------- */
+const chapters = $("#chapters");
+function editable(el, text, ph) { try { el.contentEditable = "plaintext-only"; } catch (e) {} if (el.contentEditable !== "plaintext-only") el.contentEditable = "true"; el.spellcheck = true; el.textContent = text; if (ph) el.dataset.ph = ph; el.dataset.cursorText = "1"; }
+G.forEach((g, gi) => {
+  const s = mk("section", "chapter section"); s.id = "g" + g.n;
+  const head = mk("div", "ch-head");
+  head.append(mk("p", "ch-num", "(" + pad(g.n) + ")"));
+  const h = mk("h2", "ch-title"); h.setAttribute("aria-label", g.titulo);
+  g.titulo.split(" ").forEach((w, i) => { const m = mk("span", "mask"); const sp = mk("span", null, w); m.append(sp); h.append(m, document.createTextNode(" ")); });
+  head.append(h);
+  const meta = mk("div", "ch-meta"); meta.append(mk("p", "eyebrow", g.lugar)); if (g.formato) meta.append(mk("p", "eyebrow", g.formato)); head.append(meta);
+  if (g.nota) { const n = mk("p", "ch-note"); n.append(mk("span", null, "Nota de producción"), document.createTextNode(g.nota)); head.append(n); }
+  s.append(head);
+
   // Gancho
-  const hb=el("div","block");hb.id="hb";
-  const hh=el("div","bhead");hh.append(el("h3",null,"Gancho · elige uno"));
-  const hooks=el("div","hooks");
-  if(g.hint)hooks.append(el("p","hint",g.hint));
-  const opts=[...Object.entries(g.ganchos),["otro","Proponer otro gancho"]];
-  opts.forEach(([k,txt])=>{const o=el("div","opt");const id="h"+g.n+k;
-    const inp=document.createElement("input");inp.type="radio";inp.name="hook"+g.n;inp.id=id;inp.value=k;inp.checked=r.gancho===k;
-    const lab=document.createElement("label");lab.className="hk";lab.htmlFor=id;
-    lab.append(el("span","l",k==="otro"?"+":k),el("span","t",txt));
-    o.append(inp,lab);
-    inp.addEventListener("change",()=>{if(inp.checked)save(g,{gancho:k,ganchoTexto:k==="otro"?null:((R(g).gancho===k&&R(g).ganchoTexto!=null)?R(g).ganchoTexto:txt)},hb)});
-    if(r.gancho===k){const ed=el("div","edit");const ta=document.createElement("textarea");ta.id="ht-"+g.n;
-      ta.placeholder=k==="otro"?"Escribe aquí el gancho que propones":"";
-      ta.value=k==="otro"?(r.ganchoOtro||""):(r.ganchoTexto??txt);
-      const lbl=el("span","small",k==="otro"?"Tu propuesta de gancho":"Puedes ajustar las palabras de este gancho");
-      const sv=debounce(v=>save(g,k==="otro"?{ganchoOtro:v}:{ganchoTexto:v},hb));
-      ta.addEventListener("input",()=>{grow(ta);sv(ta.value)});
-      ed.append(lbl,ta);
-      if(k!=="otro"){const rs=el("button","link","Volver al texto original");rs.type="button";rs.hidden=(r.ganchoTexto??txt).trim()===txt.trim();
-        rs.addEventListener("click",()=>{ta.value=txt;grow(ta);save(g,{ganchoTexto:txt},hb)});ed.append(rs)}
-      o.append(ed);requestAnimationFrame(()=>grow(ta))}
-    hooks.append(o)});
-  hb.append(hh,hooks,el("div","saved"));
-  // Secciones
-  const secs=g.secciones.map(([k,label,text])=>{const b=el("div","block");b.id="b-"+g.n+"-"+k;
-    const v=(r.textos||{})[k];const val=v!=null?v:text;const ed=val.trim()!==text.trim();b.dataset.ed=ed?"1":"0";
-    const bh=el("div","bhead");const left=el("div");left.style.display="flex";left.style.gap="8px";left.style.alignItems="center";
-    left.append(el("h3",null,label));const tg=el("span","tag","Editado");tg.hidden=!ed;left.append(tg);
-    const rs=el("button","link","Volver al original");rs.type="button";rs.hidden=!ed;bh.append(left,rs);
-    const ta=document.createElement("textarea");ta.id="ta-"+g.n+"-"+k;ta.value=val;
-    const sv=debounce(val=>{const t={...(R(g).textos||{})};if(val.trim()===text.trim())delete t[k];else t[k]=val;save(g,{textos:t},b)});
-    const mark=()=>{const e=ta.value.trim()!==text.trim();b.dataset.ed=e?"1":"0";tg.hidden=!e;rs.hidden=!e};
-    ta.addEventListener("input",()=>{grow(ta);mark();sv(ta.value)});
-    rs.addEventListener("click",()=>{ta.value=text;grow(ta);mark();const t={...(R(g).textos||{})};delete t[k];save(g,{textos:t},b)});
-    b.append(bh,ta,el("div","saved"));requestAnimationFrame(()=>grow(ta));return b});
-  // Estado + nota general
-  const fb=el("div","block");fb.id="fb";
-  const fh=el("div","bhead");fh.append(el("h3",null,"¿Cómo queda este guion?"));
-  const est=el("div","est");[["aprobado","Aprobado"],["cambios","Necesita cambios"]].forEach(([v,t])=>{const b=el("button",null,t);b.type="button";b.dataset.v=v;b.setAttribute("aria-pressed",String(r.estado===v));
-    b.addEventListener("click",()=>save(g,{estado:R(g).estado===v?"":v},fb));est.append(b)});
-  fh.append(est);
-  const nt=document.createElement("textarea");nt.id="nt-"+g.n;nt.placeholder="Comentarios generales para Juan: tono, locación, qué grabar, qué no decir…";nt.value=r.nota||"";
-  const svn=debounce(v=>save(g,{nota:v},fb));nt.addEventListener("input",()=>{grow(nt);svn(nt.value)});
-  fb.append(fh,nt,el("div","saved"));requestAnimationFrame(()=>grow(nt));
-  const nav=el("div","nav");
-  const pv=el("button","btn","‹ Guion anterior");pv.type="button";pv.disabled=cur===0;pv.addEventListener("click",()=>setTab(cur-1));
-  const nx=el("button","btn primary",cur===G.length-1?"Ir a enviar revisión ›":"Siguiente guion ›");nx.type="button";nx.addEventListener("click",()=>setTab(cur+1));
-  nav.append(pv,nx);
-  panel.append(head,nota,hb,...secs,fb,nav)}
-function paint(){if(cur===G.length){renderSum();return}
-  const g=G[cur];const r=R(g);
-  document.querySelectorAll('#fb .est button').forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===r.estado)));
-  // sincroniza cambios que lleguen de otro dispositivo sin pisar lo que se está escribiendo
-  const a=document.activeElement;
-  for(const[k,,text]of g.secciones){const ta=document.getElementById("ta-"+g.n+"-"+k);if(ta&&ta!==a){const v=(r.textos||{})[k];const val=v!=null?v:text;if(ta.value!==val){ta.value=val;grow(ta);ta.dispatchEvent(new Event("sync"))}}}
-  const nt=document.getElementById("nt-"+g.n);if(nt&&nt!==a&&nt.value!==(r.nota||"")){nt.value=r.nota||"";grow(nt)}
-  const checked=document.querySelector('input[name="hook'+g.n+'"]:checked');
-  if((checked?checked.value:"")!==(r.gancho||"")&&!(a&&a.closest&&a.closest("#hb")))render()}
-function ganchoFinal(g){const r=R(g);if(!r.gancho)return"";if(r.gancho==="otro")return r.ganchoOtro||"";return r.ganchoTexto??g.ganchos[r.gancho]}
-function renderSum(){panel.innerHTML="";
-  panel.append(el("h3",null,"Revisión final"),el("h2",null,fin?"Revisión enviada":"Enviar revisión a Juan"));
-  if(fin){const p=el("p","intro");p.textContent="Enviada el "+new Date(fin.t).toLocaleString("es-CO",{dateStyle:"long",timeStyle:"short"})+". Juan ya la tiene. Si cambias algo después, vuelve a enviarla.";panel.append(p)}
-  else panel.append(el("p","intro","Revisa el resumen. Cuando esté listo, envíalo: Juan recibe la versión final con el gancho elegido y todos tus cambios."));
-  const sum=el("div","sum");let faltan=0;
-  G.forEach((g,i)=>{const r=R(g);const row=el("div","row");const gf=ganchoFinal(g);if(!r.gancho)faltan++;
-    const n=el("span","n",g.n+" · "+g.titulo);const st=el("span","st",r.estado==="aprobado"?"Aprobado":r.estado==="cambios"?"Necesita cambios":"Sin marcar");st.dataset.e=r.estado||"";
-    const d=el("div","d");const b=el("b",null,r.gancho?("Gancho "+(r.gancho==="otro"?"propio":r.gancho)+": "):"Sin gancho elegido");d.append(b);if(gf)d.append(document.createTextNode(gf));
-    const ne=edits(g);if(ne||r.nota){d.append(document.createElement("br"));d.append(document.createTextNode([ne?ne+(ne===1?" texto editado":" textos editados"):"",r.nota?"Comentario: "+r.nota:""].filter(Boolean).join(" · ")))}
-    const go=el("button","link","Abrir");go.type="button";go.addEventListener("click",()=>setTab(i));
-    row.append(n,st,d,go);sum.append(row)});
-  panel.append(sum);
-  const box=el("div","confirm");
-  if(!confirming){const send=el("button","btn primary",fin?"Enviar de nuevo la revisión":"Enviar revisión final");send.type="button";send.id="send";
-    send.addEventListener("click",()=>{confirming=true;renderSum()});
-    const p=el("span","small",faltan?("Te falta"+(faltan===1?"":"n")+" elegir gancho en "+faltan+(faltan===1?" guion.":" guiones.")+" Puedes enviar igual."):"Todos los guiones tienen gancho.");
-    box.append(p,send)}
-  else{const p=el("span",null,"¿Enviar esta versión como la revisión final?");const row=el("div","nav");
-    const ok=el("button","btn primary","Sí, enviar");ok.type="button";ok.id="ok";const no=el("button","btn","Cancelar");no.type="button";
-    const s=el("div","saved");
-    no.addEventListener("click",()=>{confirming=false;renderSum()});
-    ok.addEventListener("click",async()=>{if(!db){s.textContent="Sin conexión: no se pudo enviar";return}ok.disabled=true;s.textContent="Enviando…";
-      const snap=G.map(g=>{const r=R(g);const textos={};for(const[k,label,text]of g.secciones){const v=(r.textos||{})[k];textos[label]=v!=null?v:text}
-        return{guion:g.n,titulo:g.titulo,estado:r.estado||"",gancho:r.gancho||"",ganchoFinal:ganchoFinal(g),textos,editados:edits(g),comentario:r.nota||""}});
-      let uid=null;try{const u=await claude.use("user");uid=u?await u.id():null}catch(e){}
-      const body={t:new Date().toISOString(),por:uid,guiones:snap};
-      try{await db.doc("final/envio").set(body);fin=body;confirming=false;renderTabs();renderSum()}catch(e){ok.disabled=false;s.textContent="No se pudo enviar. Intenta de nuevo."}});
-    row.append(no,ok);box.append(p,row,s)}
-  panel.append(box)}
-function showRecibido(){const b=document.getElementById("recibido");if(isOwner&&fin){b.hidden=false;b.textContent="El cliente envió la revisión final el "+new Date(fin.t).toLocaleString("es-CO",{dateStyle:"long",timeStyle:"short"})+". Mira el resumen en la última pestaña."}else b.hidden=true}
-renderTabs();render();
-(async()=>{const w=document.getElementById("warn");
-  try{const u=await claude.use("user");isOwner=u?await u.isOwner():false}catch(e){}
-  try{db=await claude.use("db")}catch(e){db=null}
-  if(!db){w.hidden=false;w.textContent="No pude conectar con el guardado de esta página: tus cambios no se van a guardar. Ábrela desde tu cuenta de Claude.";return}
-  db.collection("rev").onSnapshot(sn=>{for(const d of sn.docs)rev[d.id]=d.data();renderTabs();paint()},()=>{w.hidden=false;w.textContent="Se perdió la conexión con el guardado. Recarga la página."});
-  db.collection("final").onSnapshot(sn=>{const d=sn.docs.find(x=>x.id==="envio");fin=d?d.data():null;renderTabs();showRecibido();if(cur===G.length&&!confirming)renderSum()},()=>{})})();
+  const ph = mk("div", "part reveal");
+  const pl = mk("div", "part-lab"); pl.append(mk("p", "eyebrow", "El gancho"), mk("small", null, g.hint || "La primera frase. Elige la que más te guste."));
+  const pb = mk("div", "part-body");
+  const hooks = mk("div", "hooks"); hooks.setAttribute("role", "radiogroup"); hooks.setAttribute("aria-label", "Gancho del guion " + g.n); hooks.id = "hooks-" + g.n;
+  [...Object.entries(g.ganchos), ["otro", ""]].forEach(([k, t]) => {
+    const row = mk("div", "hook" + (k === "otro" ? " hook-other" : "")); row.dataset.k = k; row.setAttribute("role", "radio"); row.tabIndex = 0; row.dataset.cursor = "Elegir";
+    const l = mk("span", "hook-l", k === "otro" ? "+" : k);
+    const q = mk("div", "txt"); q.id = "hq-" + g.n + "-" + k; q.textContent = k === "otro" ? "" : t; q.dataset.ph = "Proponer otro gancho";
+    const hint = mk("div", "hook-hint"); hint.hidden = true;
+    row.append(l, q, hint);
+    const choose = () => { if (R(g).gancho === k) return; save(g, { gancho: k, ganchoTexto: k === "otro" ? null : t }); if (k === "otro") setTimeout(() => q.focus(), 50); };
+    row.addEventListener("click", e => { if (row.classList.contains("is-on") && e.target.closest(".txt, .restore")) return; choose(); });
+    row.addEventListener("keydown", e => { if (e.target !== row) return; if (e.key === "Enter" || e.key === " ") { e.preventDefault(); choose(); } });
+    const sv = debounce(v => save(g, k === "otro" ? { ganchoOtro: v } : { ganchoTexto: v }));
+    q.addEventListener("input", () => { if (R(g).gancho !== k) return; sv(readTxt(q)); markHook(g); });
+    q.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); q.blur(); } });
+    hooks.append(row);
+  });
+  pb.append(hooks); ph.append(pl, pb); s.append(ph);
+
+  // Partes del guion
+  g.secciones.forEach(([k, label, text, sub]) => {
+    const p = mk("div", "part reveal");
+    const lab = mk("div", "part-lab"); lab.append(mk("p", "eyebrow", label)); if (sub) lab.append(mk("small", null, sub));
+    const body = mk("div", "part-body");
+    const t = mk("div", "txt" + (k === "cierre" ? " big" : "")); t.id = "tx-" + g.n + "-" + k; editable(t, text);
+    t.setAttribute("aria-label", label + ", guion " + g.n + ". Toca para editar");
+    const tools = mk("div", "tools"); const ed = mk("span", "edited", "Editado"); const rs = mk("button", "restore", "Volver al original"); rs.type = "button";
+    tools.append(ed, rs); tools.hidden = true;
+    const sv = debounce(v => { const tx = { ...(R(g).textos || {}) }; if (same(v, text)) delete tx[k]; else tx[k] = v; save(g, { textos: tx }); });
+    t.addEventListener("input", () => { tools.hidden = same(readTxt(t), text); sv(readTxt(t)); });
+    rs.addEventListener("click", () => { t.textContent = text; tools.hidden = true; const tx = { ...(R(g).textos || {}) }; delete tx[k]; save(g, { textos: tx }); refreshST(); });
+    body.append(t, tools); p.append(lab, body); s.append(p);
+  });
+
+  // Veredicto
+  const pv = mk("div", "part reveal");
+  const vl = mk("div", "part-lab"); vl.append(mk("p", "eyebrow", "¿Cómo queda?"), mk("small", null, "Márcalo cuando termines este guion."));
+  const vb = mk("div", "part-body");
+  const pills = mk("div", "pills"); pills.id = "pills-" + g.n;
+  [["aprobado", "Aprobado"], ["cambios", "Necesita cambios"]].forEach(([v, t]) => { const b = mk("button", "pill", t); b.type = "button"; b.dataset.v = v; b.setAttribute("aria-pressed", "false"); b.addEventListener("click", () => save(g, { estado: R(g).estado === v ? "" : v })); pills.append(b); });
+  const f = mk("label", "field"); f.htmlFor = "nt-" + g.n; f.append(mk("span", null, "Comentario para Juan"));
+  const ta = document.createElement("textarea"); ta.id = "nt-" + g.n; ta.rows = 1; ta.placeholder = "Tono, locación, qué grabar, qué no decir…"; ta.setAttribute("data-lenis-prevent", "");
+  const grow = () => { ta.style.height = "auto"; ta.style.height = ta.scrollHeight + "px"; };
+  const svn = debounce(v => save(g, { nota: v })); ta.addEventListener("input", () => { grow(); svn(ta.value); });
+  f.append(ta); vb.append(pills, f); pv.append(vl, vb); s.append(pv);
+
+  // Siguiente
+  const nx = mk("div", "ch-next"); const nb = mk("button", "next"); nb.type = "button";
+  const nextG = G[gi + 1];
+  nb.append(mk("span", "eyebrow", nextG ? "Siguiente — " + pad(nextG.n) : "Ya casi"), mk("em", null, (nextG ? nextG.titulo : "Ver tu versión final") + " →"));
+  nb.addEventListener("click", () => go(nextG ? "g" + nextG.n : "final")); nx.append(nb); s.append(nx);
+  chapters.append(s);
+});
+
+/* ---------- Pintar estado (sin re-renderizar, para no romper lo que se escribe) ---------- */
+function markHook(g) {
+  const r = R(g); const k = r.gancho;
+  if (!k || k === "otro") return;
+  const row = document.querySelector(`#hooks-${g.n} .hook[data-k="${k}"]`); const hint = row.querySelector(".hook-hint");
+  const q = row.querySelector(".txt"); const changed = !same(readTxt(q), g.ganchos[k]);
+  hint.innerHTML = ""; hint.append(mk("b", null, "Elegido"), mk("span", null, changed ? "Ajustado" : "Toca el texto para ajustarlo"));
+  if (changed) { const rs = mk("button", "restore", "Volver al original"); rs.type = "button"; rs.addEventListener("click", e => { e.stopPropagation(); q.textContent = g.ganchos[k]; save(g, { ganchoTexto: g.ganchos[k] }); }); hint.append(rs); }
+}
+function paintChapter(g) {
+  const r = R(g); const a = document.activeElement;
+  const hooks = $("#hooks-" + g.n); hooks.dataset.has = r.gancho ? "1" : "0";
+  hooks.querySelectorAll(".hook").forEach(row => {
+    const k = row.dataset.k; const on = r.gancho === k; const q = row.querySelector(".txt"); const hint = row.querySelector(".hook-hint");
+    row.classList.toggle("is-on", on); row.setAttribute("aria-checked", String(on)); row.dataset.cursor = on ? "" : "Elegir";
+    if (on) { if (!q.isContentEditable) editable(q, q.textContent, "Escribe tu gancho"); }
+    else if (q.isContentEditable) { q.removeAttribute("contenteditable"); delete q.dataset.cursorText; }
+    if (q !== a) { const want = k === "otro" ? (r.ganchoOtro || "") : (on ? (r.ganchoTexto ?? g.ganchos[k]) : g.ganchos[k]); if (readTxt(q) !== want) q.textContent = want; }
+    hint.hidden = !on;
+    if (on && k === "otro") { hint.innerHTML = ""; hint.append(mk("b", null, "Elegido"), mk("span", null, "Tu propio gancho")); }
+  });
+  markHook(g);
+  for (const [k, , text] of g.secciones) {
+    const t = $("#tx-" + g.n + "-" + k); const v = (r.textos || {})[k]; const want = v != null ? v : text;
+    if (t !== a && readTxt(t) !== want) t.textContent = want;
+    t.parentElement.querySelector(".tools").hidden = same(t === a ? readTxt(t) : want, text);
+  }
+  $("#pills-" + g.n).querySelectorAll(".pill").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.v === r.estado)));
+  const ta = $("#nt-" + g.n); if (ta !== a && ta.value !== (r.nota || "")) { ta.value = r.nota || ""; ta.style.height = "auto"; ta.style.height = ta.scrollHeight + "px"; }
+  // índice
+  const li = idx.querySelector(`[data-n="${g.n}"]`); const hk = li.querySelector(".idx-hook");
+  hk.dataset.on = r.gancho ? "1" : "0"; hk.textContent = r.gancho ? (r.gancho === "otro" ? "Gancho propio" : "Gancho " + r.gancho) : "Por elegir";
+  li.querySelector(".dot").dataset.e = r.estado || "";
+  li.querySelector(".idx-lab span").textContent = r.estado === "aprobado" ? "Aprobado" : r.estado === "cambios" ? "Necesita cambios" : "Sin revisar";
+}
+function paintAll() {
+  G.forEach(paintChapter);
+  const n = G.filter(g => R(g).gancho).length;
+  $("#navCount").textContent = n + "/" + G.length;
+  $("#navFinal").textContent = fin ? "Enviada ✦" : "Versión final";
+  paintFinal();
+}
+
+/* ---------- Versión final ---------- */
+function paintFinal() {
+  const sum = $("#sum"); sum.innerHTML = ""; let faltan = 0;
+  G.forEach(g => {
+    const r = R(g); if (!r.gancho) faltan++;
+    const row = mk("div", "sum-row"); row.dataset.cursor = "Abrir";
+    const h = mk("h3"); h.append(mk("span", null, pad(g.n)), document.createTextNode(g.titulo));
+    const st = mk("span", "sum-st"); const d = mk("i", "dot"); d.dataset.e = r.estado || ""; st.append(d, document.createTextNode(r.estado === "aprobado" ? "Aprobado" : r.estado === "cambios" ? "Necesita cambios" : "Sin marcar"));
+    const desc = mk("p", "sum-d");
+    const hf = hookFinal(g);
+    if (r.gancho) { desc.append(document.createTextNode((r.gancho === "otro" ? "Gancho propio: " : "Gancho " + r.gancho + ": "))); desc.append(mk("em", null, hf ? "“" + hf + "”" : "(vacío)")); }
+    else desc.append(document.createTextNode("Todavía sin gancho elegido."));
+    const ne = edits(g); const extra = [ne ? ne + (ne === 1 ? " texto ajustado" : " textos ajustados") : "", r.nota ? "Comentario: " + r.nota : ""].filter(Boolean);
+    if (extra.length) { desc.append(document.createElement("br"), document.createTextNode(extra.join(" · "))); }
+    row.append(h, st, desc); row.addEventListener("click", () => go("g" + g.n)); sum.append(row);
+  });
+  const z = $("#sendZone"); z.innerHTML = "";
+  const fecha = t => new Date(t).toLocaleString("es-CO", { dateStyle: "long", timeStyle: "short" });
+  $("#finLead").textContent = fin ? "Ya me llegó tu revisión. Si cambias algo después, vuelve a enviarla y tomo la más reciente." : "Este es el resumen de lo que elegiste. Revísalo y, cuando esté listo, envíamelo. Con esta versión preparamos la grabación.";
+  if (fin) z.append(mk("p", "done", "Recibida el " + fecha(fin.t)));
+  if (!confirming) {
+    const b = mk("button", "btn-send"); b.type = "button"; b.dataset.cursor = "Enviar"; b.append(document.createTextNode(fin ? "Enviar de nuevo " : "Enviar revisión "), mk("span", null, "→"));
+    b.addEventListener("click", () => { confirming = true; paintFinal(); });
+    const note = mk("p", "send-note"); note.textContent = faltan ? "Te falta" + (faltan === 1 ? "" : "n") + " elegir gancho en " + faltan + (faltan === 1 ? " guion" : " guiones") + ". Puedes enviar igual y lo hablamos." : "Todos los guiones tienen gancho elegido.";
+    z.append(b, note);
+  } else {
+    const q = mk("p", "send-note"); q.append(mk("b", null, "¿Envío esta versión como la final?"), document.createTextNode(" Te llega a ti una confirmación aquí mismo."));
+    const cr = mk("div", "confirm-row");
+    const ok = mk("button", "btn-send"); ok.type = "button"; ok.append(document.createTextNode("Sí, enviar "), mk("span", null, "→"));
+    const no = mk("button", "btn-ghost", "Seguir revisando"); no.type = "button";
+    no.addEventListener("click", () => { confirming = false; paintFinal(); });
+    ok.addEventListener("click", async () => {
+      if (!db) { toast("Sin conexión: no se pudo enviar", true); return; }
+      ok.disabled = true; toast("Enviando…");
+      const guiones = G.map(g => { const r = R(g); const textos = {};
+        for (const [k, label, text] of g.secciones) { const v = (r.textos || {})[k]; textos[label] = v != null ? v : text; }
+        return { guion: g.n, titulo: g.titulo, estado: r.estado || "", gancho: r.gancho || "", ganchoFinal: hookFinal(g), textos, editados: edits(g), comentario: r.nota || "" }; });
+      let por = null; try { const u = await claude.use("user"); por = u ? await u.id() : null; } catch (e) {}
+      const body = { t: new Date().toISOString(), por, cliente: ENTREGA.cliente, guiones };
+      try { await db.doc("final/envio").set(body); fin = body; confirming = false; paintAll(); showBanner(); toast("Revisión enviada"); }
+      catch (e) { ok.disabled = false; toast("No se pudo enviar. Intenta de nuevo", true); }
+    });
+    cr.append(ok, no); z.append(q, cr);
+  }
+  refreshST();
+}
+function showBanner() { const b = $("#banner"); if (isOwner && fin) { b.hidden = false; b.textContent = ENTREGA.cliente + " envió la revisión final el " + new Date(fin.t).toLocaleString("es-CO", { dateStyle: "long", timeStyle: "short" }) + ". Está al final de la página."; } else b.hidden = true; }
+
+/* ---------- Movimiento ---------- */
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let lenis = null;
+function go(id) { const el = document.getElementById(id); if (!el) return; if (lenis) lenis.scrollTo(el, { offset: id === "inicio" ? 0 : -10 }); else el.scrollIntoView({ behavior: reduced ? "auto" : "smooth" }); }
+document.querySelectorAll("[data-go]").forEach(b => b.addEventListener("click", () => go(b.dataset.go)));
+const refreshST = debounce(() => { if (window.ScrollTrigger) ScrollTrigger.refresh(); }, 600);
+
+paintAll();
+
+if (window.gsap && !reduced) {
+  gsap.registerPlugin(ScrollTrigger);
+  document.documentElement.classList.add("anim");
+  if (window.Lenis) { lenis = new Lenis({ duration: 1.15 }); lenis.on("scroll", ScrollTrigger.update); gsap.ticker.add(t => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0); }
+  const paths = [...document.querySelectorAll("#truss .t-line")];
+  paths.forEach(p => { const L = p.getTotalLength(); p.style.strokeDasharray = L; p.style.strokeDashoffset = L; });
+  const intro = () => gsap.timeline()
+    .to(paths, { strokeDashoffset: 0, duration: 2.4, stagger: 0.06, ease: "power2.inOut" }, 0)
+    .from("#truss circle", { scale: 0, transformOrigin: "center", duration: .6, ease: "back.out(3)" }, 1.8)
+    .to(".hero-char", { y: 0, stagger: 0.045, duration: 1.1, ease: "power4.out" }, 0.1)
+    .to(".hero-fade", { opacity: 1, y: 0, stagger: 0.12, duration: 0.9, ease: "power3.out" }, 0.6);
+  gsap.timeline({ onComplete: () => { $("#preloader").style.display = "none"; intro(); } })
+    .from(".pl-char", { yPercent: 110, stagger: 0.05, duration: 0.7, ease: "power4.out" })
+    .to(".pl-bar", { scaleX: 1, duration: 0.7, ease: "power2.inOut" }, "-=0.35")
+    .to(".pl-char", { yPercent: -110, stagger: 0.03, duration: 0.5, ease: "power4.in" }, "+=0.05")
+    .to("#preloader", { yPercent: -100, duration: 0.8, ease: "expo.inOut" }, "-=0.2");
+  gsap.to("#truss", { yPercent: 18, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+  gsap.to(".hero-title", { yPercent: -40, opacity: 0.2, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });
+  gsap.to("#progress", { scaleX: 1, ease: "none", scrollTrigger: { start: 0, end: "max", scrub: 0.3 } });
+  gsap.fromTo("#howText .w", { opacity: 0.15 }, { opacity: 1, stagger: 0.05, ease: "none", scrollTrigger: { trigger: "#howText", start: "top 80%", end: "bottom 50%", scrub: true } });
+  gsap.from(".step", { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".steps", start: "top 88%" } });
+  gsap.from(".idx-heading .mask > span", { yPercent: 110, duration: 1.1, ease: "power4.out", scrollTrigger: { trigger: ".idx-heading", start: "top 85%" } });
+  document.querySelectorAll(".idx-row").forEach(r => gsap.from(r, { y: 60, opacity: 0, duration: 1.1, ease: "power3.out", scrollTrigger: { trigger: r, start: "top 94%" } }));
+  document.querySelectorAll(".ch-title").forEach(h => gsap.from(h.querySelectorAll(".mask > span"), { yPercent: 110, stagger: 0.06, duration: 1.1, ease: "power4.out", scrollTrigger: { trigger: h, start: "top 85%" } }));
+  document.querySelectorAll(".reveal").forEach(p => gsap.from(p, { y: 50, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: p, start: "top 90%" } }));
+  document.querySelectorAll(".hooks").forEach(h => gsap.from(h.querySelectorAll(".hook"), { x: -30, opacity: 0, stagger: 0.1, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: h, start: "top 85%" }, clearProps: "opacity,transform" }));
+  gsap.from(".fin-title", { y: 60, opacity: 0, duration: 1.1, ease: "power3.out", scrollTrigger: { trigger: ".fin-title", start: "top 88%" } });
+  if (document.fonts) document.fonts.ready.then(() => ScrollTrigger.refresh());
+
+  if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    const cur = $("#cursor"), lab = cur.querySelector("span");
+    document.documentElement.classList.add("has-cursor");
+    const cx = gsap.quickTo(cur, "x", { duration: 0.35, ease: "power3" }), cy = gsap.quickTo(cur, "y", { duration: 0.35, ease: "power3" });
+    addEventListener("pointermove", e => { cur.classList.add("is-moving"); cx(e.clientX); cy(e.clientY); });
+    addEventListener("pointerover", e => {
+      const tx = e.target.closest("[data-cursor-text]");
+      const t = e.target.closest("[data-cursor], button, textarea, .txt");
+      const txt = tx ? "" : (t?.dataset?.cursor || "");
+      cur.classList.toggle("is-text", !!tx); cur.classList.toggle("is-hover", !!t && !tx); cur.classList.toggle("is-label", !!txt); lab.textContent = txt;
+    });
+  }
+} else {
+  $("#preloader").style.display = "none";
+}
+
+/* ---------- Conexión ---------- */
+(async () => {
+  try { const u = await claude.use("user"); isOwner = u ? await u.isOwner() : false; } catch (e) {}
+  try { db = await claude.use("db"); } catch (e) { db = null; }
+  const w = $("#warn");
+  if (!db) { w.hidden = false; w.textContent = "No pude conectar con el guardado: tus cambios no se van a guardar. Abre esta página desde tu cuenta de Claude."; return; }
+  db.collection("rev").onSnapshot(sn => { for (const d of sn.docs) rev[d.id] = d.data(); paintAll(); }, () => { w.hidden = false; w.textContent = "Se perdió la conexión con el guardado. Recarga la página."; });
+  db.collection("final").onSnapshot(sn => { const d = sn.docs.find(x => x.id === "envio"); fin = d ? d.data() : null; paintAll(); showBanner(); }, () => {});
+})();
 </script>

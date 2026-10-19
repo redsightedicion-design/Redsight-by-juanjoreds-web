@@ -131,7 +131,9 @@ body::after { content: ""; position: fixed; inset: -50%; pointer-events: none; z
 /* Capítulo */
 .chapter { border-top: 1px solid var(--line); scroll-margin-top: 0; }
 .ch-num { font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2vw, 28px); color: var(--accent); }
-.ch-title { font-family: var(--serif); font-weight: 400; font-size: clamp(54px, 9.5vw, 156px); line-height: .92; letter-spacing: -.02em; margin-top: 18px; max-width: 14ch; text-wrap: balance; }
+.ch-title { font-family: var(--serif); font-weight: 400; font-size: clamp(50px, 8.6vw, 140px); line-height: .92; letter-spacing: -.02em; margin-top: 18px; max-width: 16ch; text-wrap: balance; }
+.ch-guion { display: flex; flex-direction: column; gap: 6px; margin-top: 22px; }
+.ch-guion em { font-size: clamp(26px, 3vw, 44px); line-height: 1.1; color: var(--muted); }
 .ch-meta { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 28px; }
 .ch-note { margin-top: 28px; max-width: 62ch; font-size: 14px; line-height: 1.65; color: var(--muted); padding-left: 16px; border-left: 1px solid var(--line); }
 .ch-note span { display: block; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; margin-bottom: 6px; }
@@ -312,7 +314,7 @@ const ENTREGA = {
   como: "Cada guion abre con <em>un gancho</em>: la primera frase, la que hace que alguien se quede viendo. Te propongo tres por historia. Tú eliges, cambias lo que no suene a ti, y me envías la versión con la que grabamos.",
   marquee: ["El gancho","El problema","La solución","La pregunta"],
   guiones: [
-{n:1,titulo:"El D1 que no es de D1",lugar:"D1 de Dosquebradas, La Capilla",
+{n:1,proyecto:"D1 Dosquebradas · La Capilla",titulo:"El D1 que no es de D1",lugar:"D1 de Dosquebradas, La Capilla",
  nota:"D1 de Dosquebradas en La Capilla. Aquí no solo van a hacer la estructura metálica sino toda la obra civil.",
  ganchos:{A:"D1 abre casi una tienda por día. Y casi ninguna es suya.",B:"Este D1 no es de D1. Es de una persona como tú.",C:"Hay más de 2.600 D1 en Colombia. Casi todos están en locales arrendados."},
  secciones:[
@@ -320,7 +322,7 @@ const ENTREGA = {
   ["solucion","Solución","Por eso esta obra es diferente a todas las que hemos hecho.\nA nosotros siempre nos han llamado para la estructura metálica. Centros comerciales, centros logísticos, bodegas. Solo la estructura.\nAquí el dueño nos pidió toda la obra. Desde el suelo hasta el techo.\nUn contratista. Una fecha.\nY mientras aquí avanza la obra civil, en nuestra bodega ya se está fabricando la estructura. Las dos cosas al mismo tiempo.\nEl resultado: este lote va a empezar a dar renta antes de lo que el dueño pensaba."],
   ["cta","Llamado a la acción","Si tienes un lote y quieres saber si sirve para algo así, escríbenos."],
   ["cierre","Pregunta de cierre","¿Cuántos lotes vacíos conoces que podrían ser un D1?"]]},
-{n:2,titulo:"Donde van a vivir tus papás",lugar:"Club house del proyecto senior, Cerritos",
+{n:2,proyecto:"Proyecto Senior Club House",titulo:"Donde van a vivir tus papás",lugar:"Club house del proyecto senior, Cerritos",
  nota:"Proyecto senior, club house listo. La estructura metálica del club house, zona social. Pedirle a Andrés los renders. Es un proyecto donde se utilizaron unas columnas redondas.",
  ganchos:{A:"En 15 años, uno de cada cinco colombianos va a tener más de 60. ¿Dónde van a vivir?",B:"Tus papás no quieren un ancianato. Quieren esto.",C:"Esto parece un hotel. Pero aquí van a vivir personas de más de 50."},
  secciones:[
@@ -328,7 +330,7 @@ const ENTREGA = {
   ["solucion","Solución","Toda la estructura metálica del club house es nuestra.\nFíjate en las columnas. No son cuadradas. Son redondas.\nY la estructura metálica permite algo clave en un lugar así: espacios grandes y abiertos, sin columnas atravesadas en la mitad.\nPorque aquí la gente no viene a encerrarse. Viene a encontrarse.\nEsto era un render. Hoy ya está en pie."],
   ["cta","Llamado a la acción","Si estás desarrollando un proyecto pensado para un público específico, escríbenos. Nosotros le damos forma a la estructura."],
   ["cierre","Pregunta de cierre","¿Tú dónde te imaginas viviendo cuando tengas 60?"]]},
-{n:3,titulo:"La bodega que se hizo en otra bodega",lugar:"Bodega 2.4, Eje Nexus · 1.200 m²",
+{n:3,proyecto:"Bodega 1.200 m² · Eje Nexus",titulo:"La bodega que se hizo en otra bodega",lugar:"Bodega 2.4, Eje Nexus · 1.200 m²",
  nota:"Bodega de 1.200 metros cuadrados, diagonal Eje Nexus, bodega 2.4. Centro logístico lleno de bodegas.",
  ganchos:{A:"Para construir esta bodega, primero usamos otra bodega.",B:"Esta bodega todavía no está terminada. Y ya vale más de un millón de pesos al día.",C:"Hay gente ganando plata con bodegas sin mover una sola caja."},
  secciones:[
@@ -336,7 +338,7 @@ const ENTREGA = {
   ["solucion","Solución","Por eso la mitad de esta bodega no se hizo aquí.\nSe hizo en otra bodega: la nuestra.\nMientras aquí se preparaba el terreno, allá ya estábamos cortando y soldando cada pieza.\nCuando la estructura llegó a la obra, no había nada que fabricar. Solo armar.\nDos equipos. Dos lugares. Al mismo tiempo.\nCada día que le quitamos a la obra es más de un millón de pesos que vuelve al bolsillo del dueño."],
   ["cta","Llamado a la acción","Si tienes un lote y estás pensando en una bodega para arrendar, escríbenos. Te decimos en cuántos días la puedes tener."],
   ["cierre","Pregunta de cierre","¿Sabes cuánto te cuesta un día de tu lote vacío?"]]},
-{n:4,titulo:"El edificio que no podía cerrar",lugar:"Liga contra el Cáncer, Dosquebradas",
+{n:4,proyecto:"Liga contra el Cáncer",titulo:"El edificio que no podía cerrar",lugar:"Liga contra el Cáncer, Dosquebradas",
  nota:"Liga contra el Cáncer: les montaron dos viaductos y ampliaciones en estructura metálica.",
  ganchos:{A:"5.000 consultas al mes se quedaron sin edificio.",B:"¿Cómo amplías un centro de cáncer sin cerrarlo ni un solo día?",C:"Estos dos puentes no son para carros. Son para pacientes."},
  secciones:[
@@ -344,14 +346,14 @@ const ENTREGA = {
   ["solucion","Solución","Por eso aquí casi nada se fabricó en obra.\nLa estructura de las ampliaciones y de los dos viaductos se cortó y se soldó en nuestra bodega.\nLejos del ruido. Lejos de los pacientes.\nA la obra llegaron las piezas listas. Solo había que montarlas.\nMientras adentro seguían atendiendo, afuera el edificio crecía.\nDos viaductos y nuevas áreas para que quepan los que llegaron de la otra sede."],
   ["cta","Llamado a la acción","Si tu edificio necesita crecer pero no puede dejar de funcionar, escríbenos."],
   ["cierre","Pregunta de cierre","¿Tú sabías que un edificio puede crecer sin cerrar sus puertas?"]]},
-{n:5,titulo:"De muros a techo",lugar:"Terra, condominio campestre · Cerritos",
+{n:5,proyecto:"Terra · 5 casas listas",titulo:"De muros a techo",lugar:"Terra, condominio campestre · Cerritos",
  nota:"Terra: 5 casas ya listas.",
  ganchos:{A:"¿Cuánto crees que tarda una casa en pasar de esto… a esto?",B:"Esta casa tiene muros. Esta tiene techo. ¿Cuánto tiempo crees que hay entre las dos?",C:"¿Cuánto tiempo crees que necesita esta casa para verse como la de al lado?"},
  secciones:[
   ["desarrollo","Desarrollo","Estas dos casas son iguales.\nLa diferencia es que esta va un paso adelante.\nEsta tiene muros. Pero arriba, nada.\nY esta ya tiene su estructura metálica y su techo.\nEntonces, ¿cuánto tiempo hay entre una y otra?\n¿Seis meses?\n¿Tres meses?\n¿Un mes?\n¿Quince días?"],
   ["solucion","Solución","Una semana.\nEse paso es el nuestro: la estructura metálica y el techo.\nEn una casa de 350 metros cuadrados, se monta en una semana.\n¿Cómo? Las piezas no se hacen en la obra. Se fabrican antes, en nuestro taller.\nCuando llegan, solo se arman.\nY aquí no es una casa. Es un condominio campestre de 20 en Cerritos.\nY ese paso lo acaban de dar cinco casas más."],
   ["cierre","Pregunta de cierre","¿Cuánto creías tú que tardaba? Te leo en los comentarios."]]},
-{n:6,titulo:"La de al lado",formato:"Formato entrevista",lugar:"Local reconstruido junto al anterior",
+{n:6,proyecto:"El local enseguida del otro",titulo:"La de al lado",formato:"Formato entrevista",lugar:"Local reconstruido junto al anterior",
  nota:"Un local que hicimos enseguida del otro; ya empezaron con esa estructura. Es importante porque el cliente nos volvió a buscar para que le reconstruyeran (propuesta: convocar al cliente). El señor tiene un hijo de 11 años que mantiene todo el tiempo con él y es muy inteligente: meter al hijo.",
  hint:"Este gancho se arma en edición con lo que respondan. Elige cuál de estas frases quieres que busquemos en la entrevista.",
  ganchos:{A:"Cuando el papá cuenta que la suya se cayó y la de al lado no.",B:"Cuando el niño dice qué vio o qué pensó al ver las dos bodegas.",C:"Su bodega se cayó en el terremoto. La de al lado, que hicimos nosotros, no. Y adivinen a quién llamó."},
@@ -385,7 +387,7 @@ function toast(msg, err) { toastEl.textContent = msg; toastEl.classList.add("is-
 /* ---------- Guardado ---------- */
 async function save(g, patch) {
   const p = R(g);
-  const body = { estado: p.estado || "", gancho: p.gancho || "", ganchoTexto: p.ganchoTexto ?? null, ganchoOtro: p.ganchoOtro || "", textos: { ...(p.textos || {}) }, nota: p.nota || "", guion: g.n, titulo: g.titulo, ...patch, t: new Date().toISOString() };
+  const body = { estado: p.estado || "", gancho: p.gancho || "", ganchoTexto: p.ganchoTexto ?? null, ganchoOtro: p.ganchoOtro || "", textos: { ...(p.textos || {}) }, nota: p.nota || "", guion: g.n, proyecto: g.proyecto, titulo: g.titulo, ...patch, t: new Date().toISOString() };
   rev[did(g)] = body; paintAll();
   if (!db) { toast("Sin conexión: este cambio no se guardó", true); return; }
   toast("Guardando…");
@@ -431,8 +433,8 @@ const idx = $("#idx");
 G.forEach(g => {
   const li = mk("li", "idx-row"); li.dataset.n = g.n; li.dataset.cursor = "Abrir"; li.tabIndex = 0;
   li.innerHTML = `<span class="idx-n">${pad(g.n)}</span><div><h3 class="idx-name"></h3><p class="idx-meta"></p></div><div class="idx-st"><span class="idx-hook"></span><span class="idx-lab"><i class="dot"></i><span></span></span></div>`;
-  li.querySelector(".idx-name").textContent = g.titulo;
-  li.querySelector(".idx-meta").textContent = g.lugar + (g.formato ? " · " + g.formato : "");
+  li.querySelector(".idx-name").textContent = g.proyecto;
+  li.querySelector(".idx-meta").textContent = "Guion: “" + g.titulo + "”" + (g.formato ? " · " + g.formato : "");
   const open = () => go("g" + g.n);
   li.addEventListener("click", open); li.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
   idx.appendChild(li);
@@ -445,11 +447,12 @@ G.forEach((g, gi) => {
   const s = mk("section", "chapter section"); s.id = "g" + g.n;
   const head = mk("div", "ch-head");
   head.append(mk("p", "ch-num", "(" + pad(g.n) + ")"));
-  const h = mk("h2", "ch-title"); h.setAttribute("aria-label", g.titulo);
-  g.titulo.split(" ").forEach((w, i) => { const m = mk("span", "mask"); const sp = mk("span", null, w); m.append(sp); h.append(m, document.createTextNode(" ")); });
+  const h = mk("h2", "ch-title"); h.setAttribute("aria-label", g.proyecto);
+  g.proyecto.split(" ").forEach((w, i) => { const m = mk("span", "mask"); const sp = mk("span", null, w); m.append(sp); h.append(m, document.createTextNode(" ")); });
   head.append(h);
+  const gn = mk("p", "ch-guion"); gn.append(mk("span", "eyebrow", "Guion"), mk("em", null, "“" + g.titulo + "”")); head.append(gn);
   const meta = mk("div", "ch-meta"); meta.append(mk("p", "eyebrow", g.lugar)); if (g.formato) meta.append(mk("p", "eyebrow", g.formato)); head.append(meta);
-  if (g.nota) { const n = mk("p", "ch-note"); n.append(mk("span", null, "Nota de producción"), document.createTextNode(g.nota)); head.append(n); }
+  if (g.nota) { const n = mk("p", "ch-note"); n.append(mk("span", null, "Lo que anotaron del proyecto"), document.createTextNode(g.nota)); head.append(n); }
   s.append(head);
 
   // Gancho
@@ -503,7 +506,7 @@ G.forEach((g, gi) => {
   // Siguiente
   const nx = mk("div", "ch-next"); const nb = mk("button", "next"); nb.type = "button";
   const nextG = G[gi + 1];
-  nb.append(mk("span", "eyebrow", nextG ? "Siguiente — " + pad(nextG.n) : "Ya casi"), mk("em", null, (nextG ? nextG.titulo : "Ver tu versión final") + " →"));
+  nb.append(mk("span", "eyebrow", nextG ? "Siguiente — " + pad(nextG.n) : "Ya casi"), mk("em", null, (nextG ? nextG.proyecto : "Ver tu versión final") + " →"));
   nb.addEventListener("click", () => go(nextG ? "g" + nextG.n : "final")); nx.append(nb); s.append(nx);
   chapters.append(s);
 });
@@ -557,7 +560,7 @@ function paintFinal() {
   G.forEach(g => {
     const r = R(g); if (!r.gancho) faltan++;
     const row = mk("div", "sum-row"); row.dataset.cursor = "Abrir";
-    const h = mk("h3"); h.append(mk("span", null, pad(g.n)), document.createTextNode(g.titulo));
+    const h = mk("h3"); h.append(mk("span", null, pad(g.n)), document.createTextNode(g.proyecto));
     const st = mk("span", "sum-st"); const d = mk("i", "dot"); d.dataset.e = r.estado || ""; st.append(d, document.createTextNode(r.estado === "aprobado" ? "Aprobado" : r.estado === "cambios" ? "Necesita cambios" : "Sin marcar"));
     const desc = mk("p", "sum-d");
     const hf = hookFinal(g);
@@ -587,7 +590,7 @@ function paintFinal() {
       ok.disabled = true; toast("Enviando…");
       const guiones = G.map(g => { const r = R(g); const textos = {};
         for (const [k, label, text] of g.secciones) { const v = (r.textos || {})[k]; textos[label] = v != null ? v : text; }
-        return { guion: g.n, titulo: g.titulo, estado: r.estado || "", gancho: r.gancho || "", ganchoFinal: hookFinal(g), textos, editados: edits(g), comentario: r.nota || "" }; });
+        return { guion: g.n, proyecto: g.proyecto, titulo: g.titulo, estado: r.estado || "", gancho: r.gancho || "", ganchoFinal: hookFinal(g), textos, editados: edits(g), comentario: r.nota || "" }; });
       let por = null; try { const u = await claude.use("user"); por = u ? await u.id() : null; } catch (e) {}
       const body = { t: new Date().toISOString(), por, cliente: ENTREGA.cliente, guiones };
       try { await db.doc("final/envio").set(body); fin = body; confirming = false; paintAll(); showBanner(); toast("Revisión enviada"); }
